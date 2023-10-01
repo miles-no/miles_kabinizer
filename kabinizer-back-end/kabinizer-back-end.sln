@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kabinizer-api", "kabinizer-api\kabinizer-api.csproj", "{B361D2CA-8345-42E8-B85C-6A57334FD58D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kabinizer-data", "kabinizer-data\kabinizer-data.csproj", "{CE7EA016-820C-48C5-840E-7C8AE99D25C0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{2308FCC1-05D8-4B14-A4E0-8CF51D080A66}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B361D2CA-8345-42E8-B85C-6A57334FD58D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B361D2CA-8345-42E8-B85C-6A57334FD58D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B361D2CA-8345-42E8-B85C-6A57334FD58D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B361D2CA-8345-42E8-B85C-6A57334FD58D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE7EA016-820C-48C5-840E-7C8AE99D25C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE7EA016-820C-48C5-840E-7C8AE99D25C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE7EA016-820C-48C5-840E-7C8AE99D25C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE7EA016-820C-48C5-840E-7C8AE99D25C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {005D159B-92F0-4A63-A9D5-42EF5897BD8B}
+	EndGlobalSection
+EndGlobal
