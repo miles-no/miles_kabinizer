@@ -23,11 +23,12 @@ public class BookingController : ControllerBase
         return new Booking(Guid.NewGuid());
     }
 
-    [HttpPatch]
-    public Booking UpdateBooking([Required] Booking booking)
-    {
-        return new Booking(Guid.NewGuid());
-    }
+    // Probably won't need this
+    //[HttpPatch]
+    //public Booking UpdateBooking([Required] Booking booking)
+    //{
+    //    return new Booking(Guid.NewGuid());
+    //}
 
     [HttpDelete]
     public bool DeleteBooking([Required] Guid bookingId)
