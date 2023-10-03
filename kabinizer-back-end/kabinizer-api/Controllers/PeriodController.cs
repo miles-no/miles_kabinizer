@@ -1,6 +1,5 @@
 ﻿using kabinizer_api.Model;
 using kabinizer_data;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace kabinizer_api.Controllers;
