@@ -9,6 +9,11 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  AZURE_WEBAPP_NAME: app-kabinizer-client-dev    # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: 'kabinizer-front-end'      # set this to the path to your web app project, defaults to the repository root
+  NODE_VERSION: '18.x' 
+
 jobs:
   build:
     runs-on: windows-latest
