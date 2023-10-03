@@ -58,4 +58,4 @@ jobs:
           app-name: 'app-kabinizer-client-dev'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_55A0413646A84475A03B61F15F2DC685 }}
-          package: .
+          package: ./kabinizer/kabinizer-front-end/
