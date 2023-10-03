@@ -24,6 +24,9 @@ jobs:
 
       - name: Open correct folder
         run: cd kabinizer-back-end
+
+      - name: LS
+        run: ls
         
       - name: Build with dotnet
         run: dotnet build --configuration Release
