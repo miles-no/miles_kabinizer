@@ -22,9 +22,6 @@ jobs:
           dotnet-version: '7.x'
           include-prerelease: true
 
-      - name: Open correct folder
-        run: cd kabinizer-back-end
-
       - name: LS
         run: ls
         
