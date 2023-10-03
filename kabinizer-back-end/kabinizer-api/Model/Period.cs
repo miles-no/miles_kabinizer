@@ -2,7 +2,7 @@
 
 namespace kabinizer_api.Model;
 
-public record Period(DateOnly PeriodStart, DateOnly PeriodEnd, DateOnly DeadlineDate)
+public record Period(DateTime PeriodStart, DateTime PeriodEnd, DateTime DeadlineDate)
 {
     public static Period FromObject(PeriodEntity o)
     {
