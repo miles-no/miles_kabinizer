@@ -11,4 +11,27 @@
   font-family: "Pacifico", cursive;
   color: brown;
   font-size: 4rem;
+  position: absolute;
+  -webkit-animation: ease-in-out;
+  -webkit-animation-name: run;
+  -webkit-animation-duration: 2s;
+  top: 0;
+}
+@-webkit-keyframes run {
+  0% {
+    top: 50%;
+    scale: 2;
+  }
+  70% {
+    top: 50%;
+    scale: 2;
+  }
+  80% {
+    top: 55%;
+    scale: 2;
+  }
+  100% {
+    top: 0;
+    scale: 1;
+  }
 }
