@@ -1,4 +1,5 @@
 ﻿using kabinizer_api.Dtos.BookingRequest;
+using kabinizer_api.Export;
 using kabinizer_api.Model;
 using kabinizer_data;
 using kabinizer_data.Entities;
@@ -53,5 +54,14 @@ public class BookingRequestController : ControllerBase
         _entityContext.BookingRequests.Remove(entityToRemove);
         _entityContext.SaveChanges();
         return true;
+    }
+
+    [HttpGet]
+    [Route("export")]
+    public IActionResult Export()
+    {
+        // TODO: Take some input and only export the values we want, for example for a single period
+        byte[] fileContent = CsvService.ExportToCsv(GetBookingRequests());
+        return File(fileContent, "application/octet-stream", "export.csv");
     }
 }
