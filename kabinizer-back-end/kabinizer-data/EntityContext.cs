@@ -13,6 +13,8 @@ public class EntityContext : DbContext
     }
 
     public DbSet<PeriodEntity> Periods { get; set; }
+    public DbSet<BookingRequestEntity> BookingRequests { get; set; }
+
 
     private void CreateTestData()
     {
