@@ -24,12 +24,12 @@ export class BookingRequestService {
 
     /**
      * @param requestBody
-     * @returns BookingRequest Success
+     * @returns any Success
      * @throws ApiError
      */
     public static postApiBookingRequest(
-        requestBody: CreateBookingRequestDto,
-    ): CancelablePromise<BookingRequest> {
+        requestBody: Array<CreateBookingRequestDto>,
+    ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/BookingRequest',
@@ -52,6 +52,34 @@ export class BookingRequestService {
             query: {
                 'bookingRequestId': bookingRequestId,
             },
+        });
+    }
+
+    /**
+     * @param userId
+     * @returns BookingRequest Success
+     * @throws ApiError
+     */
+    public static getApiBookingRequestUser(
+        userId: string,
+    ): CancelablePromise<Array<BookingRequest>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/BookingRequest/user/{userId}',
+            path: {
+                'userId': userId,
+            },
+        });
+    }
+
+    /**
+     * @returns any Success
+     * @throws ApiError
+     */
+    public static getApiBookingRequestExport(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/BookingRequest/export',
         });
     }
 

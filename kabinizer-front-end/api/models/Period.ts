@@ -7,5 +7,7 @@ export type Period = {
     periodStart?: string;
     periodEnd?: string;
     deadlineDate?: string;
+    isSpecialPeriod?: boolean;
+    title?: string | null;
 };
 
