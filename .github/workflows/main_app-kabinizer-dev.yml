@@ -19,9 +19,12 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '3.1'
+          dotnet-version: '7.x'
           include-prerelease: true
 
+      - name: Open correct folder
+        run: cd kabinizer-back-end
+        
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
