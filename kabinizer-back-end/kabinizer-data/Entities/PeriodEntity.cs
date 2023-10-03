@@ -10,4 +10,5 @@ public class PeriodEntity
     public DateTime PeriodEnd { get; set; }
     public DateTime DeadlineDate { get; set; }
     public bool IsSpecialPeriod { get; set; }
+    public string Title { get; set; }
 }
