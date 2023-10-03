@@ -2,6 +2,7 @@
 using kabinizer_api.Model;
 using kabinizer_data;
 using kabinizer_data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
