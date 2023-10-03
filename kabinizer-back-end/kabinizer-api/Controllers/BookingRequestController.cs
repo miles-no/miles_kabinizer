@@ -24,6 +24,17 @@ public class BookingRequestController : ControllerBase
         return _entityContext.BookingRequests.Select(BookingRequest.FromEntity);
     }
 
+    [HttpGet]
+    [Route("user/{userId}")]
+    public IEnumerable<BookingRequest> GetBookingRequestsByUserId(Guid userId)
+    {
+        return _entityContext.BookingRequests
+            .Where(e => e.UserId == userId)
+            .ToList()
+            .Select(BookingRequest.FromEntity);
+    }
+
+
     [HttpPost]
     public void AddBookingRequests([Required] IEnumerable<CreateBookingRequestDto> r)
     {
