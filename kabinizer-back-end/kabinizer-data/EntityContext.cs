@@ -12,17 +12,24 @@ public class EntityContext : DbContext
         CreateTestData();
     }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        //optionsBuilder.UseSqlServer("Server=LAPTOP-89T5L899\\SQLEXPRESS;Database=Kabinizer;Trusted_Connection=True");
+    }
+
+    public DbSet<BookingRequestEntity> BookingRequests { get; set; }
     public DbSet<PeriodEntity> Periods { get; set; }
+
 
     private void CreateTestData()
     {
-        Periods.Add(new PeriodEntity
-        {
-            PeriodStart = new DateOnly(2024, 01, 01),
-            PeriodEnd = new DateOnly(2024, 03, 01),
-            DeadlineDate = new DateOnly(2023, 12, 31)
-        });
+        //Periods.Add(new PeriodEntity
+        //{
+        //    PeriodStart = new DateTime(2024, 01, 01),
+        //    PeriodEnd = new DateTime(2024, 03, 01),
+        //    DeadlineDate = new DateTime(2023, 12, 31)
+        //});
 
-        SaveChanges();
+        //SaveChanges();
     }
 }
