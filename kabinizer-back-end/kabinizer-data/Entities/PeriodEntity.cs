@@ -1,6 +1,6 @@
 ﻿namespace kabinizer_data.Entities;
 
-public class DeadlineEntity
+public class PeriodEntity
 {
     public Guid Id { get; set; }
     public DateOnly PeriodStart { get; set; }
