@@ -12,11 +12,11 @@ public class EntityContext : DbContext
         CreateTestData();
     }
 
-    public DbSet<DeadlineEntity> Deadlines { get; set; }
+    public DbSet<PeriodEntity> Periods { get; set; }
 
     private void CreateTestData()
     {
-        Deadlines.Add(new DeadlineEntity
+        Periods.Add(new PeriodEntity
         {
             PeriodStart = new DateOnly(2024, 01, 01),
             PeriodEnd = new DateOnly(2024, 03, 01),
