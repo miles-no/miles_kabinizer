@@ -10,11 +10,6 @@ public class EntityContext : DbContext
     {
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        //optionsBuilder.UseSqlServer("Server=LAPTOP-89T5L899\\SQLEXPRESS;Database=Kabinizer;Trusted_Connection=True");
-    }
-
     public DbSet<BookingRequestEntity> BookingRequests { get; set; }
     public DbSet<PeriodEntity> Periods { get; set; }
 }

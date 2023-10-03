@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<EntityContext>(o => 
+builder.Services.AddDbContext<EntityContext>(o =>
     o.UseSqlServer(builder.Configuration.GetConnectionString("KabinizerConnection")));
 
 builder.Services.AddEndpointsApiExplorer();
@@ -24,4 +24,14 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Migrate db
+using (var scope = app.Services.CreateScope())
+{
+    var dataContext = scope.ServiceProvider.GetRequiredService<EntityContext>();
+    dataContext.Database.Migrate();
+}
+
 app.Run();
+
+
+
