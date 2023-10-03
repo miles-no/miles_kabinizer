@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using kabinizer_data;
 
@@ -11,9 +12,11 @@ using kabinizer_data;
 namespace kabinizer_data.Migrations
 {
     [DbContext(typeof(EntityContext))]
-    partial class EntityContextModelSnapshot : ModelSnapshot
+    [Migration("20231003173957_Create_BookingRequest")]
+    partial class Create_BookingRequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
