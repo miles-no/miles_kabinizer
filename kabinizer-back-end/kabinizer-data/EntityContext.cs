@@ -8,8 +8,6 @@ public class EntityContext : DbContext
     public EntityContext(DbContextOptions<EntityContext> options)
         : base(options)
     {
-        // TODO: to be replaced
-        CreateTestData();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -19,19 +17,4 @@ public class EntityContext : DbContext
 
     public DbSet<BookingRequestEntity> BookingRequests { get; set; }
     public DbSet<PeriodEntity> Periods { get; set; }
-    public DbSet<BookingRequestEntity> BookingRequests { get; set; }
-
-
-
-    private void CreateTestData()
-    {
-        //Periods.Add(new PeriodEntity
-        //{
-        //    PeriodStart = new DateTime(2024, 01, 01),
-        //    PeriodEnd = new DateTime(2024, 03, 01),
-        //    DeadlineDate = new DateTime(2023, 12, 31)
-        //});
-
-        //SaveChanges();
-    }
 }

@@ -41,6 +41,7 @@ public class BookingRequestController : ControllerBase
     {
         BookingRequestEntity entityToRemove = _entityContext.BookingRequests.Single(br => br.Id == bookingRequestId);
         _entityContext.BookingRequests.Remove(entityToRemove);
+        _entityContext.SaveChanges();
         return true;
     }
 }

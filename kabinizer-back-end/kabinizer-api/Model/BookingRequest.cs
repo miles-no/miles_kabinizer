@@ -6,6 +6,6 @@ public record BookingRequest(Guid Id, Guid UserId, DateOnly FromDate, DateOnly T
 {
     public static BookingRequest FromEntity(BookingRequestEntity e)
     {
-        return new BookingRequest(e.Id, e.UserId, e.FromDate, e.ToDate);
+        return new BookingRequest(e.Id, e.UserId, DateOnly.FromDateTime(e.FromDate), DateOnly.FromDateTime(e.ToDate));
     }
 };
