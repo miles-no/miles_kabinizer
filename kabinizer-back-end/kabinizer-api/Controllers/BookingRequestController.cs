@@ -3,7 +3,6 @@ using kabinizer_api.Model;
 using kabinizer_data;
 using kabinizer_data.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.ComponentModel.DataAnnotations;
 
 namespace kabinizer_api.Controllers;
@@ -25,15 +24,26 @@ public class BookingRequestController : ControllerBase
         return _entityContext.BookingRequests.Select(BookingRequest.FromEntity);
     }
 
+    [HttpGet]
+    [Route("user/{userId}")]
+    public IEnumerable<BookingRequest> GetBookingRequestsByUserId(Guid userId)
+    {
+        return _entityContext.BookingRequests
+            .Where(e => e.UserId == userId)
+            .ToList()
+            .Select(BookingRequest.FromEntity);
+    }
+
+
     [HttpPost]
-    public BookingRequest AddBookingRequest([Required] CreateBookingRequestDto r)
+    public void AddBookingRequests([Required] IEnumerable<CreateBookingRequestDto> r)
     {
         // TODO: Use authenticated user
-        EntityEntry<BookingRequestEntity> newBookingRequest =
-            _entityContext.BookingRequests.Add(new BookingRequestEntity(r.UserId, r.FromDate, r.ToDate));
-        _entityContext.SaveChanges();
+        IEnumerable<BookingRequestEntity> bookingRequestEntities =
+            r.Select(e => new BookingRequestEntity(e.UserId, e.FromDate, e.ToDate));
 
-        return BookingRequest.FromEntity(newBookingRequest.Entity);
+        _entityContext.BookingRequests.AddRange(bookingRequestEntities);
+        _entityContext.SaveChanges();
     }
 
     [HttpDelete]
