@@ -1,50 +1,60 @@
 import { Period } from "../../../../api";
+import { Option } from "../../../types";
+import { getWeeks } from "../../../utils";
 import CalenderItem from "./calenderItem";
 
-const Calender = ({ periods }: { periods: Period[] }) => {
-  const transformPeriodsToListOfWeeks = (periods: Period[]) => {
-    const weeks: Period[] = [];
-    periods.forEach((period) => {
-      if (period.isSpecialPeriod) {
-        weeks.push(period);
-      } else {
-        // Split up period into weeks
-        const start = new Date(period.periodStart ?? "");
-        const end = new Date(period.periodEnd ?? "");
-        const diffTime = Math.abs(end.getTime() - start.getTime());
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        const numberOfWeeks = Math.ceil(diffDays / 7);
-        const week = 7;
-        for (let i = 0; i < numberOfWeeks; i++) {
-          const newPeriod = {
-            ...period,
-            periodStartDate: new Date(
-              start.getTime() + i * week * 24 * 60 * 60 * 1000
-            ).toDateString(),
-            periodEndDate: new Date(
-              start.getTime() +
-                (i + 1) * week * 24 * 60 * 60 * 1000 -
-                24 * 60 * 60 * 1000
-            ).toDateString(),
-          };
-          weeks.push(newPeriod);
-        }
-      }
-    });
-    return weeks;
-  };
-
+const Calender = ({
+  periods,
+  options,
+}: {
+  periods: Period[];
+  options: Option[];
+}) => {
   const weeks = transformPeriodsToListOfWeeks(periods);
 
   return (
     <div>
-      <div className="flex flex-col gap-2">
-        {weeks.map((week, index) => (
-          <CalenderItem key={index} {...week} />
-        ))}
+      <div className="grid grid-cols-[1fr_auto_1fr] gap-1">
+        <div className="flex flex-col gap-y-1">
+          {weeks.map((week, index) => (
+            <p
+              key={index}
+              className="h-12 w-8 flex justify-center items-center"
+            >
+              {week.from.getDate()}
+            </p>
+          ))}
+        </div>
+        <div className="h-12 gap-y-1 flex flex-wrap w-[21rem]">
+          {weeks.map((week, index) => (
+            <CalenderItem
+              key={index}
+              periods={periods}
+              from={week.from}
+              options={options}
+            />
+          ))}
+        </div>
+        <div className="flex flex-col gap-y-1">
+          {weeks.map((week, index) => (
+            <p
+              key={index}
+              className="h-12 w-8 flex justify-center items-center"
+            >
+              {week.to.getDate()}
+            </p>
+          ))}
+        </div>
       </div>
     </div>
   );
+};
+
+const transformPeriodsToListOfWeeks = (periods: Period[]) => {
+  const start = periods[0].periodStart ?? "";
+  const end = periods[periods.length - 1].periodEnd ?? "";
+
+  return getWeeks(new Date(start), new Date(end));
 };
 
 export default Calender;

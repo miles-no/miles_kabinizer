@@ -1,4 +1,5 @@
 import { Period } from "../../../api";
+import { getOptions } from "../../utils";
 import Calender from "./components/calender";
 
 const MOCKED_PERIODS: Period[] = [
@@ -28,9 +29,11 @@ const Home = () => {
   //   PeriodService.getApiPeriod()
   // );
 
+  const options = getOptions(MOCKED_PERIODS);
+
   return (
     <div>
-      <Calender periods={MOCKED_PERIODS} />
+      <Calender periods={MOCKED_PERIODS} options={options} />
     </div>
   );
 };
