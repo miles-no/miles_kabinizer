@@ -17,8 +17,8 @@ public class DrawService
     {
         var drawEntity = new DrawEntity
         {
-            Start = draw.DeadlineStart,
-            End = draw.DeadlineEnd,
+            DeadlineStart = draw.DeadlineStart,
+            DeadlineEnd = draw.DeadlineEnd,
             Title = draw.Title,
             Periods = _periodService.CreatePeriods(draw.DrawPeriods)
         };

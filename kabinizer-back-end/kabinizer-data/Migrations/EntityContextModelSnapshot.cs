@@ -28,14 +28,14 @@ namespace kabinizer_data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("End")
+                    b.Property<DateTime>("DeadlineEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeadlineStart")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsSpecial")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -43,7 +43,7 @@ namespace kabinizer_data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Draws");
+                    b.ToTable("Draw");
                 });
 
             modelBuilder.Entity("kabinizer_data.Entities.BookingRequestEntity", b =>
@@ -83,8 +83,14 @@ namespace kabinizer_data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("DeadlineDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("DrawId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsSpecialPeriod")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("PeriodEnd")
                         .HasColumnType("datetime2");

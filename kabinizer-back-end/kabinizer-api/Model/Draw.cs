@@ -6,6 +6,6 @@ public record Draw(Guid Id, DateTime Start, DateTime End, string Title, bool IsS
 {
     public static Draw FromObject(DrawEntity o)
     {
-        return new Draw(o.Id, o.Start, o.End, o.Title, o.IsSpecial);
+        return new Draw(o.Id, o.DeadlineStart, o.DeadlineEnd, o.Title, o.IsSpecial);
     }
 }
