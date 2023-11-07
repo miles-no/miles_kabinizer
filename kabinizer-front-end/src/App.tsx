@@ -3,11 +3,13 @@ import "./App.css";
 import Admin from "./pages/admin";
 import Home from "./pages/home";
 import { OpenAPI } from "../api";
+import SelectPeriodsView from "./pages/selectPeriods";
 
 OpenAPI.BASE = "https://app-kabinizer-dev.azurewebsites.net";
 
 function App() {
   const showHome = window.location.pathname === "/";
+  const showSelectPeriods = window.location.pathname === "/select-periods";
   const showAdmin = window.location.pathname === "/admin";
 
   const queryClient = new QueryClient();
@@ -52,6 +54,7 @@ function App() {
         </div>
         <div className="flex-1 py-20">
           {showHome && <Home />}
+          {showSelectPeriods && <SelectPeriodsView />}
           {showAdmin && <Admin />}
         </div>
       </div>

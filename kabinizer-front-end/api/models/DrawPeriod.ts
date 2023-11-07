@@ -3,9 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type BookingRequest = {
-    id?: string;
-    userId?: string;
-    periodId?: string;
+export type DrawPeriod = {
+    start?: string;
+    end?: string;
+    title?: string | null;
 };
 
