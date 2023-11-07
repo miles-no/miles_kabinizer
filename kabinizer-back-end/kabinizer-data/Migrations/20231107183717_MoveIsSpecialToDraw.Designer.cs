@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using kabinizer_data;
 
@@ -11,9 +12,11 @@ using kabinizer_data;
 namespace kabinizer_data.Migrations
 {
     [DbContext(typeof(EntityContext))]
-    partial class EntityContextModelSnapshot : ModelSnapshot
+    [Migration("20231107183717_MoveIsSpecialToDraw")]
+    partial class MoveIsSpecialToDraw
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,8 +61,11 @@ namespace kabinizer_data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("PeriodId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<DateTime>("FromDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ToDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uniqueidentifier");
@@ -71,8 +77,6 @@ namespace kabinizer_data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PeriodId");
 
                     b.ToTable("BookingRequest");
                 });
@@ -89,9 +93,6 @@ namespace kabinizer_data.Migrations
                     b.Property<DateTime>("PeriodEnd")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("PeriodEntityId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("PeriodStart")
                         .HasColumnType("datetime2");
 
@@ -103,20 +104,7 @@ namespace kabinizer_data.Migrations
 
                     b.HasIndex("DrawId");
 
-                    b.HasIndex("PeriodEntityId");
-
                     b.ToTable("Period");
-                });
-
-            modelBuilder.Entity("kabinizer_data.Entities.BookingRequestEntity", b =>
-                {
-                    b.HasOne("kabinizer_data.Entities.PeriodEntity", "Period")
-                        .WithMany()
-                        .HasForeignKey("PeriodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Period");
                 });
 
             modelBuilder.Entity("kabinizer_data.Entities.PeriodEntity", b =>
@@ -127,19 +115,10 @@ namespace kabinizer_data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("kabinizer_data.Entities.PeriodEntity", null)
-                        .WithMany("Periods")
-                        .HasForeignKey("PeriodEntityId");
-
                     b.Navigation("Draw");
                 });
 
             modelBuilder.Entity("kabinizer_data.DrawEntity", b =>
-                {
-                    b.Navigation("Periods");
-                });
-
-            modelBuilder.Entity("kabinizer_data.Entities.PeriodEntity", b =>
                 {
                     b.Navigation("Periods");
                 });
