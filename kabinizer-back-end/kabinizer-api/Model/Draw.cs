@@ -1,7 +1,6 @@
-﻿using kabinizer_api.Model;
-using kabinizer_data;
+﻿using kabinizer_data.Entities;
 
-namespace kabinizer_api;
+namespace kabinizer_api.Model;
 
 public record Draw(Guid Id, DateTime Start, DateTime End, string Title, List<Period>? Periods, bool IsSpecial = false)
 {

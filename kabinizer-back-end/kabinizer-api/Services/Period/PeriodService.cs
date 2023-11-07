@@ -1,6 +1,7 @@
-﻿using kabinizer_data.Entities;
+﻿using kabinizer_api.Dtos.Draw;
+using kabinizer_data.Entities;
 
-namespace kabinizer_api;
+namespace kabinizer_api.Services.Period;
 
 public class PeriodService
 {

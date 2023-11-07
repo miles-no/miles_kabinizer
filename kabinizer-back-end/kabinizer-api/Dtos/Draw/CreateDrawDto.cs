@@ -1,4 +1,4 @@
-﻿namespace kabinizer_api;
+﻿namespace kabinizer_api.Dtos.Draw;
 
 public class CreateDrawDto
 {
