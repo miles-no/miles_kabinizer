@@ -2,9 +2,8 @@
 
 public class CreateDrawDto
 {
-    public DateTime DrawStart { get; set; }
-    public DateTime DrawEnd { get; set; }
+    public DateTime DeadlineStart { get; set; }
+    public DateTime DeadlineEnd { get; set; }
     public required string Title { get; set; }
-    public DateTime PeriodStart { get; set; }
-    public DateTime PeriodEnd { get; set; }
+    public required List<DrawPeriod> DrawPeriods { get; set; }
 }
