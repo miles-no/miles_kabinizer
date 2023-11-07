@@ -1,5 +1,6 @@
 ﻿using kabinizer_data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace kabinizer_api;
@@ -19,7 +20,7 @@ public class DrawController
     [HttpGet]
     public IEnumerable<Draw> GetDraws()
     {
-        return _entityContext.Draws.Select(Draw.FromObject);
+        return _entityContext.Draws.Include(d => d.Periods).Select(Draw.FromObject);
     }
 
     [HttpPost]
