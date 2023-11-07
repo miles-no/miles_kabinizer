@@ -19,13 +19,13 @@ const Calender = ({
           {weeks.map((week, index) => (
             <p
               key={index}
-              className="h-12 w-8 flex justify-center items-center"
+              className="flex h-12 w-8 items-center justify-center"
             >
               {week.from.getDate()}
             </p>
           ))}
         </div>
-        <div className="h-12 gap-y-1 flex flex-wrap w-[21rem]">
+        <div className="flex h-12 w-[21rem] flex-wrap gap-y-1">
           {weeks.map((week, index) => (
             <CalenderItem
               key={index}
@@ -39,7 +39,7 @@ const Calender = ({
           {weeks.map((week, index) => (
             <p
               key={index}
-              className="h-12 w-8 flex justify-center items-center"
+              className="flex h-12 w-8 items-center justify-center"
             >
               {week.to.getDate()}
             </p>
@@ -51,8 +51,8 @@ const Calender = ({
 };
 
 const transformPeriodsToListOfWeeks = (periods: Period[]) => {
-  const start = periods[0].periodStart ?? "";
-  const end = periods[periods.length - 1].periodEnd ?? "";
+  const start = periods[0]?.periodStart ?? "";
+  const end = periods[periods.length - 1]?.periodEnd ?? "";
 
   return getWeeks(new Date(start), new Date(end));
 };

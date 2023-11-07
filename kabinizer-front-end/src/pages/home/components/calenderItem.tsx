@@ -31,8 +31,8 @@ const CalenderItem = ({ periods, from, options }: CalenderItemProps) => {
             isDateInBetweenDates(
               new Date(from.getTime() + index * 24 * 60 * 60 * 1000),
               o.from,
-              o.to
-            )
+              o.to,
+            ),
           )}
         />
       ))}
@@ -86,7 +86,7 @@ const Square = ({
     () => BookingRequestService.getApiBookingRequest(),
     {
       refetchOnWindowFocus: false,
-    }
+    },
   );
 
   // const { mutate } = useMutation(() =>
@@ -103,7 +103,7 @@ const Square = ({
     return isDateInBetweenDates(
       date,
       new Date(br.fromDate ?? ""),
-      new Date(br.toDate ?? "")
+      new Date(br.toDate ?? ""),
     );
   });
 
@@ -129,7 +129,7 @@ const Square = ({
       {...buttonProps}
       {...pressProps}
       {...hoverProps}
-      className={`w-12 h-12 border-y-2 ${color} ${firstDay && "border-l-2"} ${
+      className={`h-12 w-12 border-y-2 ${color} ${firstDay && "border-l-2"} ${
         lastDay && "border-r-2"
       } ${isHover && "bg-gray-200"} ${isActive && "bg-gray-800"}`}
     />
