@@ -9,6 +9,11 @@ public class PeriodEntity
     public DateTime PeriodStart { get; set; }
     public DateTime PeriodEnd { get; set; }
     public required string Title { get; set; }
+    public DateTime DeadlineDate { get; set; }
+    public bool IsSpecialPeriod { get; set; }
+
     public required Guid DrawId { get; set; }
     public DrawEntity? Draw { get; set; }
+
+    public List<PeriodEntity>? Periods { get; set; }
 }

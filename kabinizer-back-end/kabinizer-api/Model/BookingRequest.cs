@@ -2,10 +2,10 @@
 
 namespace kabinizer_api.Model;
 
-public record BookingRequest(Guid Id, Guid UserId, DateOnly FromDate, DateOnly ToDate)
+public record BookingRequest(Guid Id, Guid UserId, Guid PeriodId)
 {
     public static BookingRequest FromEntity(BookingRequestEntity e)
     {
-        return new BookingRequest(e.Id, e.UserId, DateOnly.FromDateTime(e.FromDate), DateOnly.FromDateTime(e.ToDate));
+        return new BookingRequest(e.Id, e.UserId, e.PeriodId);
     }
 };

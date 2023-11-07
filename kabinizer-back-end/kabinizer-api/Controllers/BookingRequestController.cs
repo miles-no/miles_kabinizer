@@ -41,7 +41,7 @@ public class BookingRequestController : ControllerBase
     {
         // TODO: Use authenticated user
         IEnumerable<BookingRequestEntity> bookingRequestEntities =
-            r.Select(e => new BookingRequestEntity(e.UserId, e.FromDate, e.ToDate));
+            r.Select(e => new BookingRequestEntity(e.UserId, e.PeriodId));
 
         _entityContext.BookingRequests.AddRange(bookingRequestEntities);
         _entityContext.SaveChanges();
