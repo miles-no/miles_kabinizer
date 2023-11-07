@@ -17,10 +17,10 @@ public class DrawService
     {
         var drawEntity = new DrawEntity
         {
-            Start = draw.DrawStart,
-            End = draw.DrawEnd,
+            Start = draw.DeadlineStart,
+            End = draw.DeadlineEnd,
             Title = draw.Title,
-            Periods = _periodService.CreatePeriods(draw.PeriodStart, draw.PeriodEnd)
+            Periods = _periodService.CreatePeriods(draw.DrawPeriods)
         };
         _entityContext.Draws.Add(drawEntity);
         _entityContext.SaveChanges();
