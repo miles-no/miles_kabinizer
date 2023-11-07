@@ -8,17 +8,17 @@ namespace kabinizer_api.Controllers;
 [ApiController]
 public class PeriodController : ControllerBase
 {
-    private readonly EntityContext _entityContext;
+    private readonly EntityContext entityContext;
 
     public PeriodController(EntityContext entityContext)
     {
-        _entityContext = entityContext;
+        this.entityContext = entityContext;
     }
 
     [HttpGet]
     public IEnumerable<Period> GetPeriods()
     {
         // TODO: Remove periods in the past?
-        return _entityContext.Periods.Select(Period.FromObject);
+        return entityContext.Periods.Select(Period.FromObject);
     }
 }

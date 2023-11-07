@@ -1,16 +1,19 @@
-﻿using kabinizer_data;
+﻿using kabinizer_api.Dtos.Draw;
+using kabinizer_api.Services.Period;
+using kabinizer_data;
+using kabinizer_data.Entities;
 
-namespace kabinizer_api;
+namespace kabinizer_api.Services.Draw;
 
 public class DrawService
 {
-    private readonly EntityContext _entityContext;
-    private readonly PeriodService _periodService;
+    private readonly EntityContext entityContext;
+    private readonly PeriodService periodService;
 
     public DrawService(EntityContext entityContext, PeriodService periodService)
     {
-        _entityContext = entityContext;
-        _periodService = periodService;
+        this.entityContext = entityContext;
+        this.periodService = periodService;
     }
 
     public void CreateDraw(CreateDrawDto draw)
@@ -20,9 +23,9 @@ public class DrawService
             DeadlineStart = draw.DeadlineStart,
             DeadlineEnd = draw.DeadlineEnd,
             Title = draw.Title,
-            Periods = _periodService.CreatePeriods(draw.DrawPeriods)
+            Periods = periodService.CreatePeriods(draw.DrawPeriods)
         };
-        _entityContext.Draws.Add(drawEntity);
-        _entityContext.SaveChanges();
+        entityContext.Draws.Add(drawEntity);
+        entityContext.SaveChanges();
     }
 }

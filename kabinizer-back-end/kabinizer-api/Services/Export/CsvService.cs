@@ -4,7 +4,7 @@ using kabinizer_api.Model;
 using System.Globalization;
 using System.Text;
 
-namespace kabinizer_api.Export;
+namespace kabinizer_api.Services.Export;
 
 public static class CsvService
 {

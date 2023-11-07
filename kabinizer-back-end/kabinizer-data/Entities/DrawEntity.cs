@@ -1,7 +1,6 @@
-﻿using kabinizer_data.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace kabinizer_data;
+namespace kabinizer_data.Entities;
 
 [Table("Draw")]
 public class DrawEntity
