@@ -1,7 +1,5 @@
-﻿using kabinizer_api.Dtos.Draw;
-using kabinizer_api.Services.Period;
+using kabinizer_api.Dtos.Draw;
 using kabinizer_data;
-using kabinizer_data.Entities;
 
 namespace kabinizer_api.Services.Draw;
 
@@ -18,12 +16,14 @@ public class DrawService
 
     public void CreateDraw(CreateDrawDto draw)
     {
+        Guid drawId = Guid.NewGuid();
         var drawEntity = new DrawEntity
         {
+            Id = drawId,
             DeadlineStart = draw.DeadlineStart,
             DeadlineEnd = draw.DeadlineEnd,
             Title = draw.Title,
-            Periods = periodService.CreatePeriods(draw.DrawPeriods)
+            Periods = periodService.CreatePeriods(drawId, draw.IsSpecial, draw.DrawPeriods)
         };
         entityContext.Draws.Add(drawEntity);
         entityContext.SaveChanges();
