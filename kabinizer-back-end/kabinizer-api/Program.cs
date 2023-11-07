@@ -1,10 +1,15 @@
+using kabinizer_api;
 using kabinizer_data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<DrawService>();
+builder.Services.AddScoped<PeriodService>();
+
 // Add services to the container.
 builder.Services.AddControllers();
+
 
 builder.Services.AddDbContext<EntityContext>(o =>
     o.UseSqlServer(builder.Configuration.GetConnectionString("KabinizerConnection")));
