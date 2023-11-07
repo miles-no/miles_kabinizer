@@ -1,7 +1,6 @@
 using CsvHelper;
 using CsvHelper.Configuration;
 using kabinizer_api.Model;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using System.Globalization;
 using System.Text;
 
@@ -31,7 +30,7 @@ public static class CsvService
         return bookingRequests
             .GroupBy(
                 req => req.UserId,
-                req => ConvertDateToWeekNumber(req.FromDate),
+                req => "Week x", // TODO: ConvertDateToWeekNumber("Week x"),
                 (name, weeks) => new CsvRecord(name.ToString(), string.Join(", ", weeks)));
     }
 
