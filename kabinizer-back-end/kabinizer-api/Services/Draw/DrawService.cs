@@ -1,5 +1,6 @@
 using kabinizer_api.Dtos.Draw;
 using kabinizer_data;
+using kabinizer_data.Entities;
 
 namespace kabinizer_api.Services.Draw;
 
@@ -23,7 +24,8 @@ public class DrawService
             DeadlineStart = draw.DeadlineStart,
             DeadlineEnd = draw.DeadlineEnd,
             Title = draw.Title,
-            Periods = periodService.CreatePeriods(drawId, draw.IsSpecial, draw.DrawPeriods)
+            Periods = periodService.CreatePeriods(drawId, draw.IsSpecial, draw.DrawPeriods),
+            IsSpecial = draw.IsSpecial
         };
         entityContext.Draws.Add(drawEntity);
         entityContext.SaveChanges();
