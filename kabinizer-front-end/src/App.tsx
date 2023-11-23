@@ -52,7 +52,7 @@ function App() {
             </div>
           </div>
         </div>
-        <div className="flex-1 py-20">
+        <div className="flex-1 pb-10 pt-20">
           {showHome && <Home />}
           {showSelectPeriods && <SelectPeriodsView />}
           {showAdmin && <Admin />}

@@ -11,3 +11,11 @@ export type Option = {
   title?: string | null;
   halfDay?: boolean;
 };
+
+export type ColorType = {
+  background: string;
+  primary: string;
+  selected: string;
+  special: string;
+  specialSelected: string;
+};
