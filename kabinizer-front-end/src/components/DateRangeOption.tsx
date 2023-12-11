@@ -1,5 +1,5 @@
 import { ColorType } from "../types";
-import { numberOfDays } from "../utils";
+import { NumberOfDays } from "../utils";
 
 const DateRangeOption = ({
   colors,
@@ -16,7 +16,7 @@ const DateRangeOption = ({
   selected: boolean;
   onClick: () => void;
 }) => {
-  const days = numberOfDays(from, to) + 1;
+  const days = NumberOfDays(from, to) + 1;
 
   let backgroundColor = isSpecial ? colors.special : colors.primary;
 

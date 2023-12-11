@@ -2,7 +2,7 @@ const WeekNumber = ({ value }: { value: number }) => {
   return (
     <p
       style={{ fontFamily: "poppins", fontSize: "16px" }}
-      className="flex items-center justify-center"
+      className="flex w-3 items-center justify-center"
     >
       {value}
     </p>

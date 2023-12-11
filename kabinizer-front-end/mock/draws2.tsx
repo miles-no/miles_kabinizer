@@ -70,7 +70,7 @@ export const draws: Draw[] = [
     id: "2",
     start: "2024-01-29",
     end: "2024-01-21",
-    title: "",
+    title: "Easter",
     periods: [
       {
         id: "21",

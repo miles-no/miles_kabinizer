@@ -1,14 +1,19 @@
-import { useQuery } from "react-query";
-import { BookingRequest, Period } from "../../../api/index.ts";
+import { useMutation, useQuery } from "react-query";
+import { BookingRequest, BookingRequestService } from "../../../api/index.ts";
 import { draws } from "../../../mock/draws2.tsx";
 
 import WeekDayRow from "../../components/WeekDayRow";
 import Calendar from "./Calendar";
 import { useState } from "react";
 import Button from "../../components/Button.tsx";
+import Deadline from "./Deadline.tsx";
+import Title from "../../components/Title.tsx";
+import useUser from "../../hooks/useUser.tsx";
 
 const SelectPeriodsView = () => {
+  const { tenantId } = useUser();
   const [selected, setSelected] = useState<BookingRequest[]>([]);
+
   const { data = [] } = useQuery(
     ["getApiDraw"],
     () =>
@@ -16,59 +21,58 @@ const SelectPeriodsView = () => {
       draws,
   );
 
-  const compareDates = (a: Period, b: Period) => {
-    const dateA = new Date(a.periodStart ?? "").getTime();
-    const dateB = new Date(b.periodStart ?? "").getTime();
-    return dateA > dateB ? 1 : -1;
+  const { mutate } = useMutation(() =>
+    BookingRequestService.postApiBookingRequest(selected),
+  );
+
+  const handleSelectAll = () => {
+    const allPeriods = data.map((d) => d.periods ?? []).flat();
+    if (selected.length === allPeriods.length) {
+      setSelected([]);
+    } else {
+      setSelected(
+        allPeriods.map((p) => ({ periodId: p.id, userId: tenantId })),
+      );
+    }
   };
 
-  const periods = data
-    .map((value) => value.periods ?? [])
-    .flat()
-    .sort((a, b) => {
-      return compareDates(a, b);
-    });
-
   return (
-    <div className="flex flex-col gap-4">
-      <Title />
-      <div className="flex w-full justify-between">
-        <Label />
-        <div className="w-32">
-          <Button size="medium">Marker alle</Button>
+    <div className="flex flex-col items-center">
+      <div className="flex w-96 flex-col items-center gap-4">
+        <Title>Mine ønsker</Title>
+        <div className="w-full pb-10">
+          <Deadline draws={data} />
+        </div>
+        <div className="flex w-full justify-between">
+          <Label />
+          <div className="w-32">
+            <Button size="medium" onClick={handleSelectAll}>
+              Marker alle
+            </Button>
+          </div>
+        </div>
+        <div className="flex flex-col gap-1">
+          <WeekDayRow />
+          <Calendar
+            draws={data}
+            selected={selected}
+            setSelected={(selected) => setSelected(selected)}
+          />
+        </div>
+        <div className="flex w-full items-center justify-center px-20 pt-6">
+          <Button size="large" onClick={mutate}>
+            Lagre
+          </Button>
         </div>
       </div>
-      <div>
-        <WeekDayRow />
-        <Calendar
-          periods={periods}
-          draws={data}
-          selected={selected}
-          setSelected={(selected) => setSelected(selected)}
-        />
-      </div>
-      <div className="flex w-full items-center justify-center px-20 pt-6">
-        <Button size="large">Lagre</Button>
-      </div>
     </div>
-  );
-};
-
-const Title = () => {
-  return (
-    <p
-      style={{ fontFamily: "poppins", fontWeight: 600 }}
-      className="text-2xl text-[#354A71]"
-    >
-      Mine ønsker
-    </p>
   );
 };
 
 const Label = () => {
   return (
     <div className="flex items-center gap-1">
-      <p style={{ fontFamily: "poppins" }}>Ønsker</p>
+      <p className="font-poppins">Ønsker</p>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"

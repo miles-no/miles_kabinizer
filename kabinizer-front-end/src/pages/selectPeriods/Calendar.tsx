@@ -2,89 +2,24 @@ import { BookingRequest, Draw, Period } from "../../../api";
 import DateRangeOption from "../../components/DateRangeOption";
 import MonthColumn from "../../components/MonthVertical";
 import WeekNumber from "../../components/WeekNumber";
-import { ColorType } from "../../types";
-
-type Option = {
-  id?: string;
-  start: number;
-  end: number;
-  month: number;
-  week: number;
-  label: string;
-  from: Date;
-  to: Date;
-  isSpecial: boolean;
-};
-
-type WeekMapType = Record<string, Option[]>;
-
-type MonthMapType = Record<number, WeekMapType>;
-
-const MONTHS: Record<number, string> = {
-  0: "Januar",
-  1: "Februar",
-  2: "Mars",
-  3: "April",
-  4: "Mai",
-  5: "Juni",
-  6: "Juli",
-  7: "August",
-  8: "September",
-  9: "Oktober",
-  10: "November",
-  11: "Desember",
-};
-
-const COLORS: Record<number, ColorType> = {
-  0: {
-    background: "#DDD4E9",
-    primary: "#AB98C5",
-    selected: "#5C447D",
-    special: "#FE757D",
-    specialSelected: "#ff303d",
-  },
-  1: {
-    background: "#B8C5DC",
-    primary: "#8497B8",
-    selected: "#354A71",
-    special: "#FE757D",
-    specialSelected: "#ff303d",
-  },
-};
-
-const getWeeksNum = (date: Date) => {
-  // Copy date so don't modify original
-  date = new Date(+date);
-  // Set hours to 0 to take the time part out of the comparison
-  date.setHours(0, 0, 0, 0);
-  // Thursday in current week decides the year.
-  date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7));
-  // January 4 is always in week 1.
-  const week1 = new Date(date.getFullYear(), 0, 4);
-  // Adjust to Thursday in week 1 and count number of weeks from date to week1.
-  return (
-    1 +
-    Math.round(
-      ((date.getTime() - week1.getTime()) / 86400000 -
-        3 +
-        ((week1.getDay() + 6) % 7)) /
-        7,
-    )
-  );
-};
+import useUser from "../../hooks/useUser";
+import { MonthMapType, Option, WeekMapType } from "../../types";
+import { CompareDates, GetWeeksNum } from "../../utils";
+import { COLORS, MONTHS } from "../options";
+import Hump from "./Hump";
 
 const getWeeklyPeriods = (periods: Period[], draws: Draw[]) => {
   return periods.reduce<Option[]>((acc, cur) => {
     const startDate = new Date(cur.periodStart ?? "");
     const endDate = new Date(cur.periodEnd ?? "");
     // Check if we are we within the same week
-    if (getWeeksNum(startDate) === getWeeksNum(endDate)) {
+    if (GetWeeksNum(startDate) === GetWeeksNum(endDate)) {
       const weekDates = `${startDate.getDate()}-${endDate.getDate()}`;
       acc.push({
         id: cur.id,
         start: startDate.getDay() - 1, // 0 is monday
         end: (endDate.getDay() + 6) % 7, // 6 is sunday
-        week: getWeeksNum(startDate),
+        week: GetWeeksNum(startDate),
         month: startDate.getMonth(),
         label: cur.title ? `${cur.title} (${weekDates})` : weekDates,
         from: startDate,
@@ -99,7 +34,7 @@ const getWeeklyPeriods = (periods: Period[], draws: Draw[]) => {
           id: cur.id,
           start: startDate.getDay() - 1,
           end: 6,
-          week: getWeeksNum(startDate),
+          week: GetWeeksNum(startDate),
           month: startDate.getMonth(),
           label: cur.title ?? "",
           from: startDate,
@@ -111,7 +46,7 @@ const getWeeklyPeriods = (periods: Period[], draws: Draw[]) => {
           id: cur.id,
           start: 0,
           end: (endDate.getDay() + 6) % 7,
-          week: getWeeksNum(endDate),
+          week: GetWeeksNum(endDate),
           month: startDate.getMonth(),
           label: cur.title ?? "",
           from: startDate,
@@ -127,18 +62,25 @@ const getWeeklyPeriods = (periods: Period[], draws: Draw[]) => {
 };
 
 const Calendar = ({
-  periods,
   draws,
   selected,
   setSelected,
 }: {
-  periods: Period[];
   draws: Draw[];
   selected: BookingRequest[];
   setSelected: (selected: BookingRequest[]) => void;
 }) => {
+  const { tenantId } = useUser();
+  const periods = draws
+    .map((value) => value.periods ?? [])
+    .flat()
+    .sort((a, b) => {
+      return CompareDates(a, b);
+    });
+
   const onClick = (periodId: string) => {
     const checked = selected.find((s) => s.periodId === periodId);
+
     if (checked) {
       setSelected(selected.filter((s) => s.periodId !== periodId));
     } else {
@@ -148,7 +90,7 @@ const Calendar = ({
           ...selected,
           {
             periodId: periodId,
-            userId: "1",
+            userId: tenantId,
           },
         ]);
       }
@@ -225,38 +167,6 @@ const Calendar = ({
           </div>
         </div>
       ))}
-    </div>
-  );
-};
-
-const Hump = ({
-  month,
-  monthMap,
-  color,
-}: {
-  month: number;
-  monthMap: MonthMapType;
-  color: string;
-}) => {
-  if (monthMap[month - 1] === undefined) return null;
-
-  const currentMonth = monthMap[month]
-    ? Object.entries(monthMap[month])[0]
-    : undefined;
-
-  if (currentMonth === undefined) return null;
-
-  const daysCur = currentMonth[1][0].from.getDate();
-
-  return (
-    <div className="absolute -top-14 right-0 z-0 flex h-14 w-full pl-[34px]">
-      <div style={{ minWidth: `${34.5 * daysCur}px` }} />
-      <div
-        style={{
-          backgroundColor: color,
-        }}
-        className="w-full rounded-tl-lg border-l-4 border-t-4 border-white pr-[8px]"
-      />
     </div>
   );
 };
