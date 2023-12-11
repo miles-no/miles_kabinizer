@@ -12,10 +12,18 @@ import { useState } from "react";
 import Button from "../../components/Button.tsx";
 import Deadline from "./Deadline.tsx";
 import Title from "../../components/Title.tsx";
-import useUser from "../../hooks/useUser.tsx";
+
+const getDeletebookings = (
+  bookings: BookingRequest[] | undefined = [],
+  selected: BookingRequest[],
+) => {
+  return bookings.filter(
+    (b) =>
+      !selected.map((s) => s.bookingRequestId).includes(b.bookingRequestId),
+  );
+};
 
 const SelectPeriodsView = () => {
-  const { tenantId } = useUser();
   const [selected, setSelected] = useState<BookingRequest[]>([]);
 
   const { data = [] } = useQuery(
@@ -31,8 +39,8 @@ const SelectPeriodsView = () => {
       onSuccess: (data) => {
         setSelected(
           data.map((d) => ({
+            id: d.bookingRequestId,
             periodId: d.periodId,
-            userId: d.userId,
           })),
         );
       },
@@ -43,12 +51,15 @@ const SelectPeriodsView = () => {
   );
 
   const { mutateAsync: deleteBookings } = useMutation(
-    () =>
-      BookingRequestService.deleteApiBookingRequest(
-        bookings?.filter(
-          (b) => !selected.map((s) => s.periodId).includes(b.periodId),
-        ),
-      ),
+    () => {
+      const deletedBookings = getDeletebookings(bookings, selected);
+      console.log("Deleted Booking Requests:");
+      console.table(deletedBookings);
+
+      return BookingRequestService.deleteApiBookingRequest(
+        deletedBookings.map((d) => d.bookingRequestId ?? "") ?? [],
+      );
+    },
     {
       onError: (error) => {
         console.error(error);
@@ -60,6 +71,8 @@ const SelectPeriodsView = () => {
     () => BookingRequestService.postApiBookingRequest(selected),
     {
       onSuccess: () => {
+        console.log("Lagret");
+        console.table(selected);
         refetch();
       },
       onError: (error) => {
@@ -78,9 +91,7 @@ const SelectPeriodsView = () => {
     if (selected.length === allPeriods.length) {
       setSelected([]);
     } else {
-      setSelected(
-        allPeriods.map((p) => ({ periodId: p.id, userId: tenantId })),
-      );
+      setSelected(allPeriods.map((p) => ({ periodId: p.id })));
     }
   };
 

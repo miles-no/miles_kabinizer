@@ -4,7 +4,6 @@
 /* eslint-disable */
 
 export type CreateBookingRequestDto = {
-    userId?: string;
     periodId?: string;
 };
 

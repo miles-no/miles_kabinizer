@@ -21,7 +21,7 @@ async function getToken() {
   if (currentAccount) {
     const accessTokenResponse =
       await msalInstance.acquireTokenSilent(accessTokenRequest);
-    return `Bearer ${accessTokenResponse.accessToken}`;
+    return accessTokenResponse.accessToken;
   }
   return "undefined";
 }

@@ -4,7 +4,7 @@
 /* eslint-disable */
 
 export type BookingRequest = {
-    id?: string;
+    bookingRequestId?: string;
     userId?: string;
     periodId?: string;
 };
