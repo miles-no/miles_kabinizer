@@ -11,7 +11,6 @@ namespace kabinizer_api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
 public class DrawController
 {
     private readonly EntityContext entityContext;

@@ -12,7 +12,6 @@ namespace kabinizer_api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
 public class BookingRequestController : ControllerBase
 {
     private readonly EntityContext entityContext;
