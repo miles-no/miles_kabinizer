@@ -1,5 +1,6 @@
 ﻿using kabinizer_api.Dtos.BookingRequest;
 using kabinizer_api.Model;
+using kabinizer_api.Services;
 using kabinizer_api.Services.Export;
 using kabinizer_data;
 using kabinizer_data.Entities;
@@ -13,38 +14,29 @@ namespace kabinizer_api.Controllers;
 public class BookingRequestController : ControllerBase
 {
     private readonly EntityContext entityContext;
+    private readonly ITokenService tokenService;
 
-    public BookingRequestController(EntityContext entityContext)
+    public BookingRequestController(EntityContext entityContext, ITokenService tokenService)
     {
         this.entityContext = entityContext;
+        this.tokenService = tokenService;
     }
 
     [HttpGet]
     public IEnumerable<BookingRequest> GetBookingRequests()
     {
+        var currentUserId = tokenService.GetUserId();
         return entityContext.BookingRequests
-            .Select(BookingRequest.FromEntity);
+            .Where(b => b.UserId == currentUserId)
+            .AsEnumerable().Select(BookingRequest.FromModel);
     }
-
-    [HttpGet]
-    [Route("user")]
-    public IEnumerable<BookingRequest> GetBookingRequestsForUser()
-    {
-        // TODO: use authed user
-        return entityContext.BookingRequests
-            .Where(e => e.UserId == new Guid("EADD8F73-8B7A-4188-BFF8-8C80E6CB98FA"))
-            .ToList()
-            .Select(BookingRequest.FromEntity);
-    }
-
 
     [HttpPost]
     public void AddBookingRequests([Required] IEnumerable<CreateBookingRequestDto> r)
     {
-        // TODO: use authed user
+        var currentUserId = tokenService.GetUserId();
         IEnumerable<BookingRequestEntity> bookingRequestEntities =
-            r.Select(e => new BookingRequestEntity(new Guid("EADD8F73-8B7A-4188-BFF8-8C80E6CB98FA"), e.PeriodId));
-        //r.Select(e => new BookingRequestEntity(e.UserId, e.PeriodId));
+            r.Select(e => new BookingRequestEntity(currentUserId, e.PeriodId));
 
         entityContext.BookingRequests.AddRange(bookingRequestEntities);
         entityContext.SaveChanges();
@@ -53,7 +45,15 @@ public class BookingRequestController : ControllerBase
     [HttpDelete]
     public bool DeleteBookingRequest([Required] Guid bookingRequestId)
     {
+        var currentUserId = tokenService.GetUserId();
+
         BookingRequestEntity entityToRemove = entityContext.BookingRequests.Single(br => br.Id == bookingRequestId);
+
+        if (entityToRemove.UserId != currentUserId)
+        {
+            throw new Exception("You cannot remove a booking request for another user");
+        }
+
         entityContext.BookingRequests.Remove(entityToRemove);
         entityContext.SaveChanges();
         return true;

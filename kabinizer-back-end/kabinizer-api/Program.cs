@@ -1,7 +1,9 @@
 using kabinizer_api.Services;
 using kabinizer_api.Services.Draw;
 using kabinizer_data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,11 +11,16 @@ builder.Services.AddScoped<DrawService>();
 builder.Services.AddScoped<PeriodService>();
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("EntraID"));
 
 
 builder.Services.AddDbContext<EntityContext>(o =>
     o.UseSqlServer(builder.Configuration.GetConnectionString("KabinizerConnection")));
+
+builder.Services.AddScoped<ITokenService, TokenService>();
+
+builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -26,9 +33,10 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers().RequireAuthorization();
 
 // Migrate db
 using (var scope = app.Services.CreateScope())
