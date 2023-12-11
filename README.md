@@ -15,10 +15,12 @@ A suitable IDE: Visual Studio (with the ASP.NET and web development workload) or
 - SQL Server Management Studio (or similar)
 
 ### HOWTO
-Run ef core migrations with:
-```
-update database
-```
-on default project: kabinizer-data
-
-This will add the tables and columns necessary for running the solution
+Add user secrets:
+{
+  "EntraID": {
+    "Instance": "https://login.microsoftonline.com/",
+    "TenantId": "<tenant id>",
+    "ClientId": "<client id>",
+    "Audience": "<audience>"
+  }
+}
