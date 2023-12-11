@@ -2,7 +2,7 @@
 
 namespace kabinizer_api.Model;
 
-public record BookingRequest(Guid Id, Guid UserId, Guid PeriodId)
+public record BookingRequest(Guid BookingRequestId, Guid UserId, Guid PeriodId)
 {
     public static BookingRequest FromModel(BookingRequestEntity e)
     {
