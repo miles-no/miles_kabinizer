@@ -22,15 +22,17 @@ public class BookingRequestController : ControllerBase
     [HttpGet]
     public IEnumerable<BookingRequest> GetBookingRequests()
     {
-        return entityContext.BookingRequests.Select(BookingRequest.FromEntity);
+        return entityContext.BookingRequests
+            .Select(BookingRequest.FromEntity);
     }
 
     [HttpGet]
-    [Route("user/{userId}")]
-    public IEnumerable<BookingRequest> GetBookingRequestsByUserId(Guid userId)
+    [Route("user")]
+    public IEnumerable<BookingRequest> GetBookingRequestsForUser()
     {
+        // TODO: use authed user
         return entityContext.BookingRequests
-            .Where(e => e.UserId == userId)
+            .Where(e => e.UserId == new Guid("EADD8F73-8B7A-4188-BFF8-8C80E6CB98FA"))
             .ToList()
             .Select(BookingRequest.FromEntity);
     }
@@ -39,9 +41,10 @@ public class BookingRequestController : ControllerBase
     [HttpPost]
     public void AddBookingRequests([Required] IEnumerable<CreateBookingRequestDto> r)
     {
-        // TODO: Use authenticated user
+        // TODO: use authed user
         IEnumerable<BookingRequestEntity> bookingRequestEntities =
-            r.Select(e => new BookingRequestEntity(e.UserId, e.PeriodId));
+            r.Select(e => new BookingRequestEntity(new Guid("EADD8F73-8B7A-4188-BFF8-8C80E6CB98FA"), e.PeriodId));
+        //r.Select(e => new BookingRequestEntity(e.UserId, e.PeriodId));
 
         entityContext.BookingRequests.AddRange(bookingRequestEntities);
         entityContext.SaveChanges();
