@@ -3,11 +3,14 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type Period = {
+import type { Period } from './Period';
+
+export type Draw = {
     id?: string;
-    periodStart?: string;
-    periodEnd?: string;
+    start?: string;
+    end?: string;
     title?: string | null;
-    drawId?: string;
+    periods?: Array<Period> | null;
+    isSpecial?: boolean;
 };
 

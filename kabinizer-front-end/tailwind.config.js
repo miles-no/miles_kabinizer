@@ -4,7 +4,14 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        pacifico: ["Pacifico", "cursive"],
+        poppins: ["poppins", "sans-serif"],
+      },
+      fontWeight: {
+        bold: 600,
+        text: 400,
+      },
+      colors: {
+        title: "#354A71",
       },
     },
   },

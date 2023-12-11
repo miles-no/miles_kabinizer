@@ -3,11 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type Period = {
-    id?: string;
-    periodStart?: string;
-    periodEnd?: string;
+export type DrawPeriod = {
+    start?: string;
+    end?: string;
     title?: string | null;
-    drawId?: string;
 };
 

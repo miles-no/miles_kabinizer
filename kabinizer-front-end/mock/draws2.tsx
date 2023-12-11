@@ -1,0 +1,122 @@
+import { Draw } from "../api";
+
+export const draws: Draw[] = [
+  {
+    id: "1",
+    start: "2024-01-01",
+    end: "2024-01-14",
+    title: "",
+    periods: [
+      {
+        id: "11",
+        periodStart: "2024-01-01",
+        periodEnd: "2024-01-07",
+        title: "",
+        drawId: "1",
+      },
+      {
+        id: "12",
+        periodStart: "2024-01-08",
+        periodEnd: "2024-01-14",
+        title: "",
+        drawId: "1",
+      },
+      {
+        id: "13",
+        periodStart: "2024-01-15",
+        periodEnd: "2024-01-21",
+        title: "",
+        drawId: "1",
+      },
+      {
+        id: "14",
+        periodStart: "2024-01-22",
+        periodEnd: "2024-01-28",
+        title: "",
+        drawId: "1",
+      },
+      {
+        id: "15",
+        periodStart: "2024-01-29",
+        periodEnd: "2024-02-04",
+        title: "",
+        drawId: "1",
+      },
+      {
+        id: "16",
+        periodStart: "2024-02-05",
+        periodEnd: "2024-02-11",
+        title: "",
+        drawId: "1",
+      },
+      {
+        id: "17",
+        periodStart: "2024-02-12",
+        periodEnd: "2024-02-18",
+        title: "",
+        drawId: "1",
+      },
+      {
+        id: "18",
+        periodStart: "2024-02-19",
+        periodEnd: "2024-02-25",
+        title: "",
+        drawId: "1",
+      },
+    ],
+    isSpecial: false,
+  },
+  {
+    id: "2",
+    start: "2024-01-29",
+    end: "2024-01-21",
+    title: "Easter",
+    periods: [
+      {
+        id: "21",
+        periodStart: "2024-02-26",
+        periodEnd: "2024-02-29",
+        title: "Part 1",
+        drawId: "2",
+      },
+      {
+        id: "22",
+        periodStart: "2024-03-1",
+        periodEnd: "2024-03-03",
+        title: "Part 2",
+        drawId: "2",
+      },
+    ],
+    isSpecial: true,
+  },
+  {
+    id: "3",
+    start: "2024-01-22",
+    end: "2024-02-04",
+    title: "",
+    periods: [
+      {
+        id: "31",
+        periodStart: "2024-03-04",
+        periodEnd: "2024-03-10",
+        title: "",
+        drawId: "3",
+      },
+      {
+        id: "32",
+        periodStart: "2024-03-11",
+        periodEnd: "2024-03-17",
+        title: "",
+        drawId: "3",
+      },
+      {
+        id: "33",
+        periodStart: "2024-03-18",
+        periodEnd: "2024-03-24",
+        title: "",
+        drawId: "3",
+      },
+    ],
+    isSpecial: false,
+  },
+];
