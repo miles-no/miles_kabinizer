@@ -1,6 +1,10 @@
 import { useMutation, useQuery } from "react-query";
-import { BookingRequest, BookingRequestService } from "../../../api/index.ts";
-import { draws } from "../../../mock/draws2.tsx";
+import {
+  BookingRequest,
+  BookingRequestService,
+  DrawService,
+} from "../../../api/index.ts";
+// import { draws } from "../../../mock/draws2.tsx";
 
 import WeekDayRow from "../../components/WeekDayRow";
 import Calendar from "./Calendar";
@@ -16,14 +20,58 @@ const SelectPeriodsView = () => {
 
   const { data = [] } = useQuery(
     ["getApiDraw"],
-    () =>
-      // DrawService.getApiDraw(),
-      draws,
+    () => DrawService.getApiDraw(),
+    // draws,
   );
 
-  const { mutate } = useMutation(() =>
-    BookingRequestService.postApiBookingRequest(selected),
+  const { data: bookings, refetch } = useQuery(
+    ["getApiBookingRequest"],
+    () => BookingRequestService.getApiBookingRequest(),
+    {
+      onSuccess: (data) => {
+        setSelected(
+          data.map((d) => ({
+            periodId: d.periodId,
+            userId: d.userId,
+          })),
+        );
+      },
+      onError: (error) => {
+        console.error(error);
+      },
+    },
   );
+
+  const { mutateAsync: deleteBookings } = useMutation(
+    () =>
+      BookingRequestService.deleteApiBookingRequest(
+        bookings?.filter(
+          (b) => !selected.map((s) => s.periodId).includes(b.periodId),
+        ),
+      ),
+    {
+      onError: (error) => {
+        console.error(error);
+      },
+    },
+  );
+
+  const { mutate: addBookings } = useMutation(
+    () => BookingRequestService.postApiBookingRequest(selected),
+    {
+      onSuccess: () => {
+        refetch();
+      },
+      onError: (error) => {
+        console.error(error);
+      },
+    },
+  );
+
+  const handleUpdate = async () => {
+    await deleteBookings();
+    await addBookings();
+  };
 
   const handleSelectAll = () => {
     const allPeriods = data.map((d) => d.periods ?? []).flat();
@@ -60,7 +108,7 @@ const SelectPeriodsView = () => {
           />
         </div>
         <div className="flex w-full items-center justify-center px-20 pt-6">
-          <Button size="large" onClick={mutate}>
+          <Button size="large" onClick={handleUpdate}>
             Lagre
           </Button>
         </div>
