@@ -6,6 +6,7 @@ namespace kabinizer_api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class PeriodController : ControllerBase
 {
     private readonly EntityContext entityContext;

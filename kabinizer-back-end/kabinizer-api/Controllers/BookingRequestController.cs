@@ -4,6 +4,7 @@ using kabinizer_api.Services;
 using kabinizer_api.Services.Export;
 using kabinizer_data;
 using kabinizer_data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,6 +12,7 @@ namespace kabinizer_api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class BookingRequestController : ControllerBase
 {
     private readonly EntityContext entityContext;
@@ -32,29 +34,33 @@ public class BookingRequestController : ControllerBase
     }
 
     [HttpPost]
-    public void AddBookingRequests([Required] IEnumerable<CreateBookingRequestDto> r)
+    public void AddBookingRequests([Required] IEnumerable<CreateBookingRequestDto> requests)
     {
         var currentUserId = tokenService.GetUserId();
         IEnumerable<BookingRequestEntity> bookingRequestEntities =
-            r.Select(e => new BookingRequestEntity(currentUserId, e.PeriodId));
+            requests.Select(e => new BookingRequestEntity(currentUserId, e.PeriodId));
 
         entityContext.BookingRequests.AddRange(bookingRequestEntities);
         entityContext.SaveChanges();
     }
 
     [HttpDelete]
-    public bool DeleteBookingRequest([Required] Guid bookingRequestId)
+    public bool DeleteBookingRequests([Required] IEnumerable<Guid> requests)
     {
         var currentUserId = tokenService.GetUserId();
 
-        BookingRequestEntity entityToRemove = entityContext.BookingRequests.Single(br => br.Id == bookingRequestId);
-
-        if (entityToRemove.UserId != currentUserId)
+        foreach (Guid requestId in requests)
         {
-            throw new Exception("You cannot remove a booking request for another user");
+            BookingRequestEntity entityToRemove = entityContext.BookingRequests.Single(br => br.Id == requestId);
+
+            if (entityToRemove.UserId != currentUserId)
+            {
+                throw new Exception("You cannot remove a booking request for another user");
+            }
+
+            entityContext.BookingRequests.Remove(entityToRemove);
         }
 
-        entityContext.BookingRequests.Remove(entityToRemove);
         entityContext.SaveChanges();
         return true;
     }
