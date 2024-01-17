@@ -3,8 +3,20 @@ import Button from "../../components/Button";
 import { BookingRequestService } from "../../../api";
 
 const Admin = () => {
-  const { mutate } = useMutation(() =>
-    BookingRequestService.getApiBookingRequestExport(),
+  const { mutate } = useMutation(
+    () => BookingRequestService.getApiBookingRequestExport(),
+    {
+      onSuccess(data) {
+        console.log(data);
+        const blob = new Blob([data], { type: "text/csv" });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "export.csv");
+        document.body.appendChild(link);
+        link.click();
+      },
+    },
   );
 
   return (
