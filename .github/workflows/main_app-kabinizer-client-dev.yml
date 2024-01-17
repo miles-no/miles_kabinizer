@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: node-app
-          path: .
+          path: ./kabinizer-front-end/dist
 
   deploy:
     runs-on: ubuntu-latest
