@@ -28,7 +28,7 @@ jobs:
         run: |
           cd kabinizer-front-end
           bun install
-          bun run build --if-present
+          bun run build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
