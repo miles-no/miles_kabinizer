@@ -63,7 +63,6 @@ export class BookingRequestService {
     return __request(OpenAPI, {
       method: "GET",
       url: "/api/BookingRequest/export",
-      mediaType: "blob",
     });
   }
 }

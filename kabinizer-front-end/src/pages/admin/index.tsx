@@ -11,7 +11,6 @@ const Admin = () => {
     () => BookingRequestService.getApiBookingRequestExport(),
     {
       onSuccess(data) {
-        console.log(data);
         const blob = new Blob([data], { type: "text/csv" });
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement("a");

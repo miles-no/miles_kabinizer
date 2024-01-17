@@ -4,7 +4,7 @@ import {
   BookingRequestService,
   DrawService,
 } from "../../../api/index.ts";
-// import { draws } from "../../../mock/draws2.tsx";
+// import { draws } from "../../../mock/draws.tsx";
 
 import WeekDayRow from "../../components/WeekDayRow";
 import Calendar from "./Calendar";
@@ -29,12 +29,13 @@ const SelectPeriodsView = () => {
   const { data = [] } = useQuery(
     ["getApiDraw"],
     () => DrawService.getApiDraw(),
-    // draws,
+    // () => draws,
   );
 
   const { data: bookings, refetch } = useQuery(
     ["getApiBookingRequest"],
     () => BookingRequestService.getApiBookingRequest(),
+    // () => BookingRequestService.getApiBookingRequest(),
     {
       onSuccess: (data) => {
         setSelected(
@@ -53,8 +54,6 @@ const SelectPeriodsView = () => {
   const { mutateAsync: deleteBookings } = useMutation(
     () => {
       const deletedBookings = getDeletebookings(bookings, selected);
-      console.log("Deleted Booking Requests:");
-      console.table(deletedBookings);
 
       return BookingRequestService.deleteApiBookingRequest(
         deletedBookings.map((d) => d.bookingRequestId ?? "") ?? [],
@@ -71,8 +70,6 @@ const SelectPeriodsView = () => {
     () => BookingRequestService.postApiBookingRequest(selected),
     {
       onSuccess: () => {
-        console.log("Lagret");
-        console.table(selected);
         refetch();
       },
       onError: (error) => {
