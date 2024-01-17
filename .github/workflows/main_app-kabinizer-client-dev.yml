@@ -15,8 +15,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      --uses: oven-sh/setup-bun@v1
-
+      - uses: oven-sh/setup-bun@v1
 
       - name: Set up Node.js version
         uses: actions/setup-node@v1
