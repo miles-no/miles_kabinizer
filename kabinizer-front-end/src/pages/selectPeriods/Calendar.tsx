@@ -21,7 +21,7 @@ const getWeeklyPeriods = (periods: Period[], draws: Draw[]) => {
     if (GetWeeksNum(startDate) === GetWeeksNum(endDate)) {
       const weekDates = `${startDate.getDate()}-${endDate.getDate()}`;
       acc.push({
-        id: cur.drawId,
+        id: cur.id,
         start: startDate.getDay() - 1, // 0 is monday
         end: (endDate.getDay() + 6) % 7, // 6 is sunday
         week: GetWeeksNum(startDate),
@@ -36,7 +36,7 @@ const getWeeklyPeriods = (periods: Period[], draws: Draw[]) => {
       // We have a period that breaks a week
       acc.push(
         {
-          id: "a" + cur.drawId,
+          id: cur.id,
           start: startDate.getDay() - 1,
           end: 6,
           week: GetWeeksNum(startDate),
@@ -48,7 +48,7 @@ const getWeeklyPeriods = (periods: Period[], draws: Draw[]) => {
             draws.find((draw) => draw.id === cur.drawId)?.isSpecial ?? false,
         },
         {
-          id: "b" + cur.drawId,
+          id: cur.id,
           start: 0,
           end: (endDate.getDay() + 6) % 7,
           week: GetWeeksNum(endDate),
