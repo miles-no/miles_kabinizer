@@ -4,6 +4,7 @@ using kabinizer_data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,13 +24,51 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.OAuth2,
+        Flows = new OpenApiOAuthFlows
+        {
+            AuthorizationCode = new OpenApiOAuthFlow
+            {
+                AuthorizationUrl = new Uri($"https://login.microsoftonline.com/{builder.Configuration.GetValue<string>("EntraId:TenantId")}/oauth2/v2.0/authorize"),
+                TokenUrl = new Uri($"https://login.microsoftonline.com/{builder.Configuration.GetValue<string>("EntraId:TenantId")}/oauth2/v2.0/token"),
+                Scopes = new Dictionary<string, string>
+                {
+                    { $"{builder.Configuration.GetValue<string>("EntraId:Audience")}/.default", "Access Swagger" }
+                }
+            }
+        },
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "oauth2"
+                }
+            },
+            new List<string>()
+        }
+    });
+});
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(options =>
+{
+    options.OAuthClientId(builder.Configuration.GetValue<string>("EntraId:WebClientId"));
+    options.OAuthScopes($"{builder.Configuration.GetValue<string>("EntraId:Audience")}/.default");
+    options.OAuthUsePkce();
+});
 
 app.UseHttpsRedirection();
 
