@@ -9,11 +9,6 @@ const Home = () => {
               Select periods
             </button>
           </a>
-          <a href="admin" className="ml-4 inline-block">
-            <button className="rounded bg-gray-300 px-4 py-2 font-bold text-gray-800 hover:bg-gray-400">
-              Admin
-            </button>
-          </a>
         </div>
       </div>
     </div>

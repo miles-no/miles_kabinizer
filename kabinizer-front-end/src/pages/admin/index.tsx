@@ -1,8 +1,12 @@
 import { useMutation } from "react-query";
 import Button from "../../components/Button";
 import { BookingRequestService } from "../../../api";
+import useUser from "../../hooks/useUser";
+import { useEffect } from "react";
 
 const Admin = () => {
+  const { isAdmin } = useUser();
+
   const { mutate } = useMutation(
     () => BookingRequestService.getApiBookingRequestExport(),
     {
@@ -18,6 +22,12 @@ const Admin = () => {
       },
     },
   );
+
+  useEffect(() => {
+    if (!isAdmin) {
+      window.location.href = "/";
+    }
+  }, [isAdmin]);
 
   return (
     <div className="flex h-full w-full justify-center">

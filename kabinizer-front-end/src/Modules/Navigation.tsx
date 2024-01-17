@@ -1,18 +1,9 @@
-import { useMsal } from "@azure/msal-react";
 import { useRef, useState, useEffect } from "react";
-
-const admins = [
-  "fredrik.wigsnes@miles.no",
-  "kjetil.husebo@miles.no",
-  "siri.pedersen@miles.no",
-  "kamilla.nyborg@miles.no",
-];
+import useUser from "../hooks/useUser";
 
 function Navigation() {
   const ref = useRef<HTMLDivElement>(null);
-  const { instance, accounts } = useMsal();
-  const name = accounts[0]?.name ?? "";
-  const username = accounts[0]?.username ?? "";
+  const { name, isAdmin, instance } = useUser();
   const [openNav, setOpenNav] = useState(false);
 
   const handleLogOut = () => {
@@ -55,7 +46,7 @@ function Navigation() {
       {openNav && (
         <div className="flex justify-end">
           <div className="h-fit w-48 bg-gray-300 px-2 py-4" ref={ref}>
-            <UserProfile name={name} />
+            <UserProfile name={name ?? ""} />
             <nav className="flex flex-col gap-2">
               <Button variant="blue" href="/">
                 Home
@@ -63,7 +54,7 @@ function Navigation() {
               <Button variant="blue" href="select-periods">
                 Select periods
               </Button>
-              {admins.includes(username) && (
+              {isAdmin && (
                 <Button variant="red" href="admin">
                   Admin
                 </Button>
