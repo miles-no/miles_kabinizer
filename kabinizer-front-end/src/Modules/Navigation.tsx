@@ -3,12 +3,8 @@ import useUser from "../hooks/useUser";
 
 function Navigation() {
   const ref = useRef<HTMLDivElement>(null);
-  const { name, isAdmin, instance } = useUser();
+  const { name, isAdmin, logOut } = useUser();
   const [openNav, setOpenNav] = useState(false);
-
-  const handleLogOut = () => {
-    instance.logoutRedirect();
-  };
 
   const handleOutsideClick = (event: MouseEvent) => {
     if (ref.current && !ref.current.contains(event.target as Node)) {
@@ -59,7 +55,7 @@ function Navigation() {
                   Admin
                 </Button>
               )}
-              <Button variant="red" onClick={() => handleLogOut()}>
+              <Button variant="red" onClick={() => logOut()}>
                 Logout
               </Button>
             </nav>
@@ -81,9 +77,12 @@ type Props = {
   onClick?: () => void;
 };
 
-const Button = ({ children, variant, href }: Props) => {
-  const color = variant === "blue" ? "bg-[#354A71]" : "bg-red-500";
-  const classes = `flex w-full justify-center ${color} px-4 py-2 font-poppins text-lg text-white  hover:bg-blue-700 disabled:pointer-events-none`;
+const Button = ({ children, variant, href, onClick = () => null }: Props) => {
+  const color =
+    variant === "blue"
+      ? "bg-[#354A71] hover:bg-blue-700"
+      : "bg-red-500 hover:bg-red-700";
+  const classes = `flex w-full justify-center ${color} px-4 py-2 font-poppins text-lg text-white hover:text-white disabled:pointer-events-none`;
 
   if (href !== undefined) {
     return (
@@ -92,7 +91,11 @@ const Button = ({ children, variant, href }: Props) => {
       </a>
     );
   }
-  return <button className={classes}>{children}</button>;
+  return (
+    <button className={classes} onClick={() => onClick()}>
+      {children}
+    </button>
+  );
 };
 
 export default Navigation;

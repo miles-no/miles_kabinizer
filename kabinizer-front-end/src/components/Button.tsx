@@ -9,12 +9,16 @@ const Button = ({
   children: ReactNode;
   size: "small" | "medium" | "large";
 }) => {
+  const sizes = {
+    small: "text-s h-6",
+    medium: "text-m h-8",
+    large: "text-lg h-10",
+  };
+
   return (
     <button
       onClick={onClick}
-      className={`flex w-full items-center justify-center rounded-full bg-[#354A71] px-4 font-poppins text-white hover:bg-blue-700 ${
-        size === "small" ? "text-s" : size === "medium" ? "text-m" : "text-lg"
-      } ${size === "small" ? "h-6" : size === "medium" ? "h-8" : "h-10"}`}
+      className={`${sizes[size]} flex w-full items-center justify-center rounded-full bg-[#354A71] px-4 font-poppins text-white hover:bg-blue-700`}
     >
       {children}
     </button>

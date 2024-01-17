@@ -6,7 +6,11 @@ const useUser = () => {
 
   const isAdmin = admins.includes(accounts[0]?.username ?? "");
 
-  return { ...accounts[0], isAdmin, instance } ?? { tenantId: "" };
+  const logOut = () => {
+    instance.logoutRedirect();
+  };
+
+  return { ...accounts[0], isAdmin, logOut } ?? { tenantId: "" };
 };
 
 export default useUser;
