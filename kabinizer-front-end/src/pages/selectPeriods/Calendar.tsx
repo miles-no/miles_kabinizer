@@ -4,8 +4,13 @@ import MonthColumn from "../../components/MonthVertical";
 import WeekNumber from "../../components/WeekNumber";
 import useUser from "../../hooks/useUser";
 import { MonthMapType, Option, WeekMapType } from "../../types";
-import { CompareDates, GetWeeksNum } from "../../utils";
-import { COLORS, MONTHS } from "../options";
+import {
+  CompareDates,
+  GetNextSunday,
+  GetPreviousMonday,
+  GetWeeksNum,
+} from "../../utils";
+import { COLORS, MONTHS } from "../../options";
 import Hump from "./Hump";
 
 const getWeeklyPeriods = (periods: Period[], draws: Draw[]) => {
@@ -38,7 +43,7 @@ const getWeeklyPeriods = (periods: Period[], draws: Draw[]) => {
           month: startDate.getMonth(),
           label: cur.title ?? "",
           from: startDate,
-          to: endDate,
+          to: GetNextSunday(startDate),
           isSpecial:
             draws.find((draw) => draw.id === cur.drawId)?.isSpecial ?? false,
         },
@@ -49,7 +54,7 @@ const getWeeklyPeriods = (periods: Period[], draws: Draw[]) => {
           week: GetWeeksNum(endDate),
           month: startDate.getMonth(),
           label: cur.title ?? "",
-          from: startDate,
+          from: GetPreviousMonday(endDate),
           to: endDate,
           isSpecial:
             draws.find((draw) => draw.id === cur.drawId)?.isSpecial ?? false,
@@ -131,7 +136,7 @@ const Calendar = ({
         <div key={month} className="flex items-center gap-x-4">
           <MonthColumn
             month={MONTHS[Number(month)]}
-            color={COLORS[Number(month) % 2].selected}
+            color={COLORS[Number(month) % COLORS.length].selected}
           />
           <div
             className="relative flex w-72 flex-col rounded-lg rounded-tr-none p-2"

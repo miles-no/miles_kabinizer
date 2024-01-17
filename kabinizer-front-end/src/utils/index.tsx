@@ -32,3 +32,21 @@ export const GetWeeksNum = (date: Date) => {
     )
   );
 };
+
+export const GetNextSunday = (date: Date) => {
+  const day = date.getDay();
+  const nextSunday = new Date(date);
+  nextSunday.setDate(date.getDate() + (7 - day));
+  return nextSunday;
+};
+
+export const GetPreviousMonday = (date: Date) => {
+  const day = date.getDay();
+  const previousMonday = new Date(date);
+  previousMonday.setDate(date.getDate() - day + 1);
+  return previousMonday;
+};
+
+export const FormatDate = (date: Date) => {
+  return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+};

@@ -33,18 +33,10 @@ function Navigation() {
     };
   }, []);
 
-  // Extract initials from name string
-  const initials = name
-    .split(" ")
-    .map((word) => word.charAt(0))
-    .join("");
-
   return (
     <div className="fixed inset-x-0 top-0 z-20 h-16 w-full">
       <div className="relavive flex h-full w-full items-end justify-between bg-[#EBEBEB] px-4 py-1 shadow-md">
-        <h1 className="font-poppins text-xl font-bold text-[#B72318]">
-          Kabinizer
-        </h1>
+        <Title />
         <div>
           <button onClick={() => setOpenNav((o) => !o)}>
             <svg
@@ -63,37 +55,22 @@ function Navigation() {
       {openNav && (
         <div className="flex justify-end">
           <div className="h-fit w-48 bg-gray-300 px-2 py-4" ref={ref}>
-            <div className="mb-4 flex items-center gap-2">
-              <div className="rounded-full bg-red-200 p-2">{initials}</div>{" "}
-              <span>{name}</span>
-            </div>
+            <UserProfile name={name} />
             <nav className="flex flex-col gap-2">
-              <a
-                className="flex w-full  justify-center bg-[#354A71] px-4 py-2 font-poppins text-lg text-white  hover:bg-blue-700 disabled:pointer-events-none"
-                href="/"
-              >
+              <Button variant="blue" href="/">
                 Home
-              </a>
-              <a
-                className="flex w-full justify-center bg-[#354A71] px-4 py-2 font-poppins text-lg text-white  hover:bg-blue-700 disabled:pointer-events-none"
-                href="select-periods"
-              >
+              </Button>
+              <Button variant="blue" href="select-periods">
                 Select periods
-              </a>
+              </Button>
               {admins.includes(username) && (
-                <a
-                  className="flex w-full  justify-center  bg-red-500 px-4 py-2 font-poppins text-lg text-white"
-                  href="/admin"
-                >
+                <Button variant="red" href="admin">
                   Admin
-                </a>
+                </Button>
               )}
-              <button
-                onClick={() => handleLogOut()}
-                className="flex w-full  justify-center  bg-red-500 px-4 py-2 font-poppins text-lg text-white"
-              >
+              <Button variant="red" onClick={() => handleLogOut()}>
                 Logout
-              </button>
+              </Button>
             </nav>
           </div>
         </div>
@@ -102,4 +79,43 @@ function Navigation() {
   );
 }
 
+const Title = () => (
+  <h1 className="font-poppins text-xl font-bold text-[#B72318]">Kabinizer</h1>
+);
+
+type Props = {
+  variant?: "blue" | "red";
+  children: React.ReactNode;
+  href?: string;
+  onClick?: () => void;
+};
+
+const Button = ({ children, variant, href }: Props) => {
+  const color = variant === "blue" ? "bg-[#354A71]" : "bg-red-500";
+  const classes = `flex w-full justify-center ${color} px-4 py-2 font-poppins text-lg text-white  hover:bg-blue-700 disabled:pointer-events-none`;
+
+  if (href !== undefined) {
+    return (
+      <a className={classes} href={href}>
+        {children}
+      </a>
+    );
+  }
+  return <button className={classes}>{children}</button>;
+};
+
 export default Navigation;
+
+const UserProfile = ({ name }: { name: string }) => {
+  const initials = name
+    .split(" ")
+    .map((word) => word.charAt(0))
+    .join("");
+
+  return (
+    <div className="mb-4 flex items-center gap-2">
+      <div className="rounded-full bg-red-200 p-2">{initials}</div>{" "}
+      <span>{name}</span>
+    </div>
+  );
+};

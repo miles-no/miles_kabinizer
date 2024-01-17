@@ -1,4 +1,5 @@
 import { Draw } from "../../../api";
+import { FormatDate } from "../../utils";
 
 type DeadlineProps = {
   draws: Draw[];
@@ -17,7 +18,7 @@ const Deadline = ({ draws }: DeadlineProps) => {
               {draw.title}
             </p>
             <p className="font-poppins text-2xl font-bold text-[#354A71]">
-              {draw.end}
+              {draw.end ? FormatDate(new Date(draw.end)) : "–"}
             </p>
           </div>
         ))}
