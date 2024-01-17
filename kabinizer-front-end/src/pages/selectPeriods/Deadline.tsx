@@ -13,7 +13,7 @@ const Deadline = ({ draws }: DeadlineProps) => {
       </div>
       <div className="flex flex-col gap-1">
         {draws.map((draw) => (
-          <div className="flex justify-between align-middle">
+          <div key={draw.id} className="flex justify-between align-middle">
             <p className="text-l font-poppins font-bold text-[#020202]">
               {draw.title}
             </p>
