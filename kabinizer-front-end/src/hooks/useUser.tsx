@@ -1,9 +1,16 @@
 import { useMsal } from "@azure/msal-react";
+import { admins } from "../utils/admins";
 
 const useUser = () => {
-  const { accounts } = useMsal();
+  const { accounts, instance } = useMsal();
 
-  return accounts[0] ?? { tenantId: "" };
+  const isAdmin = admins.includes(accounts[0]?.username ?? "");
+
+  const logOut = () => {
+    instance.logoutRedirect();
+  };
+
+  return { ...accounts[0], isAdmin, logOut } ?? { tenantId: "" };
 };
 
 export default useUser;

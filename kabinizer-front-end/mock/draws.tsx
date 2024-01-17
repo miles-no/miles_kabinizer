@@ -1,66 +1,122 @@
-interface Period {
-  id: string;
-  periodStart: string;
-  periodEnd: string;
-  title: string;
-  drawId: string;
-}
+import { Draw } from "../api";
 
-interface Draw {
-  id: string;
-  start: string;
-  end: string;
-  title: string;
-  periods: Period[];
-  isSpecial: boolean;
-}
-
-function generateDraws(numDraws: number): Draw[] {
-  const draws: Draw[] = [];
-
-  for (let i = 0; i < numDraws; i++) {
-    const id = Math.random().toString(36).substring(7);
-    const start = new Date().toISOString();
-    const end = new Date().toISOString();
-    const title = Math.random() < 0.5 ? "" : "Holiday";
-    const isSpecial = Math.random() < 0.5;
-
-    const periods: Period[] = [];
-    let periodStart = start;
-    let periodEnd = new Date(
-      new Date(start).getTime() + 7 * 24 * 60 * 60 * 1000,
-    ).toISOString();
-
-    while (new Date(periodEnd) <= new Date(end)) {
-      const periodId = Math.random().toString(36).substring(7);
-      const periodTitle = `Period ${periods.length + 1}`;
-      periods.push({
-        id: periodId,
-        periodStart,
-        periodEnd,
-        title: periodTitle,
-        drawId: id,
-      });
-
-      periodStart = periodEnd;
-      periodEnd = new Date(
-        new Date(periodEnd).getTime() + 7 * 24 * 60 * 60 * 1000,
-      ).toISOString();
-    }
-
-    draws.push({
-      id,
-      start,
-      end,
-      title,
-      periods,
-      isSpecial,
-    });
-  }
-
-  return draws;
-}
-
-const draws = generateDraws(10);
-
-console.log(draws);
+export const draws: Draw[] = [
+  {
+    id: "1",
+    start: "2024-01-01",
+    end: "2024-01-14",
+    title: "",
+    periods: [
+      {
+        id: "11",
+        periodStart: "2024-01-01",
+        periodEnd: "2024-01-07",
+        title: "",
+        drawId: "1",
+      },
+      {
+        id: "12",
+        periodStart: "2024-01-08",
+        periodEnd: "2024-01-14",
+        title: "",
+        drawId: "1",
+      },
+      {
+        id: "13",
+        periodStart: "2024-01-15",
+        periodEnd: "2024-01-21",
+        title: "",
+        drawId: "1",
+      },
+      {
+        id: "14",
+        periodStart: "2024-01-22",
+        periodEnd: "2024-01-28",
+        title: "",
+        drawId: "1",
+      },
+      {
+        id: "15",
+        periodStart: "2024-01-29",
+        periodEnd: "2024-02-04",
+        title: "",
+        drawId: "1",
+      },
+      {
+        id: "16",
+        periodStart: "2024-02-05",
+        periodEnd: "2024-02-11",
+        title: "",
+        drawId: "1",
+      },
+      {
+        id: "17",
+        periodStart: "2024-02-12",
+        periodEnd: "2024-02-18",
+        title: "",
+        drawId: "1",
+      },
+      {
+        id: "18",
+        periodStart: "2024-02-19",
+        periodEnd: "2024-02-25",
+        title: "",
+        drawId: "1",
+      },
+    ],
+    isSpecial: false,
+  },
+  {
+    id: "2",
+    start: "2024-01-29",
+    end: "2024-01-21",
+    title: "Easter",
+    periods: [
+      {
+        id: "21",
+        periodStart: "2024-02-26",
+        periodEnd: "2024-02-29",
+        title: "Part 1",
+        drawId: "2",
+      },
+      {
+        id: "22",
+        periodStart: "2024-03-1",
+        periodEnd: "2024-03-03",
+        title: "Part 2",
+        drawId: "2",
+      },
+    ],
+    isSpecial: true,
+  },
+  {
+    id: "3",
+    start: "2024-01-22",
+    end: "2024-02-04",
+    title: "",
+    periods: [
+      {
+        id: "31",
+        periodStart: "2024-03-04",
+        periodEnd: "2024-03-10",
+        title: "",
+        drawId: "3",
+      },
+      {
+        id: "32",
+        periodStart: "2024-03-11",
+        periodEnd: "2024-03-17",
+        title: "",
+        drawId: "3",
+      },
+      {
+        id: "33",
+        periodStart: "2024-03-18",
+        periodEnd: "2024-03-24",
+        title: "",
+        drawId: "3",
+      },
+    ],
+    isSpecial: false,
+  },
+];

@@ -1,23 +1,10 @@
-import { useMsal } from "@azure/msal-react";
 import { useRef, useState, useEffect } from "react";
-
-const admins = [
-  "fredrik.wigsnes@miles.no",
-  "kjetil.husebo@miles.no",
-  "siri.pedersen@miles.no",
-  "kamilla.nyborg@miles.no",
-];
+import useUser from "../hooks/useUser";
 
 function Navigation() {
   const ref = useRef<HTMLDivElement>(null);
-  const { instance, accounts } = useMsal();
-  const name = accounts[0]?.name ?? "";
-  const username = accounts[0]?.username ?? "";
+  const { name, isAdmin, logOut } = useUser();
   const [openNav, setOpenNav] = useState(false);
-
-  const handleLogOut = () => {
-    instance.logoutRedirect();
-  };
 
   const handleOutsideClick = (event: MouseEvent) => {
     if (ref.current && !ref.current.contains(event.target as Node)) {
@@ -55,7 +42,7 @@ function Navigation() {
       {openNav && (
         <div className="flex justify-end">
           <div className="h-fit w-48 bg-gray-300 px-2 py-4" ref={ref}>
-            <UserProfile name={name} />
+            <UserProfile name={name ?? ""} />
             <nav className="flex flex-col gap-2">
               <Button variant="blue" href="/">
                 Home
@@ -63,12 +50,12 @@ function Navigation() {
               <Button variant="blue" href="select-periods">
                 Select periods
               </Button>
-              {admins.includes(username) && (
+              {isAdmin && (
                 <Button variant="red" href="admin">
                   Admin
                 </Button>
               )}
-              <Button variant="red" onClick={() => handleLogOut()}>
+              <Button variant="red" onClick={() => logOut()}>
                 Logout
               </Button>
             </nav>
@@ -90,9 +77,12 @@ type Props = {
   onClick?: () => void;
 };
 
-const Button = ({ children, variant, href }: Props) => {
-  const color = variant === "blue" ? "bg-[#354A71]" : "bg-red-500";
-  const classes = `flex w-full justify-center ${color} px-4 py-2 font-poppins text-lg text-white  hover:bg-blue-700 disabled:pointer-events-none`;
+const Button = ({ children, variant, href, onClick = () => null }: Props) => {
+  const color =
+    variant === "blue"
+      ? "bg-[#354A71] hover:bg-blue-700"
+      : "bg-red-500 hover:bg-red-700";
+  const classes = `flex w-full justify-center ${color} px-4 py-2 font-poppins text-lg text-white hover:text-white disabled:pointer-events-none`;
 
   if (href !== undefined) {
     return (
@@ -101,7 +91,11 @@ const Button = ({ children, variant, href }: Props) => {
       </a>
     );
   }
-  return <button className={classes}>{children}</button>;
+  return (
+    <button className={classes} onClick={() => onClick()}>
+      {children}
+    </button>
+  );
 };
 
 export default Navigation;

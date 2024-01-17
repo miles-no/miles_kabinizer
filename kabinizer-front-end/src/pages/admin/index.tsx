@@ -1,13 +1,16 @@
 import { useMutation } from "react-query";
 import Button from "../../components/Button";
 import { BookingRequestService } from "../../../api";
+import useUser from "../../hooks/useUser";
+import { useEffect } from "react";
 
 const Admin = () => {
+  const { isAdmin } = useUser();
+
   const { mutate } = useMutation(
     () => BookingRequestService.getApiBookingRequestExport(),
     {
       onSuccess(data) {
-        console.log(data);
         const blob = new Blob([data], { type: "text/csv" });
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement("a");
@@ -18,6 +21,12 @@ const Admin = () => {
       },
     },
   );
+
+  useEffect(() => {
+    if (!isAdmin) {
+      window.location.href = "/";
+    }
+  }, [isAdmin]);
 
   return (
     <div className="flex h-full w-full justify-center">
