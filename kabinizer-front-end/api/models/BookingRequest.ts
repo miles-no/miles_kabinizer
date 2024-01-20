@@ -3,8 +3,12 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { Period } from './Period';
+import type { User } from './User';
+
 export type BookingRequest = {
-  bookingRequestId?: string;
-  userId?: string;
-  periodId?: string;
+    bookingRequestId?: string;
+    period?: Period;
+    user?: User;
 };
+

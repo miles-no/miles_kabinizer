@@ -2,9 +2,9 @@ import { useMutation, useQuery } from "react-query";
 import {
   BookingRequest,
   BookingRequestService,
+  CreateBookingRequestDto,
   DrawService,
 } from "../../../api/index.ts";
-// import { draws } from "../../../mock/draws.tsx";
 
 import WeekDayRow from "../../components/WeekDayRow";
 import Calendar from "./Calendar";
@@ -13,35 +13,33 @@ import Button from "../../components/Button.tsx";
 import Deadline from "./Deadline.tsx";
 import Title from "../../components/Title.tsx";
 
-const getDeletebookings = (
+const getDeleteBookings = (
   bookings: BookingRequest[] | undefined = [],
-  selected: BookingRequest[],
+  selected: CreateBookingRequestDto[],
 ) => {
   return bookings.filter(
-    (b) =>
-      !selected.map((s) => s.bookingRequestId).includes(b.bookingRequestId),
+    (b) => !selected.map((s) => s.periodId).includes(b.period?.id),
   );
 };
 
 const SelectPeriodsView = () => {
-  const [selected, setSelected] = useState<BookingRequest[]>([]);
+  const [selected, setSelected] = useState<CreateBookingRequestDto[]>([]);
 
-  const { data = [] } = useQuery(
-    ["getApiDraw"],
-    () => DrawService.getApiDraw(),
-    // () => draws,
+  const { data = [], isLoading } = useQuery(["getApiDraw"], () =>
+    DrawService.getApiDraw(),
   );
 
   const { data: bookings, refetch } = useQuery(
     ["getApiBookingRequest"],
     () => BookingRequestService.getApiBookingRequest(),
-    // () => BookingRequestService.getApiBookingRequest(),
     {
       onSuccess: (data) => {
+        console.log(data);
         setSelected(
           data.map((d) => ({
-            id: d.bookingRequestId,
-            periodId: d.periodId,
+            periodId: d.period?.id ?? "",
+            userId: d.user?.id ?? "",
+            bookingRequestId: d.bookingRequestId ?? "",
           })),
         );
       },
@@ -53,11 +51,12 @@ const SelectPeriodsView = () => {
 
   const { mutateAsync: deleteBookings } = useMutation(
     () => {
-      const deletedBookings = getDeletebookings(bookings, selected);
-
-      return BookingRequestService.deleteApiBookingRequest(
-        deletedBookings.map((d) => d.bookingRequestId ?? "") ?? [],
+      const deletedBookings = getDeleteBookings(bookings, selected);
+      const deletedBookingIds = deletedBookings.map(
+        (d) => d.bookingRequestId as string,
       );
+
+      return BookingRequestService.deleteApiBookingRequest(deletedBookingIds);
     },
     {
       onError: (error) => {
@@ -84,13 +83,27 @@ const SelectPeriodsView = () => {
   };
 
   const handleSelectAll = () => {
-    const allPeriods = data.map((d) => d.periods ?? []).flat();
+    console.log("data", data);
+    const allPeriods = data.reduce<CreateBookingRequestDto[]>((acc, cur) => {
+      if (cur.periods) {
+        const bookingRequests = cur.periods.map((p) => ({
+          periodId: p.id ?? "",
+        }));
+
+        acc.push(...bookingRequests);
+      }
+      return acc;
+    }, []);
     if (selected.length === allPeriods.length) {
       setSelected([]);
     } else {
-      setSelected(allPeriods.map((p) => ({ periodId: p.id })));
+      setSelected(allPeriods);
     }
   };
+
+  if (isLoading) {
+    return <div className="flex justify-center align-middle">Loading...</div>;
+  }
 
   return (
     <div className="flex flex-col items-center">
