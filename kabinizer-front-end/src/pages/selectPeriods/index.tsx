@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "react-query";
 import {
   BookingRequest,
   BookingRequestService,
+  CreateBookingRequestDto,
   DrawService,
 } from "../../../api/index.ts";
 
@@ -11,21 +12,18 @@ import { useState } from "react";
 import Button from "../../components/Button.tsx";
 import Deadline from "./Deadline.tsx";
 import Title from "../../components/Title.tsx";
-import useUser from "../../hooks/useUser.tsx";
 
 const getDeleteBookings = (
   bookings: BookingRequest[] | undefined = [],
-  selected: BookingRequest[],
+  selected: CreateBookingRequestDto[],
 ) => {
   return bookings.filter(
-    (b) =>
-      !selected.map((s) => s.bookingRequestId).includes(b.bookingRequestId),
+    (b) => !selected.map((s) => s.periodId).includes(b.period?.id),
   );
 };
 
 const SelectPeriodsView = () => {
-  const { tenantId } = useUser();
-  const [selected, setSelected] = useState<BookingRequest[]>([]);
+  const [selected, setSelected] = useState<CreateBookingRequestDto[]>([]);
 
   const { data = [], isLoading } = useQuery(["getApiDraw"], () =>
     DrawService.getApiDraw(),
@@ -39,8 +37,8 @@ const SelectPeriodsView = () => {
         console.log(data);
         setSelected(
           data.map((d) => ({
-            periodId: d.periodId ?? "",
-            userId: d.userId ?? "",
+            periodId: d.period?.id ?? "",
+            userId: d.user?.id ?? "",
             bookingRequestId: d.bookingRequestId ?? "",
           })),
         );
@@ -86,14 +84,10 @@ const SelectPeriodsView = () => {
 
   const handleSelectAll = () => {
     console.log("data", data);
-    const allPeriods = data.reduce<BookingRequest[]>((acc, cur) => {
+    const allPeriods = data.reduce<CreateBookingRequestDto[]>((acc, cur) => {
       if (cur.periods) {
         const bookingRequests = cur.periods.map((p) => ({
           periodId: p.id ?? "",
-          bookingRequestId: bookings?.find(
-            (b) => b.periodId === p.id && b.userId === tenantId,
-          )?.bookingRequestId,
-          userId: tenantId,
         }));
 
         acc.push(...bookingRequests);

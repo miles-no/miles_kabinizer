@@ -3,12 +3,13 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { DrawPeriod } from "./DrawPeriod";
+import type { DrawPeriod } from './DrawPeriod';
 
 export type CreateDrawDto = {
-  deadlineStart?: string;
-  deadlineEnd?: string;
-  title?: string | null;
-  drawPeriods?: Array<DrawPeriod> | null;
-  isSpecial?: boolean;
+    deadlineStart?: string;
+    deadlineEnd?: string;
+    title?: string | null;
+    drawPeriods?: Array<DrawPeriod> | null;
+    isSpecial?: boolean;
 };
+

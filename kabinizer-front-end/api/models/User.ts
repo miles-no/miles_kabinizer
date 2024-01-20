@@ -3,11 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type Period = {
+export type User = {
     id?: string;
-    periodStart?: string;
-    periodEnd?: string;
-    title?: string | null;
-    drawId?: string;
+    name?: string | null;
 };
 

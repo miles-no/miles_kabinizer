@@ -4,7 +4,8 @@
 /* eslint-disable */
 
 export type DrawPeriod = {
-  start?: string;
-  end?: string;
-  title?: string | null;
+    start?: string;
+    end?: string;
+    title?: string | null;
 };
+

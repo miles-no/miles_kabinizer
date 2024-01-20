@@ -1,8 +1,7 @@
-import { BookingRequest, Draw, Period } from "../../../api";
+import { CreateBookingRequestDto, Draw, Period } from "../../../api";
 import DateRangeOption from "../../components/DateRangeOption";
 import MonthColumn from "../../components/MonthVertical";
 import WeekNumber from "../../components/WeekNumber";
-import useUser from "../../hooks/useUser";
 import { MonthMapType, Option, WeekMapType } from "../../types";
 import {
   CompareDates,
@@ -72,10 +71,9 @@ const Calendar = ({
   setSelected,
 }: {
   draws: Draw[];
-  selected: BookingRequest[];
-  setSelected: (selected: BookingRequest[]) => void;
+  selected: CreateBookingRequestDto[];
+  setSelected: (selected: CreateBookingRequestDto[]) => void;
 }) => {
-  const { tenantId } = useUser();
   const periods = draws
     .map((value) => value.periods ?? [])
     .flat()
@@ -94,9 +92,7 @@ const Calendar = ({
         setSelected([
           ...selected,
           {
-            periodId: periodId,
-            userId: tenantId,
-            bookingRequestId: period.drawId ?? "",
+            periodId: period.id ?? "",
           },
         ]);
       }
