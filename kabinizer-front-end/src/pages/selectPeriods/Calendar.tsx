@@ -96,6 +96,7 @@ const Calendar = ({
           {
             periodId: periodId,
             userId: tenantId,
+            bookingRequestId: period.drawId ?? "",
           },
         ]);
       }
