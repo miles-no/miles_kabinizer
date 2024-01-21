@@ -59,6 +59,7 @@ const Navbar = () => {
             id="user-dropdown"
           >
             <div className="block w-full md:w-auto" id="navbar-default">
+              <ThemeToggle />
               <a
                 href="/"
                 className="block rounded-t-lg px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-700 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -96,7 +97,7 @@ const Navbar = () => {
           </DropdownMenuContent>
         </DropdownMenu>
         <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-          <ul className="mt-4 flex flex-col items-center rounded-lg border border-gray-100 font-medium rtl:space-x-reverse md:mt-0 md:flex-row md:space-x-8 md:border-0">
+          <ul className="mt-4 flex flex-col items-center rounded-lg border border-gray-100 font-medium md:mt-0 md:flex-row md:space-x-8 md:border-0 rtl:space-x-reverse">
             <li>
               <a
                 href="/"
@@ -136,7 +137,7 @@ const UserMenu = () => {
   const { logOut, name, username, isAdmin } = useUser();
 
   return (
-    <div className="flex items-center space-x-3 rtl:space-x-reverse md:order-2 md:space-x-0">
+    <div className="flex items-center space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
       <DropdownMenu>
         <DropdownMenuTrigger
           type="button"
@@ -197,13 +198,13 @@ const ThemeToggle = () => {
   return (
     <div className="flex">
       <button
-        className="flex-1 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+        className="flex-1 text-nowrap px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
         onClick={() => setTheme("light")}
       >
         {theme === "light" && <span className="text-green-500">✓</span>} Light
       </button>
       <button
-        className="flex-1 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+        className="flex-1 text-nowrap px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
         onClick={() => setTheme("dark")}
       >
         {theme === "dark" && <span className="text-green-500">✓</span>} Dark

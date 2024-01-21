@@ -2,7 +2,7 @@ import Button from "../../components/Button";
 
 export default function Home() {
   return (
-    <div className="md:container md:mx-auto">
+    <div className="container">
       <Welcome />
       <Location />
       <Activeties />
@@ -16,7 +16,7 @@ const Welcome = () => {
     <section className="w-full py-6 lg:py-16">
       <div className="flex flex-col-reverse gap-4 px-4 md:px-6 lg:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-4 space-y-4">
-          <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+          <h1 className="text-3xl font-bold tracking-tighter md:text-5xl">
             Velkommen til Tjørhomfjellet
           </h1>
           <p className="max-w-[600px] text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -34,8 +34,11 @@ const Welcome = () => {
             </Button>
           </div>
         </div>
-        <div className="w-full lg:flex-1">
-          <img src="/hytta1.jpeg" />
+        <div className="relative w-full overflow-hidden pt-[56.25%] lg:flex-1">
+          <img
+            src="/hytta1.jpeg"
+            className="absolute left-[50%] top-[50%] w-full translate-x-[-50%] translate-y-[-50%] transform"
+          />
         </div>
       </div>
     </section>
@@ -64,7 +67,7 @@ const Location = () => {
           <div className="flex flex-col justify-center space-y-4">
             <div className="w-full overflow-hidden rounded-lg">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d3440.86712535045!2d6.839459895956754!3d58.91163451629089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e0!4m5!1s0x463a3549dd29f795%3A0xad7aeb21b80a9259!2sStavanger!3m2!1d58.9699756!2d5.7331074!4m3!3m2!1d58.912833299999996!2d6.8445833!5e0!3m2!1sen!2sno!4v1705840641650!5m2!1sen!2sno"
+                src="https://www.google.com/maps/embed?key=AIzaSyBcRhwrTLSJVMRnW_8uGadUfTrmYJov6rM&pb=!1m26!1m12!1m3!1d3440.86712535045!2d6.839459895956754!3d58.91163451629089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e0!4m5!1s0x463a3549dd29f795%3A0xad7aeb21b80a9259!2sStavanger!3m2!1d58.9699756!2d5.7331074!4m3!3m2!1d58.912833299999996!2d6.8445833!5e0!3m2!1sen!2sno!4v1705840641650!5m2!1sen!2sno"
                 className="w-full"
                 height="450"
                 style={{ border: 0 }}
