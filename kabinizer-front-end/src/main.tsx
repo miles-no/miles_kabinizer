@@ -8,7 +8,7 @@ import {
   EventType,
   PublicClientApplication,
 } from "@azure/msal-browser";
-import Providers from "./providers.tsx";
+import Providers from "./providers/providers.tsx";
 import { OpenAPI } from "../api";
 
 async function getToken() {

@@ -102,11 +102,13 @@ const SelectPeriodsView = () => {
   };
 
   if (isLoading) {
-    return <div className="flex justify-center align-middle">Loading...</div>;
+    return (
+      <div className="flex h-full items-center justify-center">Loading...</div>
+    );
   }
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center py-10">
       <div className="flex w-96 flex-col items-center gap-4">
         <Title>Mine ønsker</Title>
         <div className="w-full pb-10">
