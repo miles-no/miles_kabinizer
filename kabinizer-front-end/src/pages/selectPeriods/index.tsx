@@ -34,7 +34,6 @@ const SelectPeriodsView = () => {
     () => BookingRequestService.getApiBookingRequest(),
     {
       onSuccess: (data) => {
-        console.log(data);
         setSelected(
           data.map((d) => ({
             periodId: d.period?.id ?? "",
@@ -83,7 +82,6 @@ const SelectPeriodsView = () => {
   };
 
   const handleSelectAll = () => {
-    console.log("data", data);
     const allPeriods = data.reduce<CreateBookingRequestDto[]>((acc, cur) => {
       if (cur.periods) {
         const bookingRequests = cur.periods.map((p) => ({
