@@ -6,6 +6,6 @@ public record Draw(Guid Id, DateTime Start, DateTime End, string Title, List<Per
 {
     public static Draw FromObject(DrawEntity o)
     {
-        return new Draw(o.Id, o.DeadlineStart, o.DeadlineEnd, o.Title, o.Periods?.Select(Period.FromObject)?.ToList(), o.IsSpecial);
+        return new Draw(o.Id, o.DeadlineStart, o.DeadlineEnd, o.Title, o.Periods?.Select(Period.FromObject)?.OrderBy(p => p.PeriodStart).ToList(), o.IsSpecial);
     }
 }
