@@ -50,3 +50,11 @@ export const GetPreviousMonday = (date: Date) => {
 export const FormatDate = (date: Date) => {
   return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 };
+
+export const NameInitials = (name: string) => {
+  const names = name.split(" ");
+  return names
+    .map((name) => name[0])
+    .join("")
+    .toUpperCase();
+};

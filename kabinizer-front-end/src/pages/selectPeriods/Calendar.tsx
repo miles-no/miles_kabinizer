@@ -136,13 +136,20 @@ const Calendar = ({
             color={COLORS[Number(month) % COLORS.length].selected}
           />
           <div
-            className="relative flex w-72 flex-col rounded-lg rounded-tr-none p-2"
-            style={{ backgroundColor: COLORS[Number(month) % 2].background }}
+            className={`relative flex w-72 flex-col rounded-lg rounded-tr-none p-2 ${
+              Number(month) % 2
+                ? "bg-blue-200 dark:bg-blue-700"
+                : "bg-purple-200 dark:bg-purple-700"
+            }`}
           >
             <Hump
               month={Number(month)}
               monthMap={monthMap}
-              color={COLORS[Number(month) % 2].background}
+              className={`${
+                Number(month) % 2
+                  ? "bg-blue-200 dark:bg-blue-700"
+                  : "bg-purple-200 dark:bg-purple-700"
+              }`}
             />
             <div className="flex h-full flex-col gap-y-4">
               {Object.entries(weeks).map(([week, options]) => (

@@ -34,7 +34,6 @@ const SelectPeriodsView = () => {
     () => BookingRequestService.getApiBookingRequest(),
     {
       onSuccess: (data) => {
-        console.log(data);
         setSelected(
           data.map((d) => ({
             periodId: d.period?.id ?? "",
@@ -83,7 +82,6 @@ const SelectPeriodsView = () => {
   };
 
   const handleSelectAll = () => {
-    console.log("data", data);
     const allPeriods = data.reduce<CreateBookingRequestDto[]>((acc, cur) => {
       if (cur.periods) {
         const bookingRequests = cur.periods.map((p) => ({
@@ -102,11 +100,13 @@ const SelectPeriodsView = () => {
   };
 
   if (isLoading) {
-    return <div className="flex justify-center align-middle">Loading...</div>;
+    return (
+      <div className="flex h-full items-center justify-center">Loading...</div>
+    );
   }
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center py-10">
       <div className="flex w-96 flex-col items-center gap-4">
         <Title>Mine ønsker</Title>
         <div className="w-full pb-10">
@@ -150,10 +150,10 @@ const Label = () => {
         fill="none"
       >
         <path
+          className="fill-black dark:fill-white"
           fillRule="evenodd"
           clipRule="evenodd"
           d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM10 14.17L16.59 7.58002L18 9.00002L10 17L6 13L7.41 11.59L10 14.17Z"
-          fill="black"
         />
       </svg>
     </div>
