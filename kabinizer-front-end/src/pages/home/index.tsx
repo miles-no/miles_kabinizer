@@ -140,6 +140,16 @@ const ImportantInformation = () => {
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
           <div className="flex flex-col justify-center space-y-4">
             <h3 className="text-2xl font-bold tracking-tighter sm:text-3xl">
+              Hva du må ta med
+            </h3>
+            <ul className="list-inside list-disc text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              <li>Sengetøy</li>
+              <li>Håndklær</li>
+              <li>Kjøkkenhåndklær</li>
+            </ul>
+          </div>
+          <div className="flex flex-col justify-center space-y-4">
+            <h3 className="text-2xl font-bold tracking-tighter sm:text-3xl">
               Regler
             </h3>
             <ul className="list-inside list-disc text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -147,16 +157,6 @@ const ImportantInformation = () => {
                 Firbente venner får lov til å bli med på hytta, men de får ikke
                 være i sofa/senger!
               </li>
-            </ul>
-          </div>
-          <div className="flex flex-col justify-center space-y-4">
-            <h3 className="text-2xl font-bold tracking-tighter sm:text-3xl">
-              Hva du må ta med
-            </h3>
-            <ul className="list-inside list-disc text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              <li>Sengetøy</li>
-              <li>Håndklær</li>
-              <li>Kjøkkenhåndklær</li>
             </ul>
           </div>
         </div>
