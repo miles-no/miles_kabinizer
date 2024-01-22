@@ -4,8 +4,8 @@ using kabinizer_api.Services;
 using kabinizer_api.Services.Export;
 using kabinizer_data;
 using kabinizer_data.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace kabinizer_api.Controllers;
@@ -28,6 +28,8 @@ public class BookingRequestController : ControllerBase
     {
         var currentUserId = tokenService.GetUserId();
         return entityContext.BookingRequests
+            .Include(br => br.User)
+            .Include(br => br.Period)
             .Where(b => b.UserId == currentUserId)
             .AsEnumerable().Select(BookingRequest.FromModel);
     }
@@ -69,7 +71,11 @@ public class BookingRequestController : ControllerBase
     public IActionResult Export()
     {
         // TODO: Take some input and only export the values we want, for example for a single period
-        byte[] fileContent = CsvService.ExportToCsv(GetBookingRequests());
+        IEnumerable<BookingRequest> bookingRequests = entityContext.BookingRequests
+            .Include(br => br.User)
+            .Include(br => br.Period)
+            .AsEnumerable().Select(BookingRequest.FromModel);
+        byte[] fileContent = CsvService.ExportToCsv(bookingRequests);
         return File(fileContent, "application/octet-stream", "export.csv");
     }
 }

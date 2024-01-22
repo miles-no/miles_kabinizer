@@ -39,36 +39,18 @@ export class BookingRequestService {
     }
 
     /**
-     * @param bookingRequestId
+     * @param requestBody
      * @returns boolean Success
      * @throws ApiError
      */
     public static deleteApiBookingRequest(
-        bookingRequestId: string,
+        requestBody: Array<string>,
     ): CancelablePromise<boolean> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/api/BookingRequest',
-            query: {
-                'bookingRequestId': bookingRequestId,
-            },
-        });
-    }
-
-    /**
-     * @param userId
-     * @returns BookingRequest Success
-     * @throws ApiError
-     */
-    public static getApiBookingRequestUser(
-        userId: string,
-    ): CancelablePromise<Array<BookingRequest>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/BookingRequest/user/{userId}',
-            path: {
-                'userId': userId,
-            },
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 

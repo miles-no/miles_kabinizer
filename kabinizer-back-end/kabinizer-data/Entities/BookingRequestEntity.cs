@@ -7,6 +7,7 @@ public class BookingRequestEntity
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
+    public UserEntity User { get; set; }
     public PeriodEntity Period { get; set; }
     public Guid PeriodId { get; set; }
     public DateTime CreatedDate { get; set; }

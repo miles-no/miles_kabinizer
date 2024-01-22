@@ -22,30 +22,6 @@ namespace kabinizer_data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("kabinizer_data.DrawEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("DeadlineEnd")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DeadlineStart")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsSpecial")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Draw");
-                });
-
             modelBuilder.Entity("kabinizer_data.Entities.BookingRequestEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -77,6 +53,30 @@ namespace kabinizer_data.Migrations
                     b.ToTable("BookingRequest");
                 });
 
+            modelBuilder.Entity("kabinizer_data.Entities.DrawEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DeadlineEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeadlineStart")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsSpecial")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Draw");
+                });
+
             modelBuilder.Entity("kabinizer_data.Entities.PeriodEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -103,6 +103,21 @@ namespace kabinizer_data.Migrations
                     b.ToTable("Period");
                 });
 
+            modelBuilder.Entity("kabinizer_data.Entities.UserEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+                });
+
             modelBuilder.Entity("kabinizer_data.Entities.BookingRequestEntity", b =>
                 {
                     b.HasOne("kabinizer_data.Entities.PeriodEntity", "Period")
@@ -116,7 +131,7 @@ namespace kabinizer_data.Migrations
 
             modelBuilder.Entity("kabinizer_data.Entities.PeriodEntity", b =>
                 {
-                    b.HasOne("kabinizer_data.DrawEntity", "Draw")
+                    b.HasOne("kabinizer_data.Entities.DrawEntity", "Draw")
                         .WithMany("Periods")
                         .HasForeignKey("DrawId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -125,7 +140,7 @@ namespace kabinizer_data.Migrations
                     b.Navigation("Draw");
                 });
 
-            modelBuilder.Entity("kabinizer_data.DrawEntity", b =>
+            modelBuilder.Entity("kabinizer_data.Entities.DrawEntity", b =>
                 {
                     b.Navigation("Periods");
                 });

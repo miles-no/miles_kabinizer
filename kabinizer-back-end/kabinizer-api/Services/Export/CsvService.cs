@@ -20,17 +20,17 @@ public static class CsvService
         return memoryStream.ToArray();
     }
 
-    private static int ConvertDateToWeekNumber(DateOnly date)
+    private static int ConvertDateToWeekNumber(DateTime date)
     {
-        return ISOWeek.GetWeekOfYear(date.ToDateTime(TimeOnly.MinValue));
+        return ISOWeek.GetWeekOfYear(date);
     }
 
     private static IEnumerable<CsvRecord> ConvertToCsvRecords(IEnumerable<BookingRequest> bookingRequests)
     {
         return bookingRequests
             .GroupBy(
-                req => req.UserId,
-                req => "Week x", // TODO: ConvertDateToWeekNumber("Week x"),
+                req => req.User.Name,
+                req => ConvertDateToWeekNumber(req.Period.PeriodStart),
                 (name, weeks) => new CsvRecord(name.ToString(), string.Join(", ", weeks)));
     }
 
