@@ -6,12 +6,14 @@ const Button = ({
   children,
   size,
   className,
+  disabled,
 }: {
   href?: string;
   onClick?: () => void;
   children: ReactNode;
   size: "small" | "medium" | "large";
   className?: string;
+  disabled?: boolean;
 }) => {
   const sizes = {
     small: "text-s h-6",
@@ -30,7 +32,7 @@ const Button = ({
   }
 
   return (
-    <button onClick={onClick} className={classes}>
+    <button onClick={onClick} className={classes} disabled={disabled}>
       {children}
     </button>
   );
