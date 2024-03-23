@@ -1,32 +1,57 @@
-# React + TypeScript + Vite
+# Kabenizer front-end
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Stack
 
-## How to run locally
+- Vite
+- Typescript
+- Tailwind
+- react-query
+- openapi-typescript-codegen
+- msal
+- bun
+- radix-ui components
+  - Generated using v0.dev
 
-- `npm install` to install packages
-- `npm run dev` runs the appliation
+## Development
 
-Currently, two official plugins are available:
+Install packages
+`bun install`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Run dev server
+`bun run dev`
 
-## Expanding the ESLint configuration
+Generate new openapi types
+`bun run generate`
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## MVP:
 
-- Configure the top-level `parserOptions` property like this:
+- [x] Login/Logout
+- [x] Users can select periods and save.
+- [x] Admin can download the data as a CSV.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+## TODO
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- [ ] Admin can add new periods.
+- [ ] Admin can pick a period and see who has signed up.
+- [ ] Admin can draw a lottery for a period.
+
+### Nice to have
+
+- [ ] Shopping list.
+- [ ] Packing list.
+- [ ] Checkin/Checkout system.
+  - [ ] Checklist when arriving at the cabin.
+  - [ ] Checklist when leaving the cabin.
+- [ ] Email notifications.
+- [ ] Notify users
+- [ ] Allow users to cancel their reservation.
+
+## Bugs
+
+- [ ] Some users have to login twice.
+
+## Types
+
+- **_Periods_** are the available time slots for the cabin that the users can sign up for. They have a start and end date. And they belong to a draw. Most of the time, the period will be from Monday to Sunday, but it can be any period of time. For example the first winter break period starts on the friday before the winter break week.
+
+- **_Draws_** are a set of periods that has a start and end date for when the users can add their desired stay. It also includes a boolean "_isSpecial_" if the draw should be highlighted in the UI. Used for Christmas, Easter, etc.

@@ -1,7 +1,7 @@
 import { ColorType } from "../types";
 import { NumberOfDays } from "../utils";
 
-const DateRangeOption = ({
+const OptionButton = ({
   colors,
   from,
   to,
@@ -62,4 +62,4 @@ const DateRangeOption = ({
   );
 };
 
-export default DateRangeOption;
+export default OptionButton;

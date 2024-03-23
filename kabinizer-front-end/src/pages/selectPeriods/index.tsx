@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   BookingRequest,
   BookingRequestService,
@@ -7,13 +7,14 @@ import {
 } from "../../../api/index.ts";
 
 import WeekDayRow from "../../components/WeekDayRow";
-import Calendar from "./Calendar";
+import Calendar from "./Calendar/Calendar.tsx";
 import { useState } from "react";
 import Button from "../../components/Button.tsx";
 import Deadline from "./Deadline.tsx";
 import Title from "../../components/Title.tsx";
+import { getAllBookingRequests } from "@/utils/calendar.ts";
 
-const getDeleteBookings = (
+const getDeletedBookings = (
   bookings: BookingRequest[] | undefined = [],
   selected: CreateBookingRequestDto[],
 ) => {
@@ -23,75 +24,60 @@ const getDeleteBookings = (
 };
 
 const SelectPeriodsView = () => {
+  const queryClient = useQueryClient();
   const [selected, setSelected] = useState<CreateBookingRequestDto[]>([]);
 
   const { data = [], isLoading } = useQuery(["getApiDraw"], () =>
     DrawService.getApiDraw(),
   );
 
-  const { data: bookings, refetch } = useQuery(
+  const getSelectedBookingRequests = async () => {
+    try {
+      const bookingRequests =
+        await BookingRequestService.getApiBookingRequest();
+
+      setSelected(
+        bookingRequests.map((d) => ({
+          periodId: d.period?.id ?? "",
+          userId: d.user?.id ?? "",
+          bookingRequestId: d.bookingRequestId ?? "",
+        })),
+      );
+
+      return bookingRequests;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const { data: bookings } = useQuery(
     ["getApiBookingRequest"],
-    () => BookingRequestService.getApiBookingRequest(),
-    {
-      onSuccess: (data) => {
-        setSelected(
-          data.map((d) => ({
-            periodId: d.period?.id ?? "",
-            userId: d.user?.id ?? "",
-            bookingRequestId: d.bookingRequestId ?? "",
-          })),
-        );
-      },
-      onError: (error) => {
-        console.error(error);
-      },
-    },
+    () => getSelectedBookingRequests(),
+    { staleTime: Infinity, cacheTime: Infinity },
   );
 
-  const { mutateAsync: deleteBookings } = useMutation(
-    () => {
-      const deletedBookings = getDeleteBookings(bookings, selected);
+  const handleUpdate = async () => {
+    try {
+      const deletedBookings = getDeletedBookings(bookings, selected);
       const deletedBookingIds = deletedBookings.map(
         (d) => d.bookingRequestId as string,
       );
 
-      return BookingRequestService.deleteApiBookingRequest(deletedBookingIds);
-    },
-    {
-      onError: (error) => {
-        console.error(error);
-      },
-    },
-  );
+      await BookingRequestService.deleteApiBookingRequest(deletedBookingIds);
+      await BookingRequestService.postApiBookingRequest(selected);
 
-  const { mutate: addBookings } = useMutation(
-    () => BookingRequestService.postApiBookingRequest(selected),
-    {
-      onSuccess: () => {
-        refetch();
-      },
-      onError: (error) => {
-        console.error(error);
-      },
-    },
-  );
-
-  const handleUpdate = async () => {
-    await deleteBookings();
-    await addBookings();
+      queryClient.invalidateQueries("getApiBookingRequest");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const handleSelectAll = () => {
-    const allPeriods = data.reduce<CreateBookingRequestDto[]>((acc, cur) => {
-      if (cur.periods) {
-        const bookingRequests = cur.periods.map((p) => ({
-          periodId: p.id ?? "",
-        }));
+  const { mutateAsync: update, isLoading: isUpdating } = useMutation(() =>
+    handleUpdate(),
+  );
 
-        acc.push(...bookingRequests);
-      }
-      return acc;
-    }, []);
+  const handleSelectAll = () => {
+    const allPeriods = getAllBookingRequests(data);
     if (selected.length === allPeriods.length) {
       setSelected([]);
     } else {
@@ -128,10 +114,14 @@ const SelectPeriodsView = () => {
             setSelected={(selected) => setSelected(selected)}
           />
         </div>
-        <div className="flex w-full items-center justify-center px-20 pt-6">
-          <Button size="large" onClick={handleUpdate}>
-            Lagre
-          </Button>
+        <div className="flex h-8 w-full items-center justify-center px-20 pt-6">
+          {isUpdating ? (
+            <p className="ml-4">Lagrer...</p>
+          ) : (
+            <Button size="large" onClick={update} disabled={isLoading}>
+              Lagre
+            </Button>
+          )}
         </div>
       </div>
     </div>
