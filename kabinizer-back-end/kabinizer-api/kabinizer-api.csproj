@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>kabinizer_api</RootNamespace>
     <UserSecretsId>ae423604-4603-4f57-a55b-f051618b4e17</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +23,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\kabinizer-data\kabinizer-data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\.dockerignore">
+      <Link>.dockerignore</Link>
+    </Content>
   </ItemGroup>
 
 </Project>
