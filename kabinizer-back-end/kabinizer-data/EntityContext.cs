@@ -12,6 +12,6 @@ public class EntityContext : DbContext
 
     public DbSet<BookingRequestEntity> BookingRequests { get; set; }
     public DbSet<PeriodEntity> Periods { get; set; }
-    public DbSet<DrawEntity> Draws { get; set; }
+    public DbSet<DeadlineEntity> Deadlines { get; set; }
     public DbSet<UserEntity> Users { get; set; }
 }

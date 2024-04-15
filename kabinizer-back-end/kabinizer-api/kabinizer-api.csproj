@@ -24,4 +24,8 @@
     <ProjectReference Include="..\kabinizer-data\kabinizer-data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Deadline\" />
+  </ItemGroup>
+
 </Project>

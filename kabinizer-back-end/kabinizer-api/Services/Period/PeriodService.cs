@@ -1,47 +1,46 @@
-using kabinizer_api.Dtos.Draw;
-using kabinizer_api.Model;
+using kabinizer_api.Dtos.Deadline;
 using kabinizer_data.Entities;
 using System.Globalization;
 
-namespace kabinizer_api.Services;
+namespace kabinizer_api.Services.Period;
 
 public class PeriodService
 {
-    public List<PeriodEntity> CreatePeriods(Guid drawId, bool isSpecial, List<DrawPeriod> drawPeriods)
+    public List<PeriodEntity> CreatePeriods(Guid deadlineId, bool isSpecial, List<DeadlinePeriod> deadlinePeriods)
     {
-        List<PeriodEntity> periodEntities = new();
-        foreach (DrawPeriod drawPeriod in drawPeriods) {
-            // If the draw period is less than a week, just create one period for the whole draw period
+        List<PeriodEntity> periodEntities = [];
+        foreach (DeadlinePeriod deadlinePeriod in deadlinePeriods) {
+            // If the deadline period is less than a week, just create one period for the whole deadline period
             // The example is Easter where there are two parts, each shorter than one week. 
-            // We expect the user to know what they are doing when they input a draw period shorter than a week
+            // We expect the user to know what they are doing when they input a deadline period shorter than a week
             if (isSpecial) {
-                if (drawPeriod.Title == null) {
-                    throw new Exception("Draw period must have a title if it is shorter than a week");
+                if (deadlinePeriod.Title == null) {
+                    throw new Exception("Deadline period must have a title if it is shorter than a week");
                 }
-                Period period = new(drawPeriod.Start, drawPeriod.End, drawPeriod.Title, drawId);
+                Model.Period period = new(deadlinePeriod.Start, deadlinePeriod.End, deadlinePeriod.Title, deadlineId);
                 periodEntities.Add(period.ToObject());
                 continue;
             }
 
-            int firstWeekOfDrawPeriod = ISOWeek.GetWeekOfYear(drawPeriod.Start);
-            int lastWeekOfDrawPeriod = ISOWeek.GetWeekOfYear(drawPeriod.End);
+            int firstWeekOfDeadlinePeriod = ISOWeek.GetWeekOfYear(deadlinePeriod.Start);
+            int lastWeekOfDeadlinePeriod = ISOWeek.GetWeekOfYear(deadlinePeriod.End);
 
-            for (int week = firstWeekOfDrawPeriod; week <= lastWeekOfDrawPeriod; week++)
+            for (int week = firstWeekOfDeadlinePeriod; week <= lastWeekOfDeadlinePeriod; week++)
             {
-                DateTime startOfWeek = ISOWeek.ToDateTime(drawPeriod.Start.Year, week, DayOfWeek.Monday);
-                DateTime endOfWeek = ISOWeek.ToDateTime(drawPeriod.Start.Year, week, DayOfWeek.Sunday);
+                DateTime startOfWeek = ISOWeek.ToDateTime(deadlinePeriod.Start.Year, week, DayOfWeek.Monday);
+                DateTime endOfWeek = ISOWeek.ToDateTime(deadlinePeriod.Start.Year, week, DayOfWeek.Sunday);
 
-                // Don't make periods that start before drawPeriod.Start
-                if (week == firstWeekOfDrawPeriod) {
-                    startOfWeek = drawPeriod.Start;
+                // Don't make periods that start before deadlinePeriod.Start
+                if (week == firstWeekOfDeadlinePeriod) {
+                    startOfWeek = deadlinePeriod.Start;
                 }
 
-                // Don't make periods that end after drawPeriod.End
-                if (week == lastWeekOfDrawPeriod) {
-                    endOfWeek = drawPeriod.End;
+                // Don't make periods that end after deadlinePeriod.End
+                if (week == lastWeekOfDeadlinePeriod) {
+                    endOfWeek = deadlinePeriod.End;
                 }
 
-                Period period = new(startOfWeek, endOfWeek, drawPeriod.Title ?? "Week " + week, drawId);
+                Model.Period period = new(startOfWeek, endOfWeek, deadlinePeriod.Title ?? "Week " + week, deadlineId);
 
                 periodEntities.Add(period.ToObject());
             }

@@ -2,8 +2,8 @@
 
 namespace kabinizer_data.Entities;
 
-[Table("Draw")]
-public class DrawEntity
+[Table("Deadline")]
+public class DeadlineEntity
 {
     public Guid Id { get; set; }
     public DateTime DeadlineStart { get; set; }

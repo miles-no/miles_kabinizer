@@ -1,6 +1,6 @@
-﻿namespace kabinizer_api.Dtos.Draw;
+﻿namespace kabinizer_api.Dtos.Deadline;
 
-public class DrawPeriod
+public class DeadlinePeriod
 {
     public DateTime Start { get; set; }
     public DateTime End { get; set; }

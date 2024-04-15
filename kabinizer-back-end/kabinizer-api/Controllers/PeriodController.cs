@@ -1,21 +1,13 @@
 ﻿using kabinizer_api.Model;
 using kabinizer_data;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace kabinizer_api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PeriodController : ControllerBase
+public class PeriodController(EntityContext entityContext) : ControllerBase
 {
-    private readonly EntityContext entityContext;
-
-    public PeriodController(EntityContext entityContext)
-    {
-        this.entityContext = entityContext;
-    }
-
     [HttpGet]
     public IEnumerable<Period> GetPeriods()
     {

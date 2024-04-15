@@ -10,7 +10,7 @@ public class PeriodEntity
     public DateTime PeriodEnd { get; set; }
     public required string Title { get; set; }
 
-    public required Guid DrawId { get; set; }
-    public DrawEntity? Draw { get; set; }
+    public required Guid DeadlineId { get; set; }
+    public DeadlineEntity? Deadline { get; set; }
 
 }

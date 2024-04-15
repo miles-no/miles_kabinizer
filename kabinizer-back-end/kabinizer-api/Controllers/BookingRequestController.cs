@@ -12,21 +12,12 @@ namespace kabinizer_api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class BookingRequestController : ControllerBase
+public class BookingRequestController(EntityContext entityContext, ITokenService tokenService) : ControllerBase
 {
-    private readonly EntityContext entityContext;
-    private readonly ITokenService tokenService;
-
-    public BookingRequestController(EntityContext entityContext, ITokenService tokenService)
-    {
-        this.entityContext = entityContext;
-        this.tokenService = tokenService;
-    }
-
     [HttpGet]
     public IEnumerable<BookingRequest> GetBookingRequests()
     {
-        var currentUserId = tokenService.GetUserId();
+        Guid currentUserId = tokenService.GetUserId();
         return entityContext.BookingRequests
             .Include(br => br.User)
             .Include(br => br.Period)
@@ -37,7 +28,7 @@ public class BookingRequestController : ControllerBase
     [HttpPost]
     public void AddBookingRequests([Required] IEnumerable<CreateBookingRequestDto> requests)
     {
-        var currentUserId = tokenService.GetUserId();
+        Guid currentUserId = tokenService.GetUserId();
         IEnumerable<BookingRequestEntity> bookingRequestEntities =
             requests.Select(e => new BookingRequestEntity(currentUserId, e.PeriodId));
 
@@ -48,7 +39,7 @@ public class BookingRequestController : ControllerBase
     [HttpDelete]
     public bool DeleteBookingRequests([Required] IEnumerable<Guid> requests)
     {
-        var currentUserId = tokenService.GetUserId();
+        Guid currentUserId = tokenService.GetUserId();
 
         foreach (Guid requestId in requests)
         {

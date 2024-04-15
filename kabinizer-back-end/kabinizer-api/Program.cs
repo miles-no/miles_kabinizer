@@ -1,5 +1,6 @@
 using kabinizer_api.Services;
-using kabinizer_api.Services.Draw;
+using kabinizer_api.Services.Deadline;
+using kabinizer_api.Services.Period;
 using kabinizer_data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,7 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<DrawService>();
+builder.Services.AddScoped<DeadlineService>();
 builder.Services.AddScoped<PeriodService>();
 
 // Add services to the container.
