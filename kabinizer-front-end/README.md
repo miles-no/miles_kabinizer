@@ -1,57 +1,52 @@
-# Kabenizer front-end
+# Kabinizer Front-End
 
-## Stack
+This project is the front-end part of the Kabinizer application. It is built using a variety of modern web technologies
+to provide a seamless user experience.
 
-- Vite
-- Typescript
-- Tailwind
-- react-query
-- openapi-typescript-codegen
-- msal
-- bun
-- radix-ui components
-  - Generated using v0.dev
+## Technologies Used
 
-## Development
+- [Vite](https://vitejs.dev/): A build tool that provides a faster and leaner development experience for modern web
+  projects.
+- [TypeScript](https://www.typescriptlang.org/): A statically typed superset of JavaScript that adds types to the
+  language.
+- [Tailwind CSS](https://tailwindcss.com/): A utility-first CSS framework for rapidly building custom user interfaces.
+- [React Query](https://react-query.tanstack.com/): A data fetching and state management library for React applications.
+- [OpenAPI TypeScript Codegen](https://github.com/ferdikoomen/openapi-typescript-codegen): A tool to generate TypeScript
+  code from an OpenAPI specification.
+- [Microsoft Authentication Library (MSAL)](https://github.com/AzureAD/microsoft-authentication-library-for-js): A
+  library for JavaScript-based client-side authentication.
+- [npm](https://www.npmjs.com/): A package manager for JavaScript and the world’s largest software registry.
+- [Radix UI](https://www.radix-ui.com/): A low-level UI component library with a focus on accessibility, customization
+  and developer experience.
 
-Install packages
-`bun install`
+## Getting Started
 
-Run dev server
-`bun run dev`
+To set up the project for development on your local machine, please follow the instructions below:
 
-Generate new openapi types
-`bun run generate`
+1. Install the required packages:
 
-## MVP:
+    ```bash
+    npm install
+    ```
 
-- [x] Login/Logout
-- [x] Users can select periods and save.
-- [x] Admin can download the data as a CSV.
+2. Start the development server:
 
-## TODO
+    ```bash
+    npm run dev
+    ```
 
-- [ ] Admin can add new periods.
-- [ ] Admin can pick a period and see who has signed up.
-- [ ] Admin can draw a lottery for a period.
+3. Generate new OpenAPI types:
 
-### Nice to have
+    ```bash
+    npm run generate
+    ```
 
-- [ ] Shopping list.
-- [ ] Packing list.
-- [ ] Checkin/Checkout system.
-  - [ ] Checklist when arriving at the cabin.
-  - [ ] Checklist when leaving the cabin.
-- [ ] Email notifications.
-- [ ] Notify users
-- [ ] Allow users to cancel their reservation.
+## Project Structure
 
-## Bugs
+The project is structured around the concept of "Periods" and "Draws".
 
-- [ ] Some users have to login twice.
+- **Periods**: These are the available time slots for the cabin that users can sign up for. They have a start and end
+  date and belong to a draw. Most of the time, the period will be from Monday to Sunday, but it can be any period of
+  time. For example, the first winter break period starts on the Friday before the winter break week.
 
-## Types
-
-- **_Periods_** are the available time slots for the cabin that the users can sign up for. They have a start and end date. And they belong to a draw. Most of the time, the period will be from Monday to Sunday, but it can be any period of time. For example the first winter break period starts on the friday before the winter break week.
-
-- **_Draws_** are a set of periods that has a start and end date for when the users can add their desired stay. It also includes a boolean "_isSpecial_" if the draw should be highlighted in the UI. Used for Christmas, Easter, etc.
+- **Draws**: These are deadlines for signing up to a period. I'm considering refactoring to make this clearer.
