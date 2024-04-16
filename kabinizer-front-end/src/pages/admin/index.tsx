@@ -126,7 +126,7 @@ const Admin = () => {
           <div className="flex w-96 flex-col justify-center gap-10 rounded-xl bg-gray-300 p-4">
             <div className="flex flex-col justify-between gap-4">
               <label className="w-20 rounded-xl bg-[#354A71] p-1 text-center">
-                Title
+                Deadline title
               </label>
               <input
                 className="w-56 rounded bg-white p-1 text-justify text-black"
@@ -137,8 +137,8 @@ const Admin = () => {
               />
             </div>
             <div className="flex flex-col justify-between gap-4">
-              <label className="w-20 rounded-xl bg-[#354A71] p-1 text-center">
-                From
+              <label className="w-32 rounded-xl bg-[#354A71] p-1 text-center">
+                Deadline from
               </label>
               <input
                 className="w-56 rounded bg-white p-1 text-justify  text-black"
@@ -150,8 +150,8 @@ const Admin = () => {
               />
             </div>
             <div className="flex flex-col justify-between gap-4">
-              <label className="w-20 rounded-xl bg-[#354A71] p-1 text-center">
-                To
+              <label className="w-32 rounded-xl bg-[#354A71] p-1 text-center">
+                Deadline to
               </label>
               <input
                 className="text-between w-56 rounded bg-white p-1  text-black"
@@ -163,7 +163,7 @@ const Admin = () => {
               />
             </div>
             <div className="flex flex-row justify-between gap-4">
-              <label className="w-20 rounded-xl bg-[#354A71] p-1 text-center">
+              <label className="w-52 rounded-xl bg-[#354A71] p-1 text-center">
                 Is special draw?
               </label>
               <input
@@ -182,8 +182,8 @@ const Admin = () => {
             {draw?.drawPeriods?.map((date, key) => {
               return (
                 <div className="flex flex-col justify-between gap-4" key={key}>
-                  <label className="w-20 rounded-xl bg-[#354A71] p-1 text-center">
-                    From
+                  <label className="w-32 rounded-xl bg-[#354A71] p-1 text-center">
+                    Period from
                   </label>
                   <input
                     className="w-56 rounded bg-white p-1 text-justify  text-black"
@@ -193,8 +193,8 @@ const Admin = () => {
                     id="start"
                     onChange={(e) => addToDrawPeriods(e, key)}
                   />
-                  <label className="w-20 rounded-xl bg-[#354A71] p-1 text-center">
-                    To
+                  <label className="w-32 rounded-xl bg-[#354A71] p-1 text-center">
+                    Period to
                   </label>
                   <input
                     className="w-56 rounded bg-white p-1 text-justify  text-black"
@@ -204,8 +204,8 @@ const Admin = () => {
                     id="end"
                     onChange={(e) => addToDrawPeriods(e, key)}
                   />
-                  <label className="w-20 rounded-xl bg-[#354A71] p-1 text-center">
-                    Title
+                  <label className="w-32 rounded-xl bg-[#354A71] p-1 text-center">
+                    Period title
                   </label>
                   <input
                     className="w-56 rounded bg-white p-1 text-justify  text-black"
