@@ -1,0 +1,20 @@
+services:
+  sql_server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sql_server
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd" # Change this password to a strong one
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+    networks:
+      - kabinizer_net
+
+networks:
+  kabinizer_net:
+
+volumes:
+  sql_data:
+    driver: local

@@ -1,26 +1,27 @@
-# miles_kabinizer
-Kabinizer - Løsning for hyttebooking i Stavanger
+# Kabinizer: Your Cabin Booking Solution
+
+Welcome to Kabinizer, a comprehensive solution for cabin booking based in Stavanger. This project is designed to streamline the process of booking and managing cabin reservations, making it easier for both administrators and users.
 
 ## Frontend
-Frontend is in React w/ TypeScript.
+
+Our frontend is built with React and TypeScript, providing a robust and dynamic user interface. It includes features such as user login/logout, period selection and saving, and data download for admins. Future enhancements include the addition of new periods by admins, a lottery system for period selection, and a variety of user-friendly features like shopping lists, check-in/check-out systems, and email notifications.
+
+For more details, please refer to the [kabinizer-front-end](kabinizer-front-end/README.md) documentation.
 
 ## Backend
-Backend is a controller-based .NET 7 web API.
-We are using Entity Framework as an object-relational mapper (ORM).
 
-### Prerequisites
-A suitable IDE: Visual Studio (with the ASP.NET and web development workload) or Visual Studio Code (+ C# for Visual Studio Code + .NET 7.0 SDK)/Rider
+The backend of Kabinizer is a controller-based .NET 8 web API, utilizing Entity Framework as an object-relational mapper (ORM). It includes a Docker Compose file for setting up a SQL Server database, making it easy to manage and access data.
 
-- SQL Server (https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb?view=sql-server-ver16)
-- SQL Server Management Studio (or similar)
+For more information, please see the [kabinizer-back-end](kabinizer-back-end/README.md) documentation.
 
-### HOWTO
-Add user secrets:
-{
-  "EntraID": {
-    "Instance": "https://login.microsoftonline.com/",
-    "TenantId": "<tenant id>",
-    "ClientId": "<client id>",
-    "Audience": "<audience>"
-  }
-}
+## Tech Stack
+
+Kabinizer is built with a variety of modern technologies:
+
+- C#
+- TypeScript
+- JavaScript
+- npm
+- React
+
+We are continuously working to improve Kabinizer and welcome any feedback or contributions. Enjoy your stay!
