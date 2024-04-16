@@ -176,8 +176,8 @@ const Admin = () => {
               />
             </div>
 
-            <label className="w-32 rounded-xl bg-[#354A71] p-1 text-center">
-              Periods
+            <label className="w-full rounded-xl bg-[#354A71] p-1 text-center">
+              <hr/>
             </label>
             {draw?.drawPeriods?.map((date, key) => {
               return (
