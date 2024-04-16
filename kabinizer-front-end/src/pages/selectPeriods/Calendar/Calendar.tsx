@@ -18,7 +18,6 @@ const Calendar = ({
     .sort((a, b) => {
       return CompareDates(a, b);
     });
-
   const onClick = (periodId: string) => {
     const checked = selected.find((s) => s.periodId === periodId);
 
@@ -44,7 +43,6 @@ const Calendar = ({
   const data = GetWeeklyPeriods(periods, draws);
   const monthMap = getMonthsMap(data);
 
-  console.log(monthMap);
 
   return <Months months={monthMap} selected={selected} onClick={onClick} />;
 };

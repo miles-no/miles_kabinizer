@@ -6,4 +6,5 @@ export const admins = [
   "eivinn.hustveit@miles.no",
   "ove.kristian.jorgensen@miles.no",
   "marius.sorensen@miles.no",
+  "kristoffer.marthinsen@miles.no"
 ];

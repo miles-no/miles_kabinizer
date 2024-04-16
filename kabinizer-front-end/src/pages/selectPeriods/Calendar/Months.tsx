@@ -35,7 +35,7 @@ const Month = ({ children, month }: MonthProps) => {
     <div key={month} className="flex items-center gap-x-4">
       <MonthColumn
         month={MONTHS[month]}
-        color={COLORS[month % COLORS.length].selected}
+        color={COLORS[month % COLORS.length]?.selected}
       />
       <div
         className={`relative flex w-72 flex-col rounded-lg p-2 ${
