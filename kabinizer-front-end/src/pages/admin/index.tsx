@@ -25,7 +25,6 @@ const Admin = () => {
     },
   );
   const [showNewPeriodView, setShowNewPeriodView] = useState(false);
-  const [drawsExist, setDrawsExist] = useState(false);
 
   const generateNewPeriod = () => {
     setShowNewPeriodView(!showNewPeriodView);
@@ -37,17 +36,13 @@ const Admin = () => {
     }
   }, [isAdmin]);
 
-  const { data : drawPeriod} = useQuery(["getApiDraw"], () =>
+  const { data : draws, isLoading} = useQuery(["getApiDraw"], () =>
     DrawService.getApiDraw(),
   );
 
-  console.log("asdf data", drawPeriod);
+  console.log("asdf data", draws, isLoading);
 
-  useEffect(() => {
-    if (drawPeriod) {
-      setDrawsExist(true);
-    }
-  }, [drawPeriod]);
+ 
 
   return (
     <div className="flex h-full w-full justify-center py-6 lg:py-16">
@@ -70,7 +65,7 @@ const Admin = () => {
           </Button>
         </div>
         {showNewPeriodView && <NewPeriodView />}
-        {drawsExist && <DeleteDraw draw={drawPeriod} />}
+         {!isLoading && <DeleteDraw draw={draws} />}
       </div>
     </div>
   );
