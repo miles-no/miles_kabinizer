@@ -1,9 +1,11 @@
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import Button from "../../components/Button";
 import { BookingRequestService } from "../../../api";
 import useUser from "../../hooks/useUser";
 import { useEffect, useState } from "react";
 import NewPeriodView from "../../components/NewPeriodView";
+import { DrawService } from "../../../api/services/DrawService";
+import DeleteDraw from "../../components/DeleteDraw";
 
 const Admin = () => {
   const { isAdmin } = useUser();
@@ -23,6 +25,7 @@ const Admin = () => {
     },
   );
   const [showNewPeriodView, setShowNewPeriodView] = useState(false);
+  const [drawsExist, setDrawsExist] = useState(false);
 
   const generateNewPeriod = () => {
     setShowNewPeriodView(!showNewPeriodView);
@@ -33,6 +36,18 @@ const Admin = () => {
       window.location.href = "/";
     }
   }, [isAdmin]);
+
+  const { data : drawPeriod} = useQuery(["getApiDraw"], () =>
+    DrawService.getApiDraw(),
+  );
+
+  console.log("asdf data", drawPeriod);
+
+  useEffect(() => {
+    if (drawPeriod) {
+      setDrawsExist(true);
+    }
+  }, [drawPeriod]);
 
   return (
     <div className="flex h-full w-full justify-center py-6 lg:py-16">
@@ -55,6 +70,7 @@ const Admin = () => {
           </Button>
         </div>
         {showNewPeriodView && <NewPeriodView />}
+        {drawsExist && <DeleteDraw draw={drawPeriod} />}
       </div>
     </div>
   );
