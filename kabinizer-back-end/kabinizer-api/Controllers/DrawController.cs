@@ -3,6 +3,7 @@ using kabinizer_api.Model;
 using kabinizer_api.Services.Draw;
 using kabinizer_data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
@@ -21,7 +22,7 @@ public class DrawController
         this.entityContext = entityContext;
         this.drawService = drawService;
     }
-    
+
     [HttpGet]
     public IEnumerable<Draw> GetDraws()
     {
@@ -32,5 +33,19 @@ public class DrawController
     public void CreateDraw([Required] CreateDrawDto draw)
     {
         drawService.CreateDraw(draw);
+    }
+
+    [HttpDelete]
+    public IActionResult DeleteDraw([Required] String id)
+    {
+        try
+        {
+            drawService.DeleteDraw(id);
+            return new NoContentResult();
+        }
+        catch (Exception)
+        {
+            return new NotFoundResult(); 
+        }
     }
 }

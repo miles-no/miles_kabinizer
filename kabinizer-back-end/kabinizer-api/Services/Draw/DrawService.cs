@@ -30,4 +30,11 @@ public class DrawService
         entityContext.Draws.Add(drawEntity);
         entityContext.SaveChanges();
     }
+
+    public void DeleteDraw(string id)
+    {
+        var draw = entityContext.Draws.Find(id) ?? throw new Exception("Draw not found");
+        entityContext.Draws.Remove(draw);
+        entityContext.SaveChanges();
+    }
 }
