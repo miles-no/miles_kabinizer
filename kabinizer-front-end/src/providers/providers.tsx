@@ -3,6 +3,7 @@ import { MsalProvider } from "@azure/msal-react";
 import { ReactNode } from "react";
 import { PublicClientApplication } from "@azure/msal-browser";
 import { ThemeProvider } from "./ThemeProvider";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 function Providers({
   children,
@@ -20,6 +21,7 @@ function Providers({
           {children}
         </ThemeProvider>
       </MsalProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }
