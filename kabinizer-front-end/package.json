@@ -29,7 +29,8 @@
     "react-query": "^3.39.3",
     "sass": "^1.68.0",
     "tailwind-merge": "^2.2.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "date-fns": "^3.6.0"
   },
   "devDependencies": {
     "@azure/msal-browser": "^3.6.0",
