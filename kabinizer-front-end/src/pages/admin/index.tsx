@@ -40,7 +40,6 @@ const Admin = () => {
     DrawService.getApiDraw(),
   );
 
-  console.log("asdf data", draws, isLoading);
 
  
 
