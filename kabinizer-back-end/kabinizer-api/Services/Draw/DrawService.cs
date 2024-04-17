@@ -32,8 +32,8 @@ public class DrawService
     }
 
     public void DeleteDraw(string id)
-    {
-        var draw = entityContext.Draws.Find(id) ?? throw new Exception("Draw not found");
+    {   
+        var draw = entityContext.Draws.Find(Guid.Parse(id)) ?? throw new Exception("Draw not found");
         entityContext.Draws.Remove(draw);
         entityContext.SaveChanges();
     }
