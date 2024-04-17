@@ -10,14 +10,17 @@ import {
 } from "@azure/msal-browser";
 import Providers from "./providers/providers.tsx";
 import { OpenAPI } from "../api";
+import { validateEnvironmentVariables } from "@/utils/validateEnvironmentVariables.tsx";
+
+validateEnvironmentVariables();
 
 async function getToken() {
   const currentAccount = msalInstance.getActiveAccount();
+  const scopes = [import.meta.env.VITE_SCOPES];
   const accessTokenRequest = {
-    scopes: ["api://bfd7362f-1032-4565-820c-cd98e1874056/ApiAccess"],
+    scopes,
     account: currentAccount ?? undefined,
   };
-
   if (currentAccount) {
     const accessTokenResponse =
       await msalInstance.acquireTokenSilent(accessTokenRequest);
@@ -26,15 +29,15 @@ async function getToken() {
   return "undefined";
 }
 
-OpenAPI.BASE = "https://app-kabinizer-dev.azurewebsites.net";
+OpenAPI.BASE = import.meta.env.VITE_BASE_URL;
 OpenAPI.TOKEN = () => getToken();
 
 const msalInstance = new PublicClientApplication({
   auth: {
-    clientId: "7f2fc4da-ccf1-4c75-ab65-29654a5eaf53",
-    authority: "https://login.microsoftonline.com/organizations",
-    redirectUri: "/",
-    postLogoutRedirectUri: "/",
+    clientId: import.meta.env.VITE_CLIENT_ID,
+    authority: import.meta.env.VITE_AUTHORITY,
+    redirectUri: import.meta.env.VITE_REDIRECT_URI,
+    postLogoutRedirectUri: import.meta.env.VITE_POST_LOGOUT_REDIRECT_URI,
   },
 });
 

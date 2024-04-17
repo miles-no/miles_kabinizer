@@ -9,6 +9,7 @@ import {
   useMsal,
 } from "@azure/msal-react";
 import Gallery from "./pages/gallery";
+import { useState } from "react";
 
 const Pages = () => {
   const showHome = window.location.pathname === "/";
@@ -46,14 +47,18 @@ function App() {
 
 const LogIn = () => {
   const { instance } = useMsal();
+  const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = () => {
-    instance.loginRedirect();
+  const handleLogin = async () => {
+    await instance.loginRedirect().catch((e) => {
+      setError(e.message);
+    });
   };
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center">
       <button onClick={handleLogin}>Log in</button>
+      {error && <p>{error}</p>}
     </div>
   );
 };
