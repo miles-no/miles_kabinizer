@@ -4,7 +4,6 @@
 /* eslint-disable */
 
 export type User = {
-    id?: string;
-    name?: string | null;
+  id?: string;
+  name?: string | null;
 };
-
