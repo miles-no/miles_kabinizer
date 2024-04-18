@@ -36,12 +36,9 @@ const Admin = () => {
     }
   }, [isAdmin]);
 
-  const { data : draws, isLoading} = useQuery(["getApiDraw"], () =>
+  const { data: draws, isLoading } = useQuery(["getApiDraw"], () =>
     DrawService.getApiDraw(),
   );
-
-
- 
 
   return (
     <div className="flex h-full w-full justify-center py-6 lg:py-16">
@@ -58,13 +55,13 @@ const Admin = () => {
             </Button>
           </div>
         </div>
-        <div className="flex w-full flex-col justify-center gap-10 rounded- bg-gray-300 p-4">
+        <div className="rounded flex w-full flex-col justify-center gap-10 bg-gray-300 p-4">
           <Button size="large" onClick={generateNewPeriod}>
             Generate new period
           </Button>
         </div>
         {showNewPeriodView && <NewPeriodView />}
-         {!isLoading && <DeleteDraw draw={draws} />}
+        {!isLoading && <DeleteDraw draw={draws} />}
       </div>
     </div>
   );
