@@ -74,8 +74,8 @@ const NewPeriodView = () => {
   };
 
   return (
-    <div>
-      <div className="flex w-96 flex-col justify-center gap-10 rounded-xl bg-gray-300 p-4">
+    <div className ="w-full">
+      <div className="flex flex-col justify-center gap-10 rounded-xl bg-gray-300 p-4">
         <div className="flex flex-col justify-between gap-4">
           <label className="w-20 rounded-xl bg-[#354A71] p-1 text-center">
             Deadline title
