@@ -12,17 +12,8 @@ namespace kabinizer_api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class BookingRequestController : ControllerBase
+public class BookingRequestController(EntityContext entityContext, ITokenService tokenService) : ControllerBase
 {
-    private readonly EntityContext entityContext;
-    private readonly ITokenService tokenService;
-
-    public BookingRequestController(EntityContext entityContext, ITokenService tokenService)
-    {
-        this.entityContext = entityContext;
-        this.tokenService = tokenService;
-    }
-
     [HttpGet]
     public IEnumerable<BookingRequest> GetBookingRequests()
     {
@@ -38,9 +29,31 @@ public class BookingRequestController : ControllerBase
     public void AddBookingRequests([Required] IEnumerable<CreateBookingRequestDto> requests)
     {
         var currentUserId = tokenService.GetUserId();
-        IEnumerable<BookingRequestEntity> bookingRequestEntities =
-            requests.Select(e => new BookingRequestEntity(currentUserId, e.PeriodId));
+        var periodIds = requests.Select(e => e.PeriodId).ToList();
 
+        var periods = entityContext.Periods
+            .Where(p => periodIds.Contains(p.Id))
+            .Include(p => p.Draw)
+            .ToList();
+
+        if (periods.Count != periodIds.Count)
+        {
+            throw new Exception("One or more periods do not exist");
+        }
+
+        var periodsWithoutDraw = periods.Where(p => p.Draw == null).ToList();
+        if (periodsWithoutDraw.Count != 0)
+        {
+            throw new Exception("One or more periods are not part of a draw");
+        }
+
+        var periodsWithCompletedDraw = periods.Where(p => p.Draw?.DeadlineEnd < DateTime.Now).ToList();
+        if (periodsWithCompletedDraw.Count != 0)
+        {
+            throw new Exception("One or more draws are already completed");
+        }
+
+        var bookingRequestEntities = periodIds.Select(id => new BookingRequestEntity(currentUserId, id));
         entityContext.BookingRequests.AddRange(bookingRequestEntities);
         entityContext.SaveChanges();
     }
