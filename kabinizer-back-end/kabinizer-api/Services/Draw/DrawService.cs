@@ -37,4 +37,19 @@ public class DrawService
         entityContext.Draws.Remove(draw);
         entityContext.SaveChanges();
     }
+
+    public void UpdateDraw(UpdateDrawDto draw)
+    {
+        var drawToUpdate = entityContext.Draws.Find(Guid.Parse(draw.Id)) ?? throw new Exception("Draw not found");
+
+        drawToUpdate.DeadlineStart = draw.Start;
+        drawToUpdate.DeadlineEnd = draw.End;
+        drawToUpdate.Title = draw.Title;
+        drawToUpdate.IsSpecial = draw.IsSpecial;
+        drawToUpdate.Periods = periodService.UpdatePeriods(drawToUpdate.Id, draw.Periods);
+
+        entityContext.SaveChanges();
+    }
+
+
 }

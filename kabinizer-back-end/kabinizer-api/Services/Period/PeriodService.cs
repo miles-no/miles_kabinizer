@@ -48,4 +48,26 @@ public class PeriodService
         }
         return periodEntities;
     }
+
+    internal List<PeriodEntity>? UpdatePeriods(Guid id, List<UpdatePeriod>? periods)
+    {
+        if (periods == null) {
+            return null;
+        }
+
+        List<PeriodEntity> periodEntities = new();
+        foreach (UpdatePeriod updatePeriod in periods) {
+            PeriodEntity periodEntity = new()
+            {
+                Id = Guid.Parse(updatePeriod.Id),
+                PeriodStart = updatePeriod.PeriodStart,
+                PeriodEnd = updatePeriod.PeriodEnd,
+                Title = updatePeriod.Title,
+                DrawId = Guid.Parse(updatePeriod.DrawId)
+            };
+            periodEntities.Add(periodEntity);
+        }
+        return periodEntities;
+    }
+
 }

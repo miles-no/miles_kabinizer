@@ -48,4 +48,19 @@ public class DrawController
             return new NotFoundResult(); 
         }
     }
+
+    [HttpPut]
+
+    public IActionResult UpdateDraw([Required] UpdateDrawDto draw)
+    {
+        try
+        {
+            drawService.UpdateDraw(draw);
+            return new NoContentResult();
+        }
+        catch (Exception)
+        {
+            return new NotFoundResult();
+        }
+    }
 }

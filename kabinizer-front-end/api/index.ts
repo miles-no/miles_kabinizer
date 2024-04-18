@@ -13,6 +13,8 @@ export type { CreateDrawDto } from "./models/CreateDrawDto";
 export type { Draw } from "./models/Draw";
 export type { DrawPeriod } from "./models/DrawPeriod";
 export type { Period } from "./models/Period";
+export type { UpdateDrawDto } from "./models/UpdateDrawDto";
+export type { UpdatePeriod } from "./models/UpdatePeriod";
 export type { User } from "./models/User";
 
 export { BookingRequestService } from "./services/BookingRequestService";

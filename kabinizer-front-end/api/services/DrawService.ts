@@ -4,6 +4,7 @@
 /* eslint-disable */
 import type { CreateDrawDto } from "../models/CreateDrawDto";
 import type { Draw } from "../models/Draw";
+import type { UpdateDrawDto } from "../models/UpdateDrawDto";
 
 import type { CancelablePromise } from "../core/CancelablePromise";
 import { OpenAPI } from "../core/OpenAPI";
@@ -49,6 +50,20 @@ export class DrawService {
       query: {
         id: id,
       },
+    });
+  }
+
+  /**
+   * @param requestBody
+   * @returns any Success
+   * @throws ApiError
+   */
+  public static putApiDraw(requestBody: UpdateDrawDto): CancelablePromise<any> {
+    return __request(OpenAPI, {
+      method: "PUT",
+      url: "/api/Draw",
+      body: requestBody,
+      mediaType: "application/json",
     });
   }
 }
