@@ -2,35 +2,39 @@
 using kabinizer_api.Model;
 using kabinizer_api.Services.Draw;
 using kabinizer_data;
-using Microsoft.AspNetCore.Authorization;
+using kabinizer_data.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace kabinizer_api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class DrawController
+public class DrawController(EntityContext entityContext, DrawService drawService) : ControllerBase
 {
-    private readonly EntityContext entityContext;
-    private readonly DrawService drawService;
-
-    public DrawController(EntityContext entityContext, DrawService drawService)
-    {
-        this.entityContext = entityContext;
-        this.drawService = drawService;
-    }
-    
     [HttpGet]
-    public IEnumerable<Draw> GetDraws()
+    public async Task<IEnumerable<Draw>> GetDraws()
     {
-        return entityContext.Draws.Include(d => d.Periods).Select(Draw.FromObject);
+        return await drawService.GetDraws();
+    }
+
+    [HttpGet("{drawId:guid}")]
+    public async Task<DrawEntity> GetDraw([Required] Guid drawId)
+    {
+        return await drawService.GetDraw(drawId);
     }
 
     [HttpPost]
-    public void CreateDraw([Required] CreateDrawDto draw)
+    public async Task<ActionResult<DrawEntity>> CreateDraw([Required] CreateDrawDto draw)
     {
-        drawService.CreateDraw(draw);
+        var createdDraw = await drawService.CreateDraw(draw);
+        return CreatedAtAction(nameof(GetDraws), new { drawId = createdDraw.Id }, createdDraw);
+    }
+
+    [HttpDelete("{drawId:guid}")]
+    public async Task<IActionResult> DeleteDraw([Required] Guid drawId)
+    {
+        await drawService.DeleteDraw(drawId);
+        return NoContent();
     }
 }

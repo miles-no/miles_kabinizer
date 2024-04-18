@@ -1,21 +1,14 @@
 using kabinizer_api.Dtos.Draw;
+using kabinizer_api.Services.Period;
 using kabinizer_data;
 using kabinizer_data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace kabinizer_api.Services.Draw;
 
-public class DrawService
+public class DrawService(EntityContext entityContext, PeriodService periodService)
 {
-    private readonly EntityContext entityContext;
-    private readonly PeriodService periodService;
-
-    public DrawService(EntityContext entityContext, PeriodService periodService)
-    {
-        this.entityContext = entityContext;
-        this.periodService = periodService;
-    }
-
-    public void CreateDraw(CreateDrawDto draw)
+    public async Task<DrawEntity> CreateDraw(CreateDrawDto draw)
     {
         Guid drawId = Guid.NewGuid();
         var drawEntity = new DrawEntity
@@ -28,6 +21,33 @@ public class DrawService
             IsSpecial = draw.IsSpecial
         };
         entityContext.Draws.Add(drawEntity);
-        entityContext.SaveChanges();
+        await entityContext.SaveChangesAsync();
+        return drawEntity;
     }
+
+    public async Task<DrawEntity> GetDraw(Guid drawId)
+    {
+        DrawEntity drawEntity = await entityContext.Draws.FindAsync(drawId) ?? throw new Exception("Draw not found");
+        return drawEntity;
+    }
+
+    public async Task UpdateDraw(Guid drawId)
+    {
+        DrawEntity drawEntity = await entityContext.Draws.FindAsync(drawId) ?? throw new Exception("Draw not found");
+        
+    }
+    
+    public async Task DeleteDraw(Guid drawId)
+    {
+        DrawEntity drawEntity = await entityContext.Draws.FindAsync(drawId) ?? throw new Exception("Draw not found");
+        entityContext.Draws.Remove(drawEntity);
+        await entityContext.SaveChangesAsync();
+    }
+
+    public async Task<IEnumerable<Model.Draw>> GetDraws()
+    {
+        var draws = await entityContext.Draws.Include(d => d.Periods).AsNoTracking().ToListAsync();
+        return draws.Select(Model.Draw.FromObject);
+    }
+
 }
