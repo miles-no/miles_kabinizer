@@ -46,11 +46,11 @@ public class BookingRequestController(EntityContext entityContext, ITokenService
         {
             throw new Exception("One or more periods are not part of a draw");
         }
-
-        var periodsWithCompletedDraw = periods.Where(p => p.Draw?.DeadlineEnd < DateTime.Now).ToList();
-        if (periodsWithCompletedDraw.Count != 0)
+        
+        var periodsWithEndedDraw = periods.Where(p => p.Draw?.DeadlineEnd > DateTime.Now).ToList();
+        if (periodsWithEndedDraw.Count != 0)
         {
-            throw new Exception("One or more draws are already completed");
+            throw new Exception("Cannot make a booking request for a draw that has ended");
         }
 
         var bookingRequestEntities = periodIds.Select(id => new BookingRequestEntity(currentUserId, id));
