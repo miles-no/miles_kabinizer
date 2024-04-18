@@ -75,7 +75,7 @@ const NewPeriodView = () => {
 
   return (
     <div className ="w-full">
-      <div className="flex flex-col justify-center gap-10 rounded-xl bg-gray-300 p-4">
+      <div className="flex flex-col justify-center gap-10 rounded bg-gray-300 p-4">
         <div className="flex flex-col justify-between gap-4">
           <label className="w-20 rounded-xl bg-[#354A71] p-1 text-center">
             Deadline title
@@ -89,7 +89,7 @@ const NewPeriodView = () => {
           />
         </div>
         <div className="flex flex-col justify-between gap-4">
-          <label className="w-32 rounded-xl bg-[#354A71] p-1 text-center">
+          <label className="w-32 rounded bg-[#354A71] p-1 text-center">
             Deadline from
           </label>
           <input
@@ -102,7 +102,7 @@ const NewPeriodView = () => {
           />
         </div>
         <div className="flex flex-col justify-between gap-4">
-          <label className="w-32 rounded-xl bg-[#354A71] p-1 text-center">
+          <label className="w-32 rounded bg-[#354A71] p-1 text-center">
             Deadline to
           </label>
           <input
@@ -115,7 +115,7 @@ const NewPeriodView = () => {
           />
         </div>
         <div className="flex flex-row justify-between gap-4">
-          <label className="w-52 rounded-xl bg-[#354A71] p-1 text-center">
+          <label className="w-52 rounded bg-[#354A71] p-1 text-center">
             Is special draw?
           </label>
           <input
@@ -128,13 +128,13 @@ const NewPeriodView = () => {
           />
         </div>
 
-        <label className="w-full rounded-xl bg-[#354A71] p-1 text-center">
+        <label className="w-full rounded bg-[#354A71] p-1 text-center">
           <hr />
         </label>
         {draw?.drawPeriods?.map((date, key) => {
           return (
             <div className="flex flex-col justify-between gap-4" key={key}>
-              <label className="w-32 rounded-xl bg-[#354A71] p-1 text-center">
+              <label className="w-32 rounded bg-[#354A71] p-1 text-center">
                 Period from
               </label>
               <input
@@ -145,7 +145,7 @@ const NewPeriodView = () => {
                 id="start"
                 onChange={(e) => addToDrawPeriods(e, key)}
               />
-              <label className="w-32 rounded-xl bg-[#354A71] p-1 text-center">
+              <label className="w-32 rounded bg-[#354A71] p-1 text-center">
                 Period to
               </label>
               <input
@@ -156,7 +156,7 @@ const NewPeriodView = () => {
                 id="end"
                 onChange={(e) => addToDrawPeriods(e, key)}
               />
-              <label className="w-32 rounded-xl bg-[#354A71] p-1 text-center">
+              <label className="w-32 rounded bg-[#354A71] p-1 text-center">
                 Period title
               </label>
               <input
@@ -169,12 +169,12 @@ const NewPeriodView = () => {
             </div>
           );
         })}
-        <div className=" rounded-xl bg-[#354A71] p-1">
+        <div className=" rounded bg-[#354A71] p-1">
           <Button size="small" onClick={addDrawPeriods}>
             Add more periods
           </Button>
         </div>
-        <div className="w-20 rounded-xl bg-[#354A71] p-1">
+        <div className="w-20 rounded bg-[#354A71] p-1">
           <Button size="large" onClick={handleSubmit}>
             Submit
           </Button>

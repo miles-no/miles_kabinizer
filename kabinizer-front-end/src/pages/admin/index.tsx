@@ -46,9 +46,9 @@ const Admin = () => {
   return (
     <div className="flex h-full w-full justify-center py-6 lg:py-16">
       <div className="flex h-full w-2/4 flex-col items-center gap-8">
-        <div className="flex w-full rounded-xl bg-gray-300 p-4">
+        <div className="flex w-full rounded bg-gray-300 p-4">
           <div className="w-22 flex w-full flex-col items-center gap-4">
-            <div className="rounded-xl bg-[#354A71] p-1 ">
+            <div className="rounded bg-[#354A71] p-1 ">
               <h2 className="font-poppins text-lg">
                 Download selected periods
               </h2>
@@ -58,7 +58,7 @@ const Admin = () => {
             </Button>
           </div>
         </div>
-        <div className="flex w-full flex-col justify-center gap-10 rounded-xl bg-gray-300 p-4">
+        <div className="flex w-full flex-col justify-center gap-10 rounded- bg-gray-300 p-4">
           <Button size="large" onClick={generateNewPeriod}>
             Generate new period
           </Button>

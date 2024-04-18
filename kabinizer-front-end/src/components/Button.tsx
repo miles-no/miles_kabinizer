@@ -21,7 +21,7 @@ const Button = ({
     large: "text-lg h-10",
   };
 
-  const classes = `${className} ${sizes[size]} flex w-full items-center justify-center rounded-full bg-[#354A71] px-4 font-poppins text-white hover:bg-blue-700`;
+  const classes = `${className} ${sizes[size]} flex w-full items-center justify-center rounded bg-[#354A71] px-4 font-poppins text-white hover:bg-blue-700`;
 
   if (href !== undefined) {
     return (
