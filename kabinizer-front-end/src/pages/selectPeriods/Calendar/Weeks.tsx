@@ -10,7 +10,7 @@ const Weeks = ({ weeks, month, selected, onClick }: WeeksProps) => {
   return (
     <div className="flex h-full flex-col gap-y-4">
       {Object.entries(weeks).map(([week, options]) => (
-        <Week week={Number(week)}>
+        <Week key={week} week={Number(week)}>
           <Options
             options={options}
             selected={selected}
