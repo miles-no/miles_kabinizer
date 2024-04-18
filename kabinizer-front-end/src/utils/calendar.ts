@@ -113,11 +113,13 @@ export const getMonthsMap = (data: Option[]): MonthMapType => {
   const weeksMap = getWeeksMap(data);
 
   for (const week in weeksMap) {
-    const month = weeksMap[week][0].month;
-    if (!monthsMap[month]) {
-      monthsMap[month] = {};
+    if (weeksMap[week] && weeksMap[week].length > 0) {
+      const month = weeksMap[week][0].month;
+      if (!monthsMap[month]) {
+        monthsMap[month] = {};
+      }
+      monthsMap[month][Number(week)] = weeksMap[week];
     }
-    monthsMap[month][Number(week)] = weeksMap[week];
   }
 
   return monthsMap;
