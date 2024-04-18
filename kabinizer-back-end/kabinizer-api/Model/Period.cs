@@ -2,9 +2,9 @@
 
 namespace kabinizer_api.Model;
 
-public record Period(Guid Id, DateTime PeriodStart, DateTime PeriodEnd, string Title, Guid DrawId)
+public record Period(Guid Id, DateTime PeriodStart, DateTime PeriodEnd, string? Title, Guid DrawId)
 {
-    public Period(DateTime periodStart, DateTime periodEnd, string title, Guid DrawId) 
+    public Period(DateTime periodStart, DateTime periodEnd, string? title, Guid DrawId) 
         : this(Guid.NewGuid(), periodStart, periodEnd, title, DrawId)
     {
     }

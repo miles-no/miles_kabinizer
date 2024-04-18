@@ -14,7 +14,7 @@ public static class CsvService
         using StreamWriter streamWriter = new(memoryStream);
         CsvConfiguration config = new(CultureInfo.CurrentCulture) { Delimiter = ";", Encoding = Encoding.UTF8 };
         using CsvWriter csv = new(streamWriter, config);
-        
+
         csv.WriteRecords(ConvertToCsvRecords(requests));
         streamWriter.Flush();
         return memoryStream.ToArray();
@@ -31,8 +31,8 @@ public static class CsvService
             .GroupBy(
                 req => req.User.Name,
                 req => ConvertDateToWeekNumber(req.Period.PeriodStart),
-                (name, weeks) => new CsvRecord(name.ToString(), string.Join(", ", weeks)));
+                (name, weeks) => new CsvRecord(name?.ToString(), string.Join(", ", weeks)));
     }
 
-    private record CsvRecord(string Name, string Weeks);
+    private record CsvRecord(string? Name, string Weeks);
 }

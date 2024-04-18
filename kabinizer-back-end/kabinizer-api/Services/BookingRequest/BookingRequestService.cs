@@ -59,7 +59,15 @@ public abstract class BookingRequestService(EntityContext entityContext, ITokenS
             throw new Exception("User does not exist");
         }
 
-        var bookingRequest = new BookingRequestEntity(tokenService.GetUserId(), request.PeriodId, user, period);
+        var bookingRequest = new BookingRequestEntity
+        {
+            PeriodId = period.Id,
+            UserId = user.Id,
+            CreatedDate = DateTime.Now,
+            CreatedBy = user.Id,
+            User = user,
+            Period = period
+        };
         entityContext.BookingRequests.Add(bookingRequest);
         await entityContext.SaveChangesAsync();
         return bookingRequest;

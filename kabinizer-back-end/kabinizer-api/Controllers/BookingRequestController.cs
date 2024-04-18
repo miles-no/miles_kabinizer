@@ -22,6 +22,11 @@ public class BookingRequestController(
         try
         {
             var bookingRequest = await bookingRequestService.GetBookingRequest(id);
+            if (bookingRequest == null)
+            {
+                return NotFound("Booking request does not exist or does not belong to the current user");
+            }
+
             return Ok(BookingRequestDto.FromModel(bookingRequest));
         }
         catch (Exception ex)
@@ -50,6 +55,11 @@ public class BookingRequestController(
         try
         {
             var bookingRequest = await bookingRequestService.AddBookingRequest(requests.First());
+            if (bookingRequest == null)
+            {
+                return BadRequest("Booking request could not be added");
+            }
+
             return Ok(BookingRequestDto.FromModel(bookingRequest));
         }
         catch (Exception e)

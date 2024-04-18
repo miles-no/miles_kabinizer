@@ -12,8 +12,16 @@ public class BookingRequestEntity(
     DateTime? updatedDate,
     Guid? updatedBy,
     UserEntity user,
-    PeriodEntity period)
+    PeriodEntity period
+)
 {
+    public BookingRequestEntity() : this(Guid.NewGuid(), Guid.Empty, Guid.Empty, DateTime.Now, Guid.Empty, null, null,
+        new UserEntity(), new PeriodEntity { Title = null, DrawId = default }
+    )
+    {
+    }
+
+
     public Guid Id { get; set; } = id;
     public Guid UserId { get; set; } = userId;
     public UserEntity User { get; set; } = user;
@@ -23,9 +31,4 @@ public class BookingRequestEntity(
     public Guid CreatedBy { get; set; } = createdBy;
     public DateTime? UpdatedDate { get; set; } = updatedDate;
     public Guid? UpdatedBy { get; set; } = updatedBy;
-
-    public BookingRequestEntity(Guid userId, Guid periodId, UserEntity user, PeriodEntity period) : this(Guid.NewGuid(),
-        userId, periodId, DateTime.Now, userId, null, null, user, period)
-    {
-    }
 }
