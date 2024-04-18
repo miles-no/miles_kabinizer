@@ -8,7 +8,7 @@ namespace kabinizer_api.Services.Export;
 
 public static class CsvService
 {
-    public static byte[] ExportToCsv(IEnumerable<BookingRequest> requests)
+    public static byte[] ExportToCsv(IEnumerable<Model.BookingRequest> requests)
     {
         using MemoryStream memoryStream = new();
         using StreamWriter streamWriter = new(memoryStream);
@@ -25,7 +25,7 @@ public static class CsvService
         return ISOWeek.GetWeekOfYear(date);
     }
 
-    private static IEnumerable<CsvRecord> ConvertToCsvRecords(IEnumerable<BookingRequest> bookingRequests)
+    private static IEnumerable<CsvRecord> ConvertToCsvRecords(IEnumerable<Model.BookingRequest> bookingRequests)
     {
         return bookingRequests
             .GroupBy(

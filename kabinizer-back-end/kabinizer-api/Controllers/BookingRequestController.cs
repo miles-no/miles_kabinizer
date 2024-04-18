@@ -1,9 +1,8 @@
 ﻿using kabinizer_api.Dtos.BookingRequest;
 using kabinizer_api.Model;
-using kabinizer_api.Services;
+using kabinizer_api.Services.BookingRequest;
 using kabinizer_api.Services.Export;
 using kabinizer_data;
-using kabinizer_data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
@@ -12,71 +11,69 @@ namespace kabinizer_api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class BookingRequestController(EntityContext entityContext, ITokenService tokenService) : ControllerBase
+public class BookingRequestController(
+    EntityContext entityContext,
+    BookingRequestService bookingRequestService
+) : ControllerBase
 {
-    [HttpGet]
-    public IEnumerable<BookingRequest> GetBookingRequests()
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetBookingRequest([Required] Guid id)
     {
-        var currentUserId = tokenService.GetUserId();
-        return entityContext.BookingRequests
-            .Include(br => br.User)
-            .Include(br => br.Period)
-            .Where(b => b.UserId == currentUserId)
-            .AsEnumerable().Select(BookingRequest.FromModel);
+        try
+        {
+            var bookingRequest = await bookingRequestService.GetBookingRequest(id);
+            return Ok(BookingRequestDto.FromModel(bookingRequest));
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetBookingRequests()
+    {
+        try
+        {
+            var bookingRequests = await bookingRequestService.GetBookingRequests();
+            return Ok(bookingRequests.Select(BookingRequestDto.FromModel));
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
     }
 
     [HttpPost]
-    public void AddBookingRequests([Required] IEnumerable<CreateBookingRequestDto> requests)
+    public async Task<IActionResult> AddBookingRequests([Required] IEnumerable<CreateBookingRequestDto> requests)
     {
-        var currentUserId = tokenService.GetUserId();
-        var periodIds = requests.Select(e => e.PeriodId).ToList();
-
-        var periods = entityContext.Periods
-            .Where(p => periodIds.Contains(p.Id))
-            .Include(p => p.Draw)
-            .ToList();
-
-        if (periods.Count != periodIds.Count)
+        try
         {
-            throw new Exception("One or more periods do not exist");
+            var bookingRequest = await bookingRequestService.AddBookingRequest(requests.First());
+            return Ok(BookingRequestDto.FromModel(bookingRequest));
         }
-
-        var periodsWithoutDraw = periods.Where(p => p.Draw == null).ToList();
-        if (periodsWithoutDraw.Count != 0)
+        catch (Exception e)
         {
-            throw new Exception("One or more periods are not part of a draw");
+            return BadRequest(e.Message);
         }
-        
-        var periodsWithEndedDraw = periods.Where(p => p.Draw?.DeadlineEnd > DateTime.Now).ToList();
-        if (periodsWithEndedDraw.Count != 0)
-        {
-            throw new Exception("Cannot make a booking request for a draw that has ended");
-        }
-
-        var bookingRequestEntities = periodIds.Select(id => new BookingRequestEntity(currentUserId, id));
-        entityContext.BookingRequests.AddRange(bookingRequestEntities);
-        entityContext.SaveChanges();
     }
 
     [HttpDelete]
-    public bool DeleteBookingRequests([Required] IEnumerable<Guid> requests)
+    public async Task<IActionResult> DeleteBookingRequests([Required] IEnumerable<Guid> requests)
     {
-        var currentUserId = tokenService.GetUserId();
-
-        foreach (Guid requestId in requests)
+        try
         {
-            BookingRequestEntity entityToRemove = entityContext.BookingRequests.Single(br => br.Id == requestId);
-
-            if (entityToRemove.UserId != currentUserId)
+            foreach (Guid request in requests)
             {
-                throw new Exception("You cannot remove a booking request for another user");
+                await bookingRequestService.DeleteBookingRequest(request);
             }
 
-            entityContext.BookingRequests.Remove(entityToRemove);
+            return Ok("Booking requests deleted");
         }
-
-        entityContext.SaveChanges();
-        return true;
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
     [HttpGet]

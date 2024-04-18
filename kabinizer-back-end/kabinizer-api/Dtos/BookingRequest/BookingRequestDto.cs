@@ -1,9 +1,8 @@
-using System.ComponentModel.DataAnnotations.Schema;
+using kabinizer_data.Entities;
 
-namespace kabinizer_data.Entities;
+namespace kabinizer_api.Dtos.BookingRequest;
 
-[Table("BookingRequest")]
-public class BookingRequestEntity(
+public class BookingRequestDto(
     Guid id,
     Guid userId,
     Guid periodId,
@@ -24,8 +23,9 @@ public class BookingRequestEntity(
     public DateTime? UpdatedDate { get; set; } = updatedDate;
     public Guid? UpdatedBy { get; set; } = updatedBy;
 
-    public BookingRequestEntity(Guid userId, Guid periodId, UserEntity user, PeriodEntity period) : this(Guid.NewGuid(),
-        userId, periodId, DateTime.Now, userId, null, null, user, period)
+    public static BookingRequestDto FromModel(BookingRequestEntity? e)
     {
+        return new BookingRequestDto(e.Id, e.UserId, e.PeriodId, e.CreatedDate, e.CreatedBy, e.UpdatedDate, e.UpdatedBy,
+            e.User, e.Period);
     }
 }
