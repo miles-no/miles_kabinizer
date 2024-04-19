@@ -4,10 +4,11 @@ import {
   DrawService,
 } from "../../../../api";
 import { CompareDates } from "@/utils";
-import DrawPeriodMonths from "./Months";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import useUser from "@/hooks/useUser.tsx";
 import { getMonthsMap, GetWeeklyPeriods } from "@/utils/calendar.ts";
+import Weeks from "@/pages/selectPeriods/Calendar/Weeks.tsx";
+import { MonthsContainer } from "@/pages/selectPeriods/Calendar/MonthsContainer.tsx";
 
 const DrawPeriodsCalendar = () => {
   const user = useUser();
@@ -55,11 +56,18 @@ const DrawPeriodsCalendar = () => {
   };
 
   return (
-    <DrawPeriodMonths
-      months={monthMap}
-      selected={bookingRequests || []}
-      onClick={toggleBooking}
-    />
+    <div className="flex flex-col gap-1">
+      {Object.entries(monthMap).map(([month, weeks]) => (
+        <MonthsContainer key={month} month={Number(month)}>
+          <Weeks
+            weeks={weeks}
+            selected={bookingRequests || []}
+            month={Number(month)}
+            onClick={toggleBooking}
+          />
+        </MonthsContainer>
+      ))}
+    </div>
   );
 };
 
