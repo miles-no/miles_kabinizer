@@ -17,7 +17,9 @@ public class BookingRequestController(
 ) : ControllerBase
 {
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetBookingRequest([Required] Guid id)
+    [ProducesResponseType(200, Type = typeof(BookingRequestDto))]
+    [ProducesResponseType(404, Type = typeof(string))]
+    public async Task<ActionResult<BookingRequestDto>> GetBookingRequest(Guid id)
     {
         try
         {
@@ -36,7 +38,9 @@ public class BookingRequestController(
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetBookingRequests()
+    [ProducesResponseType(200, Type = typeof(IEnumerable<BookingRequestDto>))]
+    [ProducesResponseType(404, Type = typeof(string))]
+    public async Task<ActionResult<IEnumerable<BookingRequestDto>>> GetBookingRequests()
     {
         try
         {
@@ -50,7 +54,9 @@ public class BookingRequestController(
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddBookingRequests([Required] IEnumerable<CreateBookingRequestDto> requests)
+    [ProducesResponseType(200, Type = typeof(BookingRequestDto))]
+    [ProducesResponseType(400, Type = typeof(string))]
+    public async Task<ActionResult<IEnumerable<BookingRequestDto>>> AddBookingRequests([Required] IEnumerable<CreateBookingRequestDto> requests)
     {
         try
         {
@@ -69,6 +75,8 @@ public class BookingRequestController(
     }
 
     [HttpDelete]
+    [ProducesResponseType(200, Type = typeof(string))]
+    [ProducesResponseType(400, Type = typeof(string))]
     public async Task<IActionResult> DeleteBookingRequests([Required] IEnumerable<Guid> requests)
     {
         try
