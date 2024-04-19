@@ -52,6 +52,48 @@ public class BookingRequestController(
             return NotFound(ex.Message);
         }
     }
+    
+    [HttpGet("user/{userId:guid}")]
+    [ProducesResponseType(200, Type = typeof(IEnumerable<BookingRequestDto>))]
+    [ProducesResponseType(404, Type = typeof(string))]
+    public async Task<ActionResult<IEnumerable<BookingRequestDto>>> GetBookingRequestsByUser(Guid userId)
+    {
+        try
+        {
+           var bookingRequests = await bookingRequestService.GetBookingRequestsByUser(userId);
+           if (bookingRequests.Count == 0)
+           {
+               return NotFound("No booking requests found for the user");
+           }
+           
+           return Ok(bookingRequests.Select(BookingRequestDto.FromModel));
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+    
+    [HttpGet("period/{periodId:guid}")]
+    [ProducesResponseType(200, Type = typeof(IEnumerable<BookingRequestDto>))]
+    [ProducesResponseType(404, Type = typeof(string))]
+    public async Task<ActionResult<IEnumerable<BookingRequestDto>>> GetBookingRequestsByPeriod(Guid periodId)
+    {
+        try
+        {
+            var bookingRequests = await bookingRequestService.GetBookingRequestsByPeriod(periodId);
+            if (bookingRequests.Count == 0)
+            {
+                return NotFound("No booking requests found for the period");
+            }
+            
+            return Ok(bookingRequests.Select(BookingRequestDto.FromModel));
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
 
     [HttpPost]
     [ProducesResponseType(200, Type = typeof(BookingRequestDto))]

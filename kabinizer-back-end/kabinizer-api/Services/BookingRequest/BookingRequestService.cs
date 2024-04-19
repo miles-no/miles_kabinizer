@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace kabinizer_api.Services.BookingRequest;
 
-public abstract class BookingRequestService(EntityContext entityContext, ITokenService tokenService)
+public class BookingRequestService(EntityContext entityContext, ITokenService tokenService)
 {
     private async Task<BookingRequestEntity?> GetBookingRequestById(Guid bookingRequestId)
     {
@@ -85,5 +85,35 @@ public abstract class BookingRequestService(EntityContext entityContext, ITokenS
         entityContext.BookingRequests.Remove(bookingRequest);
         await entityContext.SaveChangesAsync();
         return true;
+    }
+
+    public async Task<List<BookingRequestEntity>> GetBookingRequestsByUser(Guid userId)
+    {
+        var bookingRequests = await entityContext.BookingRequests
+            .Include(br => br.User)
+            .Include(br => br.Period)
+            .Where(b => b.UserId == userId)
+            .ToListAsync();
+        if (bookingRequests == null)
+        {
+            throw new Exception("No booking requests found for the user");
+        }
+
+        return bookingRequests;
+    }
+
+    public async Task<List<BookingRequestEntity>> GetBookingRequestsByPeriod(Guid periodId)
+    {
+        var bookingRequests = await entityContext.BookingRequests
+            .Include(br => br.User)
+            .Include(br => br.Period)
+            .Where(b => b.PeriodId == periodId)
+            .ToListAsync();
+        if (bookingRequests == null)
+        {
+            throw new Exception("No booking requests found for the period");
+        }
+
+        return bookingRequests;
     }
 }
