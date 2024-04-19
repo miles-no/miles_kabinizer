@@ -14,10 +14,6 @@ builder.Services.AddCors();
 builder.Services.AddScoped<DrawService>();
 builder.Services.AddScoped<PeriodService>();
 builder.Services.AddScoped<BookingRequestService>();
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-});
 
 // Add services to the container.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
