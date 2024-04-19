@@ -1,5 +1,4 @@
 import Button from "./Button";
-import { UpdateDrawDto } from "../../api";
 import { useState } from "react";
 import { DrawService } from "../../api/services/DrawService";
 import { Draw } from "../../api/models/Draw";
@@ -11,7 +10,6 @@ const EditPeriodView = (props: { draw: Draw }) => {
   const { draw } = props;
   const [tempDraw, setTempDraw] = useState(draw);
 
-  console.log("asdf draw", draw)
 
   const handleChangePeriod = (e) => {
     const isSpecial =
@@ -83,7 +81,7 @@ const EditPeriodView = (props: { draw: Draw }) => {
             type="text"
             name="title"
             id="title"
-            value={draw?.title}
+            value={draw?.title || ""}
             onChange={handleChangePeriod}
           />
         </div>
@@ -163,7 +161,7 @@ const EditPeriodView = (props: { draw: Draw }) => {
                 type="text"
                 name="title"
                 id="title"
-                value={date?.title}
+                value={date?.title || ""}
                 onChange={(e) => addTitleToDrawPeriods(e.target.value, key)}
               />
             </div>
