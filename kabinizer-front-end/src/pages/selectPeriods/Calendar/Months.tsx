@@ -3,6 +3,7 @@ import { COLORS, MONTHS } from "@/options";
 import { MonthMapType } from "@/types";
 import Weeks from "./Weeks";
 import { OptionsProps } from "./Options";
+import React from "react";
 
 type MonthsProps = {
   months: MonthMapType;

@@ -73,9 +73,9 @@ public class BookingRequestService(EntityContext entityContext, ITokenService to
         return bookingRequest;
     }
 
-    public async Task<bool> DeleteBookingRequest(Guid bookingRequestId)
+    public async Task DeleteBookingRequest(Guid bookingRequestId)
     {
-        var bookingRequest = await GetBookingRequestById(bookingRequestId);
+        var bookingRequest = await entityContext.BookingRequests.FirstOrDefaultAsync(b => b.Id == bookingRequestId);
         if (bookingRequest == null)
         {
             throw new Exception(
@@ -84,7 +84,6 @@ public class BookingRequestService(EntityContext entityContext, ITokenService to
 
         entityContext.BookingRequests.Remove(bookingRequest);
         await entityContext.SaveChangesAsync();
-        return true;
     }
 
     public async Task<List<BookingRequestEntity>> GetBookingRequestsByUser(Guid userId)
@@ -109,6 +108,7 @@ public class BookingRequestService(EntityContext entityContext, ITokenService to
             .Include(br => br.Period)
             .Where(b => b.PeriodId == periodId)
             .ToListAsync();
+        
         if (bookingRequests == null)
         {
             throw new Exception("No booking requests found for the period");

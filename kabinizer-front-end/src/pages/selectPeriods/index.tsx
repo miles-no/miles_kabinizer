@@ -1,127 +1,28 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import {
-  BookingRequest,
-  BookingRequestService,
-  CreateBookingRequestDto,
-  DrawService,
-} from "../../../api/index.ts";
+import { CreateBookingRequestDto } from "../../../api";
 
 import WeekDayRow from "../../components/WeekDayRow";
-import Calendar from "./Calendar/Calendar.tsx";
+import DrawPeriodsCalendar from "./Calendar/DrawPeriodsCalendar.tsx";
 import { useState } from "react";
-import Button from "../../components/Button.tsx";
-import Deadline from "./Deadline.tsx";
+import DrawDeadlines from "./DrawDeadlines.tsx";
 import Title from "../../components/Title.tsx";
-import { getAllBookingRequests } from "@/utils/calendar.ts";
-
-const getDeletedBookings = (
-  bookings: BookingRequest[] | undefined = [],
-  selected: CreateBookingRequestDto[],
-) => {
-  return bookings.filter(
-    (b) => !selected.map((s) => s.periodId).includes(b.period?.id),
-  );
-};
 
 const SelectPeriodsView = () => {
-  const queryClient = useQueryClient();
   const [selected, setSelected] = useState<CreateBookingRequestDto[]>([]);
-
-  const { data = [], isLoading } = useQuery(["getApiDraw"], () =>
-    DrawService.getApiDraw(),
-  );
-
-  const getSelectedBookingRequests = async () => {
-    try {
-      const bookingRequests =
-        await BookingRequestService.getApiBookingRequest();
-
-      setSelected(
-        bookingRequests.map((d) => ({
-          periodId: d.period?.id ?? "",
-          userId: d.user?.id ?? "",
-          bookingRequestId: d.bookingRequestId ?? "",
-        })),
-      );
-
-      return bookingRequests;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const { data: bookings } = useQuery(
-    ["getApiBookingRequest"],
-    () => getSelectedBookingRequests(),
-    { staleTime: Infinity, cacheTime: Infinity },
-  );
-
-  const handleUpdate = async () => {
-    try {
-      const deletedBookings = getDeletedBookings(bookings, selected);
-      const deletedBookingIds = deletedBookings.map(
-        (d) => d.bookingRequestId as string,
-      );
-
-      await BookingRequestService.deleteApiBookingRequest(deletedBookingIds);
-      await BookingRequestService.postApiBookingRequest(selected);
-
-      queryClient.invalidateQueries("getApiBookingRequest");
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const { mutateAsync: update, isLoading: isUpdating } = useMutation(() =>
-    handleUpdate(),
-  );
-
-  const handleSelectAll = () => {
-    const allPeriods = getAllBookingRequests(data);
-    if (selected.length === allPeriods.length) {
-      setSelected([]);
-    } else {
-      setSelected(allPeriods);
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <div className="flex h-full items-center justify-center">Loading...</div>
-    );
-  }
 
   return (
     <div className="flex flex-col items-center py-10">
       <div className="flex w-96 flex-col items-center gap-4">
         <Title>Mine ønsker</Title>
-        <div className="w-full pb-10">
-          <Deadline draws={data} />
-        </div>
+        <DrawDeadlines />
         <div className="flex w-full justify-between">
           <Label />
-          <div className="w-32">
-            <Button size="medium" onClick={handleSelectAll}>
-              Marker alle
-            </Button>
-          </div>
         </div>
         <div className="flex flex-col gap-1">
           <WeekDayRow />
-          <Calendar
-            draws={data}
+          <DrawPeriodsCalendar
             selected={selected}
             setSelected={(selected) => setSelected(selected)}
           />
-        </div>
-        <div className="flex h-8 w-full items-center justify-center px-20 pt-6">
-          {isUpdating ? (
-            <p className="ml-4">Lagrer...</p>
-          ) : (
-            <Button size="large" onClick={update} disabled={isLoading}>
-              Lagre
-            </Button>
-          )}
         </div>
       </div>
     </div>

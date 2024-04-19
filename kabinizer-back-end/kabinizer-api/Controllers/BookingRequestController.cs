@@ -61,11 +61,6 @@ public class BookingRequestController(
         try
         {
            var bookingRequests = await bookingRequestService.GetBookingRequestsByUser(userId);
-           if (bookingRequests.Count == 0)
-           {
-               return NotFound("No booking requests found for the user");
-           }
-           
            return Ok(bookingRequests.Select(BookingRequestDto.FromModel));
         }
         catch (Exception ex)
