@@ -2,7 +2,7 @@ using kabinizer_data.Entities;
 
 namespace kabinizer_api.Model;
 
-public record User(Guid Id, string Name)
+public record User(Guid Id, string? Name)
 {
     public static User FromEntity(UserEntity u)
     {

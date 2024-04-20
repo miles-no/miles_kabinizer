@@ -1,16 +1,19 @@
 using kabinizer_api.Services;
+using kabinizer_api.Services.BookingRequest;
 using kabinizer_api.Services.Draw;
 using kabinizer_data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors();
 builder.Services.AddScoped<DrawService>();
 builder.Services.AddScoped<PeriodService>();
+builder.Services.AddScoped<BookingRequestService>();
 
 // Add services to the container.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
