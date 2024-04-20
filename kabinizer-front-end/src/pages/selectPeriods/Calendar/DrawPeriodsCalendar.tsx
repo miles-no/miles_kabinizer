@@ -106,6 +106,7 @@ const DrawPeriodsCalendar = () => {
       <div className="flex flex-col gap-1">
         {Object.entries(monthMap).map(([month, weeks]) => (
           <MonthOptionsComponent
+            key={month}
             month={month}
             weeks={weeks}
             bookingRequests={bookingRequests}

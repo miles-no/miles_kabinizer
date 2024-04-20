@@ -31,6 +31,7 @@ const MonthOptionsComponent: React.FC<MonthOptionsComponentProps> = ({
     >
       {Object.entries(weeks).map(([week, options]) => (
         <WeekOptionsComponent
+          key={week}
           week={week}
           month={month}
           options={options}
