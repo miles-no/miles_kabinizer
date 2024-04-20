@@ -1,9 +1,8 @@
 ﻿using kabinizer_api.Dtos.BookingRequest;
 using kabinizer_api.Model;
-using kabinizer_api.Services;
+using kabinizer_api.Services.BookingRequest;
 using kabinizer_api.Services.Export;
 using kabinizer_data;
-using kabinizer_data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
@@ -12,58 +11,124 @@ namespace kabinizer_api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class BookingRequestController : ControllerBase
+public class BookingRequestController(
+    EntityContext entityContext,
+    BookingRequestService bookingRequestService
+) : ControllerBase
 {
-    private readonly EntityContext entityContext;
-    private readonly ITokenService tokenService;
-
-    public BookingRequestController(EntityContext entityContext, ITokenService tokenService)
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(200, Type = typeof(BookingRequestDto))]
+    [ProducesResponseType(404, Type = typeof(string))]
+    public async Task<ActionResult<BookingRequestDto>> GetBookingRequest(Guid id)
     {
-        this.entityContext = entityContext;
-        this.tokenService = tokenService;
+        try
+        {
+            var bookingRequest = await bookingRequestService.GetBookingRequest(id);
+            if (bookingRequest == null)
+            {
+                return NotFound("Booking request does not exist or does not belong to the current user");
+            }
+
+            return Ok(BookingRequestDto.FromModel(bookingRequest));
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
     }
 
     [HttpGet]
-    public IEnumerable<BookingRequest> GetBookingRequests()
+    [ProducesResponseType(200, Type = typeof(IEnumerable<BookingRequestDto>))]
+    [ProducesResponseType(404, Type = typeof(string))]
+    public async Task<ActionResult<IEnumerable<BookingRequestDto>>> GetBookingRequests()
     {
-        var currentUserId = tokenService.GetUserId();
-        return entityContext.BookingRequests
-            .Include(br => br.User)
-            .Include(br => br.Period)
-            .Where(b => b.UserId == currentUserId)
-            .AsEnumerable().Select(BookingRequest.FromModel);
+        try
+        {
+            var bookingRequests = await bookingRequestService.GetBookingRequests();
+            return Ok(bookingRequests.Select(BookingRequestDto.FromModel));
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+    
+    [HttpGet("user/{userId:guid}")]
+    [ProducesResponseType(200, Type = typeof(IEnumerable<BookingRequestDto>))]
+    [ProducesResponseType(404, Type = typeof(string))]
+    public async Task<ActionResult<IEnumerable<BookingRequestDto>>> GetBookingRequestsByUser(Guid userId)
+    {
+        try
+        {
+           var bookingRequests = await bookingRequestService.GetBookingRequestsByUser(userId);
+           return Ok(bookingRequests.Select(BookingRequestDto.FromModel));
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+    
+    [HttpGet("period/{periodId:guid}")]
+    [ProducesResponseType(200, Type = typeof(IEnumerable<BookingRequestDto>))]
+    [ProducesResponseType(404, Type = typeof(string))]
+    public async Task<ActionResult<IEnumerable<BookingRequestDto>>> GetBookingRequestsByPeriod(Guid periodId)
+    {
+        try
+        {
+            var bookingRequests = await bookingRequestService.GetBookingRequestsByPeriod(periodId);
+            if (bookingRequests.Count == 0)
+            {
+                return NotFound("No booking requests found for the period");
+            }
+            
+            return Ok(bookingRequests.Select(BookingRequestDto.FromModel));
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
     }
 
     [HttpPost]
-    public void AddBookingRequests([Required] IEnumerable<CreateBookingRequestDto> requests)
+    [ProducesResponseType(200, Type = typeof(BookingRequestDto))]
+    [ProducesResponseType(400, Type = typeof(string))]
+    public async Task<ActionResult<IEnumerable<BookingRequestDto>>> AddBookingRequests([Required] IEnumerable<CreateBookingRequestDto> requests)
     {
-        var currentUserId = tokenService.GetUserId();
-        IEnumerable<BookingRequestEntity> bookingRequestEntities =
-            requests.Select(e => new BookingRequestEntity(currentUserId, e.PeriodId));
+        try
+        {
+            var bookingRequest = await bookingRequestService.AddBookingRequest(requests.First());
+            if (bookingRequest == null)
+            {
+                return BadRequest("Booking request could not be added");
+            }
 
-        entityContext.BookingRequests.AddRange(bookingRequestEntities);
-        entityContext.SaveChanges();
+            return Ok(BookingRequestDto.FromModel(bookingRequest));
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
     [HttpDelete]
-    public bool DeleteBookingRequests([Required] IEnumerable<Guid> requests)
+    [ProducesResponseType(200, Type = typeof(string))]
+    [ProducesResponseType(400, Type = typeof(string))]
+    public async Task<IActionResult> DeleteBookingRequests([Required] IEnumerable<Guid> requests)
     {
-        var currentUserId = tokenService.GetUserId();
-
-        foreach (Guid requestId in requests)
+        try
         {
-            BookingRequestEntity entityToRemove = entityContext.BookingRequests.Single(br => br.Id == requestId);
-
-            if (entityToRemove.UserId != currentUserId)
+            foreach (Guid request in requests)
             {
-                throw new Exception("You cannot remove a booking request for another user");
+                await bookingRequestService.DeleteBookingRequest(request);
             }
 
-            entityContext.BookingRequests.Remove(entityToRemove);
+            return Ok("Booking requests deleted");
         }
-
-        entityContext.SaveChanges();
-        return true;
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
     [HttpGet]
