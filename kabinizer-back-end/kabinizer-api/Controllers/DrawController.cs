@@ -2,35 +2,57 @@
 using kabinizer_api.Model;
 using kabinizer_api.Services.Draw;
 using kabinizer_data;
-using Microsoft.AspNetCore.Authorization;
+using kabinizer_data.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace kabinizer_api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class DrawController
+public class DrawController(DrawService drawService) : ControllerBase
 {
-    private readonly EntityContext entityContext;
-    private readonly DrawService drawService;
-
-    public DrawController(EntityContext entityContext, DrawService drawService)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Draw>>> GetDraws()
     {
-        this.entityContext = entityContext;
-        this.drawService = drawService;
+        return Ok(await drawService.GetDraws());
     }
     
-    [HttpGet]
-    public IEnumerable<Draw> GetDraws()
+    [HttpGet("current")]
+    public async Task<ActionResult<IEnumerable<Draw>>> GetCurrentDraws()
     {
-        return entityContext.Draws.Include(d => d.Periods).Select(Draw.FromObject);
+        return Ok(await drawService.GetCurrentDraws());
+    }
+    
+    [HttpGet("upcoming")]
+    public async Task<ActionResult<IEnumerable<Draw>>> GetUpcomingDraws()
+    {
+        return Ok(await drawService.GetUpcomingDraws());
+    }
+    
+    [HttpGet("past")]
+    public async Task<ActionResult<IEnumerable<Draw>>> GetPastDraws()
+    {
+        return Ok(await drawService.GetPastDraws());
+    }
+
+    [HttpGet("{drawId:guid}")]
+    public async Task<ActionResult<DrawEntity>> GetDraw([Required] Guid drawId)
+    {
+        return Ok(await drawService.GetDraw(drawId));
     }
 
     [HttpPost]
-    public void CreateDraw([Required] CreateDrawDto draw)
+    public async Task<ActionResult<DrawEntity>> CreateDraw([Required] CreateDrawDto draw)
     {
-        drawService.CreateDraw(draw);
+        var createdDraw = await drawService.CreateDraw(draw);
+        return CreatedAtAction(nameof(GetDraws), new { drawId = createdDraw.Id }, createdDraw);
+    }
+
+    [HttpDelete("{drawId:guid}")]
+    public async Task<IActionResult> DeleteDraw([Required] Guid drawId)
+    {
+        await drawService.DeleteDraw(drawId);
+        return NoContent();
     }
 }

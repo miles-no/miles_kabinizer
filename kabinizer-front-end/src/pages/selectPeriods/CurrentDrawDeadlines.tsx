@@ -3,8 +3,8 @@ import { FormatDate } from "@/utils";
 import { useQuery } from "react-query";
 
 const CurrentDrawDeadlines = () => {
-  const { data: draws, isLoading } = useQuery(["getApiDraw"], () =>
-    DrawService.getApiDraw(),
+  const { data: draws, isLoading } = useQuery(["getApiDrawCurrent"], () =>
+    DrawService.getApiDrawCurrent(),
   );
   if (isLoading) return <p>Loading...</p>;
 
