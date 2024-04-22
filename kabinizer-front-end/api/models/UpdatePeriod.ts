@@ -4,10 +4,9 @@
 /* eslint-disable */
 
 export type UpdatePeriod = {
-    id?: string | null;
-    periodStart?: string;
-    periodEnd?: string;
-    title?: string | null;
-    drawId?: string | null;
+  id?: string | null;
+  periodStart?: string;
+  periodEnd?: string;
+  title?: string | null;
+  drawId?: string | null;
 };
-
