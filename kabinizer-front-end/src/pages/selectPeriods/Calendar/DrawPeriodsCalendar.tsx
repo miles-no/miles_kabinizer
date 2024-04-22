@@ -19,7 +19,7 @@ const DrawPeriodsCalendar = () => {
     data: draws,
     isLoading: isLoadingDraws,
     error: drawError,
-  } = useQuery("getApiDraw", DrawService.getApiDraw);
+  } = useQuery("getApiDrawCurrent", DrawService.getApiDrawCurrent);
 
   const {
     data: bookingRequests,
