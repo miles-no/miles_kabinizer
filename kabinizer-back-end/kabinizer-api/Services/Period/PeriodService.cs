@@ -51,15 +51,12 @@ public class PeriodService
 
     internal List<PeriodEntity>? UpdatePeriods(Guid id, List<UpdatePeriod>? periods)
     {
-        if (periods == null) {
-            return null;
-        }
+     ArgumentNullException.ThrowIfNull(periods);
 
         List<PeriodEntity> periodEntities = new();
         foreach (UpdatePeriod updatePeriod in periods) {
             PeriodEntity periodEntity = new()
             {
-                Id = Guid.Parse(updatePeriod.Id),
                 PeriodStart = updatePeriod.PeriodStart,
                 PeriodEnd = updatePeriod.PeriodEnd,
                 Title = updatePeriod.Title,

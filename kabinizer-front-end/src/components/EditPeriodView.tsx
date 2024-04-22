@@ -2,13 +2,14 @@ import Button from "./Button";
 import { useState } from "react";
 import { DrawService } from "../../api/services/DrawService";
 import { Draw } from "../../api/models/Draw";
-import {format} from "date-fns"
+import { format } from "date-fns";
+import checkIfDateIsEmpty from "../components/CheckIfDateIsEmpty";
 
 const EditPeriodView = (props: { draw: Draw }) => {
-
-
   const { draw } = props;
   const [tempDraw, setTempDraw] = useState(draw);
+  const [validated, setValidated] = useState(false);
+  const [error, setError] = useState(false);
 
 
   const handleChangePeriod = (e) => {
@@ -21,7 +22,29 @@ const EditPeriodView = (props: { draw: Draw }) => {
     });
   };
 
+  const validate = () => {
+    const { title, start, end, periods } = tempDraw;
+
+    periods?.map((date) => {
+      if (
+        checkIfDateIsEmpty(date.periodStart) &&
+        checkIfDateIsEmpty(date.periodEnd) &&
+        date.title &&
+        title &&
+        checkIfDateIsEmpty(start) &&
+        checkIfDateIsEmpty(end)
+      ) {
+        setValidated(true);
+      }
+    });
+  };
+
   const handleSubmit = () => {
+    validate();
+    if (!validated) {
+      setError(true);
+      return;
+    }
     try {
       DrawService.putApiDraw(tempDraw);
     } catch (error) {
@@ -31,7 +54,7 @@ const EditPeriodView = (props: { draw: Draw }) => {
 
   const addToDrawPeriods = (e, key) => {
     const { name, value } = e.target;
-    const addTextToPeriodDraw = draw?.periods?.map((date, index) => {
+    const addTextToPeriodDraw = tempDraw?.periods?.map((date, index) => {
       if (index === key) {
         return {
           ...date,
@@ -41,13 +64,13 @@ const EditPeriodView = (props: { draw: Draw }) => {
       return date;
     }, []);
     setTempDraw({
-      ...draw,
+      ...tempDraw,
       periods: addTextToPeriodDraw,
     });
   };
 
   const addTitleToDrawPeriods = (value: string, key: number) => {
-    const addTextToPeriodDraw = draw?.periods?.map((date, index) => {
+    const addTextToPeriodDraw = tempDraw?.periods?.map((date, index) => {
       if (index === key) {
         return {
           ...date,
@@ -62,11 +85,25 @@ const EditPeriodView = (props: { draw: Draw }) => {
     });
   };
 
- 
   const formatStupidDate = (date: string | undefined) => {
     if (!date) return "";
 
     return format(new Date(date), "yyyy-MM-dd");
+  };
+
+  const addDrawPeriods = () => {
+    setTempDraw({
+      ...tempDraw,
+      periods: [
+        ...tempDraw.periods,
+        {
+          periodEnd: "",
+          periodStart: "",
+          title: "",
+          drawId: tempDraw.id,
+        },
+      ],
+    });
   }
 
   return (
@@ -74,25 +111,25 @@ const EditPeriodView = (props: { draw: Draw }) => {
       <div className="flex flex-col justify-center gap-10 rounded bg-gray-300 p-4">
         <div className="flex flex-col justify-between gap-4">
           <label className="w-20 rounded-xl bg-[#354A71] p-1 text-center">
-            Deadline title
+            Draw title
           </label>
           <input
             className="w-56 rounded bg-white p-1 text-justify text-black"
             type="text"
             name="title"
             id="title"
-            value={draw?.title || ""}
+            value={tempDraw?.title || ""}
             onChange={handleChangePeriod}
           />
         </div>
-         <div className="flex flex-col justify-between gap-4">
+        <div className="flex flex-col justify-between gap-4">
           <label className="w-32 rounded bg-[#354A71] p-1 text-center">
-            Deadline from
+            Booking opens
           </label>
           <input
             className="w-56 rounded bg-white p-1 text-justify  text-black"
             type="date"
-            value={formatStupidDate(draw?.start)}
+            value={formatStupidDate(tempDraw.start)}
             name="start"
             id="start"
             onChange={handleChangePeriod}
@@ -100,12 +137,12 @@ const EditPeriodView = (props: { draw: Draw }) => {
         </div>
         <div className="flex flex-col justify-between gap-4">
           <label className="w-32 rounded bg-[#354A71] p-1 text-center">
-            Deadline to
+            Deadline
           </label>
           <input
             className="text-between w-56 rounded bg-white p-1  text-black"
             type="date"
-            value={formatStupidDate(draw?.end)}
+            value={formatStupidDate(tempDraw.end)}
             name="end"
             id="end"
             onChange={handleChangePeriod}
@@ -118,7 +155,7 @@ const EditPeriodView = (props: { draw: Draw }) => {
           <input
             className="text-between w-56 rounded bg-white p-1  text-black"
             type="checkbox"
-            defaultChecked={draw?.isSpecial}
+            defaultChecked={tempDraw?.isSpecial}
             name="isSpecial"
             id="isSpecial"
             onChange={handleChangePeriod}
@@ -128,7 +165,7 @@ const EditPeriodView = (props: { draw: Draw }) => {
         <label className="w-full rounded bg-[#354A71] p-1 text-center">
           <hr />
         </label>
-        {draw?.periods?.map((date, key) => {
+        {tempDraw?.periods?.map((date, key) => {
           return (
             <div className="flex flex-col justify-between gap-4" key={key}>
               <label className="w-32 rounded bg-[#354A71] p-1 text-center">
@@ -167,11 +204,17 @@ const EditPeriodView = (props: { draw: Draw }) => {
             </div>
           );
         })}
+        <div className=" rounded bg-[#354A71] p-1">
+          <Button size="small" onClick={addDrawPeriods}>
+            Add more periods
+          </Button>
+        </div>
+        {error && <p className="text-red-500">Please fill in all fields</p>}
         <div className="w-20 rounded bg-[#354A71] p-1">
           <Button size="large" onClick={handleSubmit}>
             Submit
           </Button>
-        </div> 
+        </div>
       </div>
     </div>
   );

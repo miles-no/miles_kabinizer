@@ -78,7 +78,7 @@ const NewPeriodView = () => {
       <div className="flex flex-col justify-center gap-10 rounded bg-gray-300 p-4">
         <div className="flex flex-col justify-between gap-4">
           <label className="w-20 rounded-xl bg-[#354A71] p-1 text-center">
-            Deadline title
+            Draw title
           </label>
           <input
             className="w-56 rounded bg-white p-1 text-justify text-black"
@@ -90,7 +90,7 @@ const NewPeriodView = () => {
         </div>
         <div className="flex flex-col justify-between gap-4">
           <label className="w-32 rounded bg-[#354A71] p-1 text-center">
-            Deadline from
+            Booking opens
           </label>
           <input
             className="w-56 rounded bg-white p-1 text-justify  text-black"

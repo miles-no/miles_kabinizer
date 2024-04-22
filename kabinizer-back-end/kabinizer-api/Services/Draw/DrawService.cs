@@ -1,6 +1,7 @@
 using kabinizer_api.Dtos.Draw;
 using kabinizer_data;
 using kabinizer_data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace kabinizer_api.Services.Draw;
 
@@ -32,7 +33,7 @@ public class DrawService
     }
 
     public void DeleteDraw(string id)
-    {   
+    {
         var draw = entityContext.Draws.Find(Guid.Parse(id)) ?? throw new Exception("Draw not found");
         entityContext.Draws.Remove(draw);
         entityContext.SaveChanges();
@@ -40,14 +41,14 @@ public class DrawService
 
     public void UpdateDraw(UpdateDrawDto draw)
     {
-        var drawToUpdate = entityContext.Draws.Find(Guid.Parse(draw.Id)) ?? throw new Exception("Draw not found");
+        var drawToUpdate = entityContext.Draws.Include(d => d.Periods).FirstOrDefault(d => d.Id == Guid.Parse(draw.Id)) 
+            ?? throw new Exception("Draw not found");
 
         drawToUpdate.DeadlineStart = draw.Start;
         drawToUpdate.DeadlineEnd = draw.End;
         drawToUpdate.Title = draw.Title;
         drawToUpdate.IsSpecial = draw.IsSpecial;
         drawToUpdate.Periods = periodService.UpdatePeriods(drawToUpdate.Id, draw.Periods);
-
         entityContext.SaveChanges();
     }
 
