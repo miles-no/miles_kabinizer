@@ -40,9 +40,9 @@ public class DrawService(EntityContext entityContext, PeriodService periodServic
     /**
      * Update a draw
      */
-    public async Task UpdateDraw(Guid drawId)
+    public Task UpdateDraw(Guid drawId)
     {
-        DrawEntity drawEntity = await entityContext.Draws.FindAsync(drawId) ?? throw new Exception("Draw not found");
+        throw new NotImplementedException();
     }
 
     /**
@@ -91,7 +91,7 @@ public class DrawService(EntityContext entityContext, PeriodService periodServic
     }
 
     /**
-     * Get draws that have already ended
+     * Get draws that have ended and are no longer open for booking
      */
     public async Task<IEnumerable<Model.Draw>> GetPastDraws()
     {
