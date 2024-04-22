@@ -10,51 +10,66 @@ public class PeriodService(EntityContext entityContext)
 {
     public List<PeriodEntity> CreatePeriods(Guid drawId, bool isSpecial, List<DrawPeriod> drawPeriods)
     {
-        List<PeriodEntity> periodEntities = new();
+        List<PeriodEntity> periodEntities = [];
         foreach (DrawPeriod drawPeriod in drawPeriods)
         {
-            // If the draw period is less than a week, just create one period for the whole draw period
-            // The example is Easter where there are two parts, each shorter than one week. 
-            // We expect the user to know what they are doing when they input a draw period shorter than a week
             if (isSpecial)
             {
-                if (drawPeriod.Title == null)
-                {
-                    throw new Exception("Draw period must have a title if it is shorter than a week");
-                }
-
-                Model.Period period = new(drawPeriod.Start, drawPeriod.End, drawPeriod.Title, drawId);
-                periodEntities.Add(period.ToObject());
-                continue;
+                periodEntities.Add(CreateSpecialPeriod(drawPeriod, drawId));
             }
-
-            int firstWeekOfDrawPeriod = ISOWeek.GetWeekOfYear(drawPeriod.Start);
-            int lastWeekOfDrawPeriod = ISOWeek.GetWeekOfYear(drawPeriod.End);
-
-            for (int week = firstWeekOfDrawPeriod; week <= lastWeekOfDrawPeriod; week++)
+            else
             {
-                DateTime startOfWeek = ISOWeek.ToDateTime(drawPeriod.Start.Year, week, DayOfWeek.Monday);
-                DateTime endOfWeek = ISOWeek.ToDateTime(drawPeriod.Start.Year, week, DayOfWeek.Sunday);
-
-                // Don't make periods that start before drawPeriod.Start
-                if (week == firstWeekOfDrawPeriod)
-                {
-                    startOfWeek = drawPeriod.Start;
-                }
-
-                // Don't make periods that end after drawPeriod.End
-                if (week == lastWeekOfDrawPeriod)
-                {
-                    endOfWeek = drawPeriod.End;
-                }
-
-                Model.Period period = new(startOfWeek, endOfWeek, drawPeriod.Title ?? "Week " + week, drawId);
-
-                periodEntities.Add(period.ToObject());
+                periodEntities.AddRange(CreateRegularPeriods(drawPeriod, drawId));
             }
         }
 
         return periodEntities;
+    }
+
+    private PeriodEntity CreateSpecialPeriod(DrawPeriod drawPeriod, Guid drawId)
+    {
+        if (drawPeriod.Title == null)
+        {
+            throw new Exception("Draw period must have a title if it is shorter than a week");
+        }
+
+        Model.Period period = new(drawPeriod.Start, drawPeriod.End, drawPeriod.Title, drawId);
+        return period.ToObject();
+    }
+
+    private List<PeriodEntity> CreateRegularPeriods(DrawPeriod drawPeriod, Guid drawId)
+    {
+        List<PeriodEntity> periodEntities = new();
+        int firstWeekOfDrawPeriod = ISOWeek.GetWeekOfYear(drawPeriod.Start);
+        int lastWeekOfDrawPeriod = ISOWeek.GetWeekOfYear(drawPeriod.End);
+
+        for (int week = firstWeekOfDrawPeriod; week <= lastWeekOfDrawPeriod; week++)
+        {
+            periodEntities.Add(CreatePeriodForWeek(drawPeriod, drawId, week));
+        }
+
+        return periodEntities;
+    }
+
+    private PeriodEntity CreatePeriodForWeek(DrawPeriod drawPeriod, Guid drawId, int week)
+    {
+        DateTime startOfWeek = ISOWeek.ToDateTime(drawPeriod.Start.Year, week, DayOfWeek.Monday);
+        DateTime endOfWeek = ISOWeek.ToDateTime(drawPeriod.Start.Year, week, DayOfWeek.Sunday);
+
+        // Don't make periods that start before drawPeriod.Start
+        if (week == ISOWeek.GetWeekOfYear(drawPeriod.Start))
+        {
+            startOfWeek = drawPeriod.Start;
+        }
+
+        // Don't make periods that end after drawPeriod.End
+        if (week == ISOWeek.GetWeekOfYear(drawPeriod.End))
+        {
+            endOfWeek = drawPeriod.End;
+        }
+
+        Model.Period period = new(startOfWeek, endOfWeek, drawPeriod.Title ?? "Week " + week, drawId);
+        return period.ToObject();
     }
 
     public async Task<PeriodEntity?> GetPeriod(Guid periodId)
@@ -76,14 +91,14 @@ public class PeriodService(EntityContext entityContext)
         return periods;
     }
 
-    public async Task<List<PeriodEntity?>> GetUpcomingPeriods()
+    public async Task<List<PeriodEntity>> GetUpcomingPeriods()
     {
         var periods = await entityContext.Periods
             .Where(p => p.PeriodStart > DateTime.Now)
             .ToListAsync();
         return periods;
     }
-    
+
     public async Task<List<PeriodEntity>> GetPastPeriods()
     {
         var periods = await entityContext.Periods
@@ -91,7 +106,7 @@ public class PeriodService(EntityContext entityContext)
             .ToListAsync();
         return periods;
     }
-    
+
     public async Task<IEnumerable<PeriodEntity>> GetAllPeriods()
     {
         return await entityContext.Periods.ToListAsync();

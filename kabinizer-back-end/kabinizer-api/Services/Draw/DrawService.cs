@@ -8,6 +8,9 @@ namespace kabinizer_api.Services.Draw;
 
 public class DrawService(EntityContext entityContext, PeriodService periodService)
 {
+    /**
+     * Create a draw
+     */
     public async Task<DrawEntity> CreateDraw(CreateDrawDto draw)
     {
         Guid drawId = Guid.NewGuid();
@@ -25,18 +28,26 @@ public class DrawService(EntityContext entityContext, PeriodService periodServic
         return drawEntity;
     }
 
+    /**
+     * Get a draw
+     */
     public async Task<DrawEntity> GetDraw(Guid drawId)
     {
         DrawEntity drawEntity = await entityContext.Draws.FindAsync(drawId) ?? throw new Exception("Draw not found");
         return drawEntity;
     }
 
+    /**
+     * Update a draw
+     */
     public async Task UpdateDraw(Guid drawId)
     {
         DrawEntity drawEntity = await entityContext.Draws.FindAsync(drawId) ?? throw new Exception("Draw not found");
-        
     }
-    
+
+    /**
+     * Delete a draw
+     */
     public async Task DeleteDraw(Guid drawId)
     {
         DrawEntity drawEntity = await entityContext.Draws.FindAsync(drawId) ?? throw new Exception("Draw not found");
@@ -44,10 +55,51 @@ public class DrawService(EntityContext entityContext, PeriodService periodServic
         await entityContext.SaveChangesAsync();
     }
 
+    /**
+     * Get all draws
+     */
     public async Task<IEnumerable<Model.Draw>> GetDraws()
     {
         var draws = await entityContext.Draws.Include(d => d.Periods).AsNoTracking().ToListAsync();
         return draws.Select(Model.Draw.FromObject);
     }
 
+    /**
+     * Get draws that are currently open for booking
+     */
+    public async Task<IEnumerable<Model.Draw>> GetCurrentDraws()
+    {
+        var draws = await entityContext.Draws
+            .Include(d => d.Periods)
+            .Where(d => d.DeadlineStart <= DateTime.Now && d.DeadlineEnd >= DateTime.Now)
+            .AsNoTracking()
+            .ToListAsync();
+        return draws.Select(Model.Draw.FromObject);
+    }
+
+    /**
+     * Get draws that not yet open for booking but will be in the future
+     */
+    public async Task<IEnumerable<Model.Draw>> GetUpcomingDraws()
+    {
+        var draws = await entityContext.Draws
+            .Include(d => d.Periods)
+            .Where(d => d.DeadlineStart > DateTime.Now)
+            .AsNoTracking()
+            .ToListAsync();
+        return draws.Select(Model.Draw.FromObject);
+    }
+
+    /**
+     * Get draws that have already ended
+     */
+    public async Task<IEnumerable<Model.Draw>> GetPastDraws()
+    {
+        var draws = await entityContext.Draws
+            .Include(d => d.Periods)
+            .Where(d => d.DeadlineEnd < DateTime.Now)
+            .AsNoTracking()
+            .ToListAsync();
+        return draws.Select(Model.Draw.FromObject);
+    }
 }

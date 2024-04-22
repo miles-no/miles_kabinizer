@@ -10,18 +10,36 @@ namespace kabinizer_api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class DrawController(EntityContext entityContext, DrawService drawService) : ControllerBase
+public class DrawController(DrawService drawService) : ControllerBase
 {
     [HttpGet]
-    public async Task<IEnumerable<Draw>> GetDraws()
+    public async Task<ActionResult<IEnumerable<Draw>>> GetDraws()
     {
-        return await drawService.GetDraws();
+        return Ok(await drawService.GetDraws());
+    }
+    
+    [HttpGet("current")]
+    public async Task<ActionResult<IEnumerable<Draw>>> GetCurrentDraws()
+    {
+        return Ok(await drawService.GetCurrentDraws());
+    }
+    
+    [HttpGet("upcoming")]
+    public async Task<ActionResult<IEnumerable<Draw>>> GetUpcomingDraws()
+    {
+        return Ok(await drawService.GetUpcomingDraws());
+    }
+    
+    [HttpGet("past")]
+    public async Task<ActionResult<IEnumerable<Draw>>> GetPastDraws()
+    {
+        return Ok(await drawService.GetPastDraws());
     }
 
     [HttpGet("{drawId:guid}")]
-    public async Task<DrawEntity> GetDraw([Required] Guid drawId)
+    public async Task<ActionResult<DrawEntity>> GetDraw([Required] Guid drawId)
     {
-        return await drawService.GetDraw(drawId);
+        return Ok(await drawService.GetDraw(drawId));
     }
 
     [HttpPost]

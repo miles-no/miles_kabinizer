@@ -9,11 +9,13 @@ public record Period(Guid Id, DateTime PeriodStart, DateTime PeriodEnd, string? 
     {
     }
 
-    public static Period FromObject(PeriodEntity o)
+    public static Period FromObject(PeriodEntity? o)
     {
+        ArgumentNullException.ThrowIfNull(o);
+
         return new Period(o.Id, o.PeriodStart, o.PeriodEnd, o.Title, o.DrawId);
     }
-
+    
     public PeriodEntity ToObject() {
         return new PeriodEntity {
             Id = Id,
