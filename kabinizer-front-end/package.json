@@ -9,7 +9,8 @@
     "test": "vitest",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "generate": "openapi -i http://localhost:5111/swagger/v1/swagger.json -o ./api --useUnionTypes & prettier -w ./api"
+    "generate": "openapi -i https://app-kabinizer-dev.azurewebsites.net/swagger/v1/swagger.json -o ./api --useUnionTypes & prettier -w ./api",
+    "generate:local": "openapi -i http://localhost:5111/swagger/v1/swagger.json -o ./api --useUnionTypes & prettier -w ./api"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.0.4",
