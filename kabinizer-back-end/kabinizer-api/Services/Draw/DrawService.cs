@@ -20,7 +20,7 @@ public class DrawService(EntityContext entityContext, PeriodService periodServic
             DeadlineStart = draw.DeadlineStart,
             DeadlineEnd = draw.DeadlineEnd,
             Title = draw.Title,
-            Periods = periodService.CreatePeriods(drawId, draw.IsSpecial, draw.DrawPeriods),
+            Periods = periodService.CreatePeriods(drawId, draw.DrawPeriods),
             IsSpecial = draw.IsSpecial
         };
         entityContext.Draws.Add(drawEntity);

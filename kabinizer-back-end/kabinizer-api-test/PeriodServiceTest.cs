@@ -8,7 +8,7 @@ namespace kabinizer_api_test;
 public class PeriodServiceTest
 {
     private static readonly EntityContext EntityContext =
-        new EntityContext(new DbContextOptionsBuilder<EntityContext>().UseInMemoryDatabase("test").Options);
+        new(new DbContextOptionsBuilder<EntityContext>().UseInMemoryDatabase("test").Options);
 
     public class CreatePeriods
     {
@@ -23,7 +23,7 @@ public class PeriodServiceTest
             var periodService = new PeriodService(EntityContext);
 
             // Act
-            var periods = periodService.CreatePeriods(Guid.NewGuid(), false, drawPeriods);
+            var periods = periodService.CreatePeriods(Guid.NewGuid(), drawPeriods);
 
             // Assert
             Assert.Equal(new DateOnly(2023, 02, 01), DateOnly.FromDateTime(periods[0].PeriodStart));
@@ -40,7 +40,7 @@ public class PeriodServiceTest
             var periodService = new PeriodService(EntityContext);
 
             // Act
-            var periods = periodService.CreatePeriods(Guid.NewGuid(), false, drawPeriods);
+            var periods = periodService.CreatePeriods(Guid.NewGuid(), drawPeriods);
 
             // Assert
             Assert.Equal(new DateOnly(2023, 03, 31), DateOnly.FromDateTime(periods[^1].PeriodEnd));
@@ -61,7 +61,7 @@ public class PeriodServiceTest
             var periodService = new PeriodService(EntityContext);
 
             // Act
-            var periods = periodService.CreatePeriods(Guid.NewGuid(), false, drawPeriods);
+            var periods = periodService.CreatePeriods(Guid.NewGuid(),  drawPeriods);
 
             // Assert
             Assert.Equal(new DateOnly(2023, 02, 01), DateOnly.FromDateTime(periods[0].PeriodStart));
@@ -82,7 +82,7 @@ public class PeriodServiceTest
             var periodService = new PeriodService(EntityContext);
 
             // Act
-            var periods = periodService.CreatePeriods(Guid.NewGuid(), false, drawPeriods);
+            var periods = periodService.CreatePeriods(Guid.NewGuid(), drawPeriods);
 
             // Assert
             Assert.Equal(new DateOnly(2023, 03, 31), DateOnly.FromDateTime(periods[^1].PeriodEnd));
@@ -110,7 +110,7 @@ public class PeriodServiceTest
             var periodService = new PeriodService(EntityContext);
 
             // Act
-            var periods = periodService.CreatePeriods(Guid.NewGuid(), true, drawPeriods);
+            var periods = periodService.CreatePeriods(Guid.NewGuid(), drawPeriods);
 
             // Assert
             Assert.Equal(new DateOnly(2024, 03, 22), DateOnly.FromDateTime(periods[0].PeriodStart));
