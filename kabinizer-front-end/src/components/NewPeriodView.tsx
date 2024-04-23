@@ -1,7 +1,8 @@
 import Button from "./Button";
 import { CreateDrawDto } from "../../api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DrawService } from "../../api/services/DrawService";
+import checkIfDateIsEmpty from "../components/CheckIfDateIsEmpty";
 
 const NewPeriodView = () => {
   const [draw, setDraw] = useState<CreateDrawDto>({
@@ -11,6 +12,10 @@ const NewPeriodView = () => {
     isSpecial: false,
     drawPeriods: [{ start: "", end: "", title: "" }],
   });
+
+  const [validated, setValidated] = useState(false);
+  const [error, setError] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChangePeriod = (e) => {
     const isSpecial =
@@ -27,11 +32,19 @@ const NewPeriodView = () => {
       (date) => date?.start !== "",
     );
 
+    validate();
+    if (!validated) {
+      setError(true);
+      return;
+    }
+    setError(false);
+    setIsSubmitted(true);
     DrawService.postApiDraw({
       ...draw,
       drawPeriods: specialDates,
     });
   };
+
 
   const addToDrawPeriods = (e, key) => {
     const { name, value } = e.target;
@@ -73,8 +86,25 @@ const NewPeriodView = () => {
     });
   };
 
+  const validate = () => {
+    const { title, deadlineStart, deadlineEnd, drawPeriods } = draw;
+
+    drawPeriods?.map((date) => {
+      if (
+        checkIfDateIsEmpty(date.start) &&
+        checkIfDateIsEmpty(date.end) &&
+        date.title &&
+        title &&
+        checkIfDateIsEmpty(deadlineStart) &&
+        checkIfDateIsEmpty(deadlineEnd)
+      ) {
+        setValidated(true);
+      }
+    });
+  };
+
   return (
-    <div className ="w-full">
+    <div className="w-full">
       <div className="flex flex-col justify-center gap-10 rounded bg-gray-300 p-4">
         <div className="flex flex-col justify-between gap-4">
           <label className="w-20 rounded-xl bg-[#354A71] p-1 text-center">
@@ -174,11 +204,18 @@ const NewPeriodView = () => {
             Add more periods
           </Button>
         </div>
-        <div className="w-20 rounded bg-[#354A71] p-1">
-          <Button size="large" onClick={handleSubmit}>
-            Submit
-          </Button>
-        </div>
+        {!isSubmitted ? (
+          <div className="w-20 rounded bg-[#354A71] p-1">
+            <Button size="large" onClick={handleSubmit}>
+              Submit
+            </Button>
+          </div>
+        ) : (
+          <div className="w-24 rounded bg-[#354A71] p-2 text-green-400">
+            Submitted
+          </div>
+        )}
+        {error && <p className="text-red-500">Please fill in all fields</p>}
       </div>
     </div>
   );

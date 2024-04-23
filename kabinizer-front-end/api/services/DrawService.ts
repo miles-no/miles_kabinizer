@@ -48,7 +48,7 @@ export class DrawService {
       method: "DELETE",
       url: "/api/Draw",
       query: {
-        id: id,
+        drawId: id,
       },
     });
   }

@@ -5,12 +5,13 @@ import { Draw } from "../../api/models/Draw";
 import { format } from "date-fns";
 import checkIfDateIsEmpty from "../components/CheckIfDateIsEmpty";
 
-const EditPeriodView = (props: { draw: Draw }) => {
+const EditPeriodView = (props: { draw: object}) => {
   const { draw } = props;
-  const [tempDraw, setTempDraw] = useState(draw);
+
+  const [tempDraw, setTempDraw] = useState(draw as Draw)
   const [validated, setValidated] = useState(false);
   const [error, setError] = useState(false);
-
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChangePeriod = (e) => {
     const isSpecial =
@@ -45,6 +46,8 @@ const EditPeriodView = (props: { draw: Draw }) => {
       setError(true);
       return;
     }
+    setError(false);
+    setIsSubmitted(true);
     try {
       DrawService.putApiDraw(tempDraw);
     } catch (error) {
@@ -104,11 +107,11 @@ const EditPeriodView = (props: { draw: Draw }) => {
         },
       ],
     });
-  }
+  };
 
   return (
     <div className="w-full">
-      <div className="flex flex-col justify-center gap-10 rounded bg-gray-300 p-4">
+      <div className="flex flex-col justify-center items-center gap-10 rounded bg-gray-300 p-4">
         <div className="flex flex-col justify-between gap-4">
           <label className="w-20 rounded-xl bg-[#354A71] p-1 text-center">
             Draw title
@@ -129,7 +132,7 @@ const EditPeriodView = (props: { draw: Draw }) => {
           <input
             className="w-56 rounded bg-white p-1 text-justify  text-black"
             type="date"
-            value={formatStupidDate(tempDraw.start)}
+            value={formatStupidDate(tempDraw?.start)}
             name="start"
             id="start"
             onChange={handleChangePeriod}
@@ -142,7 +145,7 @@ const EditPeriodView = (props: { draw: Draw }) => {
           <input
             className="text-between w-56 rounded bg-white p-1  text-black"
             type="date"
-            value={formatStupidDate(tempDraw.end)}
+            value={formatStupidDate(tempDraw?.end)}
             name="end"
             id="end"
             onChange={handleChangePeriod}
@@ -210,11 +213,17 @@ const EditPeriodView = (props: { draw: Draw }) => {
           </Button>
         </div>
         {error && <p className="text-red-500">Please fill in all fields</p>}
-        <div className="w-20 rounded bg-[#354A71] p-1">
-          <Button size="large" onClick={handleSubmit}>
-            Submit
-          </Button>
-        </div>
+        {!isSubmitted ? (
+          <div className="w-20 rounded bg-[#354A71] p-1">
+            <Button size="large" onClick={handleSubmit}>
+              Submit
+            </Button>
+          </div>
+        ) : (
+          <div className="w-24 rounded bg-[#354A71] p-2 text-green-400">
+            Submitted
+          </div>
+        )}
       </div>
     </div>
   );

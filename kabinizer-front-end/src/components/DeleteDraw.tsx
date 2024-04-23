@@ -31,7 +31,11 @@ const DeleteDraw = ({ draw }: { draw: Array<Draw> }) => {
       {draw?.map((draws) => (
         <div key={draws.id} className="flex flex-col items-center gap-4">
           <div className="flex flex-row items-center gap-3">
-            <button onClick={wantToEdit }  className="rounded hover:bg-green-700">
+            <button
+              key={draws.id}
+              onClick={() => wantToEdit()}
+              className="rounded hover:bg-green-700"
+            >
               <Editicon />
             </button>
             <div className="font-poppins flex w-full flex-col items-start gap-2 rounded bg-[#354A71] p-4 text-white">
