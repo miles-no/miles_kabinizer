@@ -31,8 +31,21 @@ const NewPeriodView = () => {
     const specialDates = draw?.drawPeriods?.filter(
       (date) => date?.start !== "",
     );
+    const { title, deadlineStart, deadlineEnd, drawPeriods } = draw;
 
-    validate();
+    drawPeriods?.map((date) => {
+      if (
+        checkIfDateIsEmpty(date.start) &&
+        checkIfDateIsEmpty(date.end) &&
+        date.title &&
+        title &&
+        checkIfDateIsEmpty(deadlineStart) &&
+        checkIfDateIsEmpty(deadlineEnd)
+      ) {
+        setValidated(true);
+      }
+    });
+
     if (!validated) {
       setError(true);
       return;
@@ -44,7 +57,6 @@ const NewPeriodView = () => {
       drawPeriods: specialDates,
     });
   };
-
 
   const addToDrawPeriods = (e, key) => {
     const { name, value } = e.target;
@@ -86,26 +98,9 @@ const NewPeriodView = () => {
     });
   };
 
-  const validate = () => {
-    const { title, deadlineStart, deadlineEnd, drawPeriods } = draw;
-
-    drawPeriods?.map((date) => {
-      if (
-        checkIfDateIsEmpty(date.start) &&
-        checkIfDateIsEmpty(date.end) &&
-        date.title &&
-        title &&
-        checkIfDateIsEmpty(deadlineStart) &&
-        checkIfDateIsEmpty(deadlineEnd)
-      ) {
-        setValidated(true);
-      }
-    });
-  };
-
   return (
     <div className="w-full">
-      <div className="flex flex-col justify-center gap-10 rounded bg-gray-300 p-4">
+      <div className="flex flex-col justify-center items-center gap-10 rounded bg-gray-300 p-4">
         <div className="flex flex-col justify-between gap-4">
           <label className="w-20 rounded-xl bg-[#354A71] p-1 text-center">
             Draw title

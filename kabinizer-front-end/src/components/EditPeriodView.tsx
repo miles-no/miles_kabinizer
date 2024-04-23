@@ -1,21 +1,21 @@
 import Button from "./Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DrawService } from "../../api/services/DrawService";
 import { Draw } from "../../api/models/Draw";
 import { format } from "date-fns";
 import checkIfDateIsEmpty from "../components/CheckIfDateIsEmpty";
 
-const EditPeriodView = (props: { draw: object}) => {
+const EditPeriodView = (props: { draw: object }) => {
   const { draw } = props;
 
-  const [tempDraw, setTempDraw] = useState(draw as Draw)
+  const [tempDraw, setTempDraw] = useState(draw as Draw);
   const [validated, setValidated] = useState(false);
   const [error, setError] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChangePeriod = (e) => {
     const isSpecial =
-      e.target.name === "isSpecial" ? e.target.checked : draw.isSpecial;
+      e.target.name === "isSpecial" ? e.target.checked : draw?.isSpecial;
     setTempDraw({
       ...tempDraw,
       [e.target.name]: e.target.value,
@@ -23,7 +23,7 @@ const EditPeriodView = (props: { draw: object}) => {
     });
   };
 
-  const validate = () => {
+  const handleSubmit = () => {
     const { title, start, end, periods } = tempDraw;
 
     periods?.map((date) => {
@@ -38,10 +38,7 @@ const EditPeriodView = (props: { draw: object}) => {
         setValidated(true);
       }
     });
-  };
 
-  const handleSubmit = () => {
-    validate();
     if (!validated) {
       setError(true);
       return;
@@ -111,7 +108,7 @@ const EditPeriodView = (props: { draw: object}) => {
 
   return (
     <div className="w-full">
-      <div className="flex flex-col justify-center items-center gap-10 rounded bg-gray-300 p-4">
+      <div className="flex flex-col items-center justify-center gap-10 rounded bg-gray-300 p-4">
         <div className="flex flex-col justify-between gap-4">
           <label className="w-20 rounded-xl bg-[#354A71] p-1 text-center">
             Draw title
@@ -224,6 +221,9 @@ const EditPeriodView = (props: { draw: object}) => {
             Submitted
           </div>
         )}
+        <label className="w-full rounded bg-[#354A71] p-1 text-center">
+          <hr />
+        </label>
       </div>
     </div>
   );
