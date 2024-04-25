@@ -3,6 +3,7 @@ import { CreateDrawDto } from "../../api";
 import { useEffect, useState } from "react";
 import { DrawService } from "../../api/services/DrawService";
 import checkIfDateIsEmpty from "../components/CheckIfDateIsEmpty";
+import { debug } from "console";
 
 const NewPeriodView = () => {
   const [draw, setDraw] = useState<CreateDrawDto>({
@@ -27,35 +28,48 @@ const NewPeriodView = () => {
     });
   };
 
-  const handleSubmit = () => {
-    const specialDates = draw?.drawPeriods?.filter(
-      (date) => date?.start !== "",
-    );
-    const { title, deadlineStart, deadlineEnd, drawPeriods } = draw;
+  const validate = () => {
+    const { deadlineStart, deadlineEnd, drawPeriods } = draw;
 
     drawPeriods?.map((date) => {
       if (
         checkIfDateIsEmpty(date.start) &&
         checkIfDateIsEmpty(date.end) &&
-        date.title &&
-        title &&
         checkIfDateIsEmpty(deadlineStart) &&
         checkIfDateIsEmpty(deadlineEnd)
       ) {
         setValidated(true);
+        setError(false);
+      }
+      if (Number(date?.start) < Number(date?.end) - 7 && !date.title) {
+        setValidated(false);
+        setError(true);
       }
     });
 
     if (!validated) {
       setError(true);
-      return;
     }
-    setError(false);
-    setIsSubmitted(true);
-    DrawService.postApiDraw({
-      ...draw,
-      drawPeriods: specialDates,
-    });
+  };
+  useEffect(() => {}, [error]);
+
+  const handleSubmit = () => {
+    const specialDates = draw?.drawPeriods?.filter(
+      (date) => date?.start !== "",
+    );
+    validate();
+    if (!validated) {
+    }
+    try {
+      DrawService.postApiDraw({
+        ...draw,
+        drawPeriods: specialDates,
+      });
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error(error);
+      setIsSubmitted(false);
+    }
   };
 
   const addToDrawPeriods = (e, key) => {
@@ -100,7 +114,7 @@ const NewPeriodView = () => {
 
   return (
     <div className="w-full">
-      <div className="flex flex-col justify-center items-center gap-10 rounded bg-gray-300 p-4">
+      <div className="flex flex-col items-center justify-center gap-10 rounded bg-gray-300 p-4">
         <div className="flex flex-col justify-between gap-4">
           <label className="w-20 rounded-xl bg-[#354A71] p-1 text-center">
             Draw title
@@ -124,6 +138,7 @@ const NewPeriodView = () => {
             name="deadlineStart"
             id="deadlineStart"
             onChange={handleChangePeriod}
+            required={true}
           />
         </div>
         <div className="flex flex-col justify-between gap-4">
@@ -199,18 +214,21 @@ const NewPeriodView = () => {
             Add more periods
           </Button>
         </div>
-        {!isSubmitted ? (
-          <div className="w-20 rounded bg-[#354A71] p-1">
-            <Button size="large" onClick={handleSubmit}>
-              Submit
-            </Button>
-          </div>
+
+        <div className="w-20 rounded bg-[#354A71] p-1">
+          <Button size="large" onClick={handleSubmit}>
+            Submit
+          </Button>
+        </div>
+        {/*  {!isSubmitted ? (
         ) : (
           <div className="w-24 rounded bg-[#354A71] p-2 text-green-400">
             Submitted
           </div>
+        )} */}
+        {!validated && (
+          <p className="text-red-500">Please fill in all fields</p>
         )}
-        {error && <p className="text-red-500">Please fill in all fields</p>}
       </div>
     </div>
   );

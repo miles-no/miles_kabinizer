@@ -44,11 +44,13 @@ const EditPeriodView = (props: { draw: object }) => {
       return;
     }
     setError(false);
-    setIsSubmitted(true);
+    
     try {
       DrawService.putApiDraw(tempDraw);
+      setIsSubmitted(true);
     } catch (error) {
       console.error(error);
+      setIsSubmitted(false);
     }
   };
 
