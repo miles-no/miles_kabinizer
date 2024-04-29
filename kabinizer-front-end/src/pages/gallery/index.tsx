@@ -5,27 +5,27 @@ export default function Gallery() {
         <img
           alt="Hytte utendørs"
           className="h-full w-full transform object-cover transition-transform duration-200 group-hover:scale-105"
-          src="/hytta1.jpeg"
+          src="/gallery/hytta1.jpeg"
         />
         <img
           alt="Hytt utendørs nærbilde"
           className="h-full w-full transform object-cover transition-transform duration-200 group-hover:scale-105"
-          src="/hytta2.jpeg"
+          src="/gallery/hytta2.jpeg"
         />
         <img
           alt="Hytte utendørs side"
           className="h-full w-full transform object-cover transition-transform duration-200 group-hover:scale-105"
-          src="/hytta3.jpeg"
+          src="/gallery/hytta3.jpeg"
         />
         <img
           alt="Hytte innendørs stue"
           className="h-full w-full transform object-cover transition-transform duration-200 group-hover:scale-105"
-          src="/hytta4.jpeg"
+          src="/gallery/hytta4.jpeg"
         />
         <img
           alt="Hytte innendørs soverom"
           className="h-full w-full transform object-cover transition-transform duration-200 group-hover:scale-105"
-          src="/hytta5.jpeg"
+          src="/gallery/hytta5.jpeg"
         />
       </main>
     </div>
