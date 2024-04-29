@@ -1,66 +1,85 @@
-import "./App.css";
 import Admin from "./pages/admin";
-import Home from "./pages/home";
 import SelectPeriodsView from "./pages/selectPeriods";
-import Navigation from "./modules/Navigation";
 import {
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
-  useMsal,
 } from "@azure/msal-react";
 import Gallery from "./pages/gallery";
-import { useState } from "react";
+import { LoginPage } from "@/LoginPage.tsx";
+import TorjePage from "@/pages/torje.tsx";
+
+function Profile() {
+  return <div>Profile</div>;
+}
+
+const routes = [
+  {
+    path: "/",
+    component: TorjePage,
+    name: "Mine ønsker",
+  },
+  {
+    path: "/select-periods",
+    component: SelectPeriodsView,
+    name: "Select periods",
+  },
+  {
+    path: "/admin",
+    component: Admin,
+    name: "Admin",
+  },
+  {
+    path: "/gallery",
+    component: Gallery,
+    name: "Gallery",
+  },
+  {
+    path: "/profile",
+    component: Profile,
+    name: "Profile",
+  },
+];
 
 const Pages = () => {
-  const showHome = window.location.pathname === "/";
+  // const showHome = window.location.pathname === "/";
   const showSelectPeriods = window.location.pathname === "/select-periods";
   const showAdmin = window.location.pathname === "/admin";
   const showGallery = window.location.pathname === "/gallery";
-
+  const torjePage = window.location.pathname === "/";
   return (
     <>
-      {showHome && <Home />}
+      {/*{showHome && <Home />}*/}
       {showSelectPeriods && <SelectPeriodsView />}
       {showAdmin && <Admin />}
       {showGallery && <Gallery />}
+      {torjePage && <TorjePage />}
     </>
   );
 };
 
 function App() {
   return (
-    <div>
+    <>
       <AuthenticatedTemplate>
-        <div className="flex h-screen w-screen flex-col items-center">
-          <Navigation />
-          <div className="w-full flex-1 pt-16">
-            <Pages />
-          </div>
+        <Pages />
+        <div className="bg-miles-red-900 sticky top-0 flex flex-wrap justify-center gap-2 overflow-scroll p-10">
+          {routes.map((route) => (
+            <a
+              className={
+                "bg-miles-red-500 content-center rounded-full pb-2 pl-4 pr-4 pt-2 font-bold text-white"
+              }
+              href={route.path}
+            >
+              {route.name}
+            </a>
+          ))}
         </div>
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
-        <LogIn />
+        <LoginPage />
       </UnauthenticatedTemplate>
-    </div>
+    </>
   );
 }
-
-const LogIn = () => {
-  const { instance } = useMsal();
-  const [error, setError] = useState<string | null>(null);
-
-  const handleLogin = async () => {
-    await instance.loginRedirect().catch((e) => {
-      setError(e.message);
-    });
-  };
-
-  return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center">
-      <button onClick={handleLogin}>Log in</button>
-      {error && <p>{error}</p>}
-    </div>
-  );
-};
 
 export default App;

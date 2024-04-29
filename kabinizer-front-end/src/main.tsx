@@ -8,9 +8,11 @@ import {
   EventType,
   PublicClientApplication,
 } from "@azure/msal-browser";
-import Providers from "./providers/providers.tsx";
 import { OpenAPI } from "../api";
 import { validateEnvironmentVariables } from "@/utils/validateEnvironmentVariables.tsx";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { MsalProvider } from "@azure/msal-react";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 validateEnvironmentVariables();
 
@@ -55,12 +57,16 @@ msalInstance.initialize().then(() => {
       msalInstance.setActiveAccount(account);
     }
   });
+  const queryClient = new QueryClient();
 
   ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
-      <Providers msalInstance={msalInstance}>
-        <App />
-      </Providers>
+      <QueryClientProvider client={queryClient}>
+        <MsalProvider instance={msalInstance}>
+          <App />
+        </MsalProvider>
+        {/*<ReactQueryDevtools initialIsOpen={false} />*/}
+      </QueryClientProvider>
     </React.StrictMode>,
   );
 });
