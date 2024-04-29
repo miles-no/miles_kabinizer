@@ -1,6 +1,6 @@
 import { StyledCheckBoxWithLabel } from "@/pages/styledCheckBoxWithLabel.tsx";
 import { useState } from "react";
-import { FormCalendar } from "@/pages/formCalendar.tsx";
+import { FormCalendar } from "@/components/formCalendar.tsx";
 import { Form, useLoaderData } from "react-router-dom";
 
 // Note, this is all happening in the browser since we are using an SPA
@@ -11,7 +11,13 @@ export async function loader() {
   return { greeting: "Hello, world!" };
 }
 // eslint-disable-next-line react-refresh/only-export-components
-export async function action({ request, params }) {
+export async function action({
+  request,
+  params,
+}: {
+  request: Request;
+  params: Record<string, string>;
+}) {
   console.log("Running action", { request, params });
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);

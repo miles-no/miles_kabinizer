@@ -38,6 +38,20 @@ export const FormCalendar: React.FC<FormCalendarProps> = ({ year }) => {
     new Date(0, i).toLocaleString("default", { month: "long" }),
   );
 
+  // Track selected weeks as they can span across two months
+  const [selectedWeeks, setSelectedWeeks] = React.useState<Set<number>>(
+    new Set(),
+  );
+  const handleWeekSelect = (week: number, isSelected: boolean) => {
+    const newSelectedWeeks = new Set(selectedWeeks);
+    if (isSelected) {
+      newSelectedWeeks.add(week);
+    } else {
+      newSelectedWeeks.delete(week);
+    }
+    setSelectedWeeks(newSelectedWeeks);
+  };
+
   return (
     <>
       <input type="hidden" name="year" value={year} />
@@ -87,6 +101,8 @@ export const FormCalendar: React.FC<FormCalendarProps> = ({ year }) => {
                     status="Ledig"
                     week={weekNumber}
                     days={week}
+                    selected={selectedWeeks.has(weekNumber)}
+                    onWeekSelect={handleWeekSelect}
                   />
                 );
               })}
@@ -117,17 +133,24 @@ interface WeekRowProps {
   status: string;
   week: number;
   days: (number | null)[];
-  defaultChecked?: boolean;
   disabled?: boolean;
+  selected?: boolean;
+  onWeekSelect?: (week: number, selected: boolean) => void;
 }
 
 export const WeekRow: React.FC<WeekRowProps> = ({
   status,
   week,
   days,
-  defaultChecked,
   disabled,
+  selected,
+  onWeekSelect,
 }) => {
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (onWeekSelect) {
+      onWeekSelect(week, event.target.checked);
+    }
+  };
   return (
     <label className="grid h-10 cursor-pointer grid-cols-12 items-center rounded-xl border-2 border-transparent pl-2 pr-2 checked:border-miles-red-500">
       <p className="col-span-2 truncate text-start text-miles-red-900">
@@ -143,9 +166,10 @@ export const WeekRow: React.FC<WeekRowProps> = ({
         <input
           name={`week-${week}`}
           type="checkbox"
-          defaultChecked={defaultChecked}
-          disabled={disabled}
+          checked={selected}
+          onChange={handleCheckboxChange}
           className="checkbox-primary checkbox"
+          disabled={disabled}
         />
       </div>
     </label>
