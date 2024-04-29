@@ -24,7 +24,6 @@ export const StyledCheckBoxWithLabel = ({
     {title}
     <input
       className="checkbox-primary checkbox"
-      // className="checked:bg-miles-red-900 h-6 w-6 cursor-pointer appearance-none rounded border-2 border-gray-300 checked:border-transparent disabled:cursor-not-allowed disabled:border-transparent disabled:bg-gray-200"
       name={name}
       type="checkbox"
       defaultChecked={defaultChecked}

@@ -12,7 +12,6 @@ import { OpenAPI } from "../api";
 import { validateEnvironmentVariables } from "@/utils/validateEnvironmentVariables.tsx";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MsalProvider } from "@azure/msal-react";
-import { ReactQueryDevtools } from "react-query/devtools";
 
 validateEnvironmentVariables();
 

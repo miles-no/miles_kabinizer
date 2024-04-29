@@ -40,6 +40,7 @@ export const FormCalendar: React.FC<FormCalendarProps> = ({ year }) => {
 
   return (
     <>
+      <input type="hidden" name="year" value={year} />
       {months.map((month, index) => {
         const daysInMonth = getDaysInMonth(index, year);
         const firstDayOfWeek = getFirstDayOfWeek(index, year);

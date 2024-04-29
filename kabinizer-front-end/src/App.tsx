@@ -6,74 +6,55 @@ import {
 } from "@azure/msal-react";
 import Gallery from "./pages/gallery";
 import { LoginPage } from "@/LoginPage.tsx";
-import TorjePage from "@/pages/torje.tsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Root from "@/routes/root.tsx";
+import TorjePage, {
+  loader as torjeLoader,
+  action as torjeAction,
+} from "@/pages/torje.tsx";
 
-function Profile() {
-  return <div>Profile</div>;
-}
-
-const routes = [
+const router = createBrowserRouter([
   {
     path: "/",
-    component: TorjePage,
-    name: "Mine ønsker",
+    element: <Root />,
+  },
+  {
+    path: "/torje",
+    element: <TorjePage />,
+    loader: torjeLoader,
+    action: torjeAction,
   },
   {
     path: "/select-periods",
-    component: SelectPeriodsView,
-    name: "Select periods",
+    element: <SelectPeriodsView />,
   },
   {
     path: "/admin",
-    component: Admin,
-    name: "Admin",
+    element: <Admin />,
   },
   {
     path: "/gallery",
-    component: Gallery,
-    name: "Gallery",
+    element: <Gallery />,
   },
-  {
-    path: "/profile",
-    component: Profile,
-    name: "Profile",
-  },
-];
-
-const Pages = () => {
-  // const showHome = window.location.pathname === "/";
-  const showSelectPeriods = window.location.pathname === "/select-periods";
-  const showAdmin = window.location.pathname === "/admin";
-  const showGallery = window.location.pathname === "/gallery";
-  const torjePage = window.location.pathname === "/";
-  return (
-    <>
-      {/*{showHome && <Home />}*/}
-      {showSelectPeriods && <SelectPeriodsView />}
-      {showAdmin && <Admin />}
-      {showGallery && <Gallery />}
-      {torjePage && <TorjePage />}
-    </>
-  );
-};
+]);
 
 function App() {
   return (
     <>
       <AuthenticatedTemplate>
-        <Pages />
-        <div className="bg-miles-red-900 sticky top-0 flex flex-wrap justify-center gap-2 overflow-scroll p-10">
-          {routes.map((route) => (
-            <a
-              className={
-                "bg-miles-red-500 content-center rounded-full pb-2 pl-4 pr-4 pt-2 font-bold text-white"
-              }
-              href={route.path}
-            >
-              {route.name}
-            </a>
-          ))}
-        </div>
+        <RouterProvider router={router} />
+        {/*<div className="sticky top-0 flex flex-wrap justify-center gap-2 overflow-scroll bg-miles-red-900 p-10">*/}
+        {/*  {routes.map((route) => (*/}
+        {/*    <a*/}
+        {/*      className={*/}
+        {/*        "content-center rounded-full bg-miles-red-500 pb-2 pl-4 pr-4 pt-2 font-bold text-white"*/}
+        {/*      }*/}
+        {/*      href={route.path}*/}
+        {/*    >*/}
+        {/*      {route.name}*/}
+        {/*    </a>*/}
+        {/*  ))}*/}
+        {/*</div>*/}
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
         <LoginPage />

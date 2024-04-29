@@ -1,11 +1,31 @@
 import { StyledCheckBoxWithLabel } from "@/pages/styledCheckBoxWithLabel.tsx";
 import { useState } from "react";
 import { FormCalendar } from "@/pages/formCalendar.tsx";
+import { Form, useLoaderData } from "react-router-dom";
+
+// Note, this is all happening in the browser since we are using an SPA
+
+// eslint-disable-next-line react-refresh/only-export-components
+export async function loader() {
+  console.log("Running loader");
+  return { greeting: "Hello, world!" };
+}
+// eslint-disable-next-line react-refresh/only-export-components
+export async function action({ request, params }) {
+  console.log("Running action", { request, params });
+  const formData = await request.formData();
+  const updates = Object.fromEntries(formData);
+  console.log("Form data", updates);
+  return { greeting: "You just ran an action!" };
+}
 
 const TorjePage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [year, setYear] = useState(new Date().getFullYear());
+
+  // @ts-expect-error - We know greeting is in the loader data
+  const { greeting } = useLoaderData();
 
   return (
     <div className="flex flex-wrap justify-center">
@@ -13,6 +33,9 @@ const TorjePage = () => {
         <div className="sticky top-8">
           <div className=" pb-8 text-4xl font-extrabold text-miles-red-500">
             Kabinizer
+          </div>
+          <div className="p-4 pb-4 pt-4 text-2xl font-extrabold text-red-900">
+            {greeting}
           </div>
           <h1 className="max-w-xl text-3xl font-extrabold text-red-900">
             Hei kollega! <br />
@@ -26,18 +49,19 @@ const TorjePage = () => {
           </h1>
         </div>
       </div>
-      <form
-        onSubmit={(e) => {
-          setIsSubmitting(true);
-          setTimeout(() => {
-            setIsSubmitting(false);
-            setShowSuccess(true);
-            setTimeout(() => {
-              setShowSuccess(false);
-            }, 2000);
-          }, 2000);
-          e.preventDefault();
-        }}
+      <Form
+        method="post"
+        // onSubmit={(e) => {
+        //   setIsSubmitting(true);
+        //   setTimeout(() => {
+        //     setIsSubmitting(false);
+        //     setShowSuccess(true);
+        //     setTimeout(() => {
+        //       setShowSuccess(false);
+        //     }, 2000);
+        //   }, 2000);
+        //   e.preventDefault();
+        // }}
         className="max-w-xl"
       >
         <div className="p-4 pb-4 pt-4">
@@ -49,12 +73,21 @@ const TorjePage = () => {
             Velg ferie
           </h2>
           <div className={" flex flex-col gap-4 pt-6"}>
-            <StyledCheckBoxWithLabel title="Vinterferien" />
-            <StyledCheckBoxWithLabel title="Påskeferien - Første halvdel" />
-            <StyledCheckBoxWithLabel title="Påskeferien - Andre halvdel" />
-            <StyledCheckBoxWithLabel title="Sommer - Fellesferien" />
-            <StyledCheckBoxWithLabel title="Høstferien" />
-            <StyledCheckBoxWithLabel title="Juleferien" />
+            <StyledCheckBoxWithLabel title="Vinterferien" name="vinterferie" />
+            <StyledCheckBoxWithLabel
+              title="Påskeferien - Første halvdel"
+              name="påskeferie-første"
+            />
+            <StyledCheckBoxWithLabel
+              title="Påskeferien - Andre halvdel"
+              name="påskeferie-andre"
+            />
+            <StyledCheckBoxWithLabel
+              title="Sommer - Fellesferien"
+              name="sommer-felles"
+            />
+            <StyledCheckBoxWithLabel title="Høstferien" name="høstferie" />
+            <StyledCheckBoxWithLabel title="Juleferien" name="juleferie" />
             <p className="justify-center p-4 text-center text-red-500">
               NB. Vi ønsker å prioritere ansatte med barn i skolealder for
               vinter- og høstferie.
@@ -87,7 +120,7 @@ const TorjePage = () => {
                 : "Send inn"}
           </button>
         </div>
-      </form>
+      </Form>
     </div>
   );
 };
