@@ -1,6 +1,6 @@
 import { CreateDrawDto } from "../../api";
 import { DrawService } from "../../api/services/DrawService";
-import {  createFormFactory, FieldApi } from "@tanstack/react-form";
+import { createFormFactory, FieldApi } from "@tanstack/react-form";
 
 function FieldInfo({ field }: { field: FieldApi<any, any, any, any> }) {
   return (

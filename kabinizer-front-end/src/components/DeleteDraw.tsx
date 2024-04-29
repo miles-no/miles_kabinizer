@@ -25,8 +25,8 @@ const DeleteDraw = ({ draw }: { draw: Array<Draw> }) => {
 
   return (
     <div className="flex w-full flex-col gap-8 rounded-xl bg-gray-300 p-4">
-      <div className="rounded bg-[#354A71] p-2 ">
-        <h2 className="font-poppins text-lg">Delete draw and period?</h2>
+      <div className="rounded gap-10 bg-[#354A71]  text-center">
+        <h2 className="text-lg h-10 flex w-full items-center justify-center rounded bg-[#354A71] px-4 font-poppins text-white">Delete or edit draw?</h2>
       </div>
       {draw?.map((draws) => (
         <div key={draws.id} className="flex flex-col items-center gap-4">
