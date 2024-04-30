@@ -1,26 +1,31 @@
+/**
+ * ISO 8601 week number of the year
+ * @param date
+ */
 export const getWeekNumber = (date: Date): number => {
-  // Find the first Thursday of the current year
-  const firstThursday = new Date(date.getFullYear(), 0, 1);
-  while (firstThursday.getDay() !== 4) {
-    firstThursday.setDate(firstThursday.getDate() + 1);
+  // Create a copy of the date object
+  const target = new Date(date.valueOf());
+
+  // ISO week date weeks start on Monday, so correct the day number
+  const dayNr = (date.getDay() + 6) % 7;
+
+  // Set the target to the Thursday of this week so the
+  // target year is the year of this week
+  target.setDate(target.getDate() - dayNr + 3);
+
+  // ISO 8601 states that week 1 is the week
+  // with the first Thursday of that year.
+  const firstThursday = target.valueOf();
+
+  // Set the target to the first Thursday of the year
+  // First set the target to January 1st
+  target.setMonth(0, 1);
+  // Not a Thursday? Correct the date to the next Thursday
+  if (target.getDay() !== 4) {
+    target.setMonth(0, 1 + ((4 - target.getDay() + 7) % 7));
   }
 
-  // Determine the start of the first week (Monday before the first Thursday)
-  const firstWeekStart = new Date(firstThursday);
-  firstWeekStart.setDate(firstWeekStart.getDate() - 3); // Move to Monday
-
-  // Calculate the number of days from the first week start to the given date
-  const daysDifference =
-    (date.getTime() - firstWeekStart.getTime()) / (24 * 60 * 60 * 1000);
-
-  // Calculate the number of weeks
-  const weekNumber = Math.floor(daysDifference / 7) + 1;
-
-  // Handle edge case: if the week number is less than 1, it's the last week of the previous year
-  if (weekNumber < 1) {
-    const lastDayOfPreviousYear = new Date(date.getFullYear() - 1, 11, 31);
-    return getWeekNumber(lastDayOfPreviousYear);
-  }
-
-  return weekNumber;
+  // The week-number is the number of weeks between the
+  // first Thursday of the year and the Thursday in the target week.
+  return 1 + Math.ceil((firstThursday - target.valueOf()) / 604800000); // 604800000 = number of milliseconds in a week
 };

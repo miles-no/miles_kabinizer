@@ -1,15 +1,17 @@
 import React from "react";
 
 type WeekRowProps = {
+  name: string;
   status: string;
   week: number;
   days: (number | null)[];
   disabled?: boolean;
   selected?: boolean;
-  onWeekSelect?: (week: number, selected: boolean) => void;
+  onWeekSelect?: (selected: boolean) => void;
 };
 
 export const WeekRow: React.FC<WeekRowProps> = ({
+  name,
   status,
   week,
   days,
@@ -29,12 +31,10 @@ export const WeekRow: React.FC<WeekRowProps> = ({
     ))}
     <div className=" flex justify-end">
       <input
-        name={`week-${week}`}
+        name={name}
         type="checkbox"
         checked={selected}
-        onChange={(event) =>
-          onWeekSelect && onWeekSelect(week, event.target.checked)
-        }
+        onChange={(event) => onWeekSelect && onWeekSelect(event.target.checked)}
         className="checkbox-primary checkbox"
         disabled={disabled}
       />

@@ -3,7 +3,7 @@ import { getDaysInMonth } from "@/utils/getDaysInMonth.ts";
 
 /**
  * Generates a 2D array representing the weeks of a given month and year.
- * Each week is an array of days, where each day is represented by a number (1-31) or null for days outside of the month.
+ * Each week is an array of days, where each day is represented by a number (1-31) or null for days outside the month.
  * The first day of the week is determined by the `getFirstDayOfWeek` function.
  * The number of days in the month is determined by the `getDaysInMonth` function.
  *
@@ -31,7 +31,10 @@ export const generateMonthWeeks = (
   }
 
   // Add the remaining days of the last week of the month, filling the rest of the week with nulls
-  weeks.push([...currentWeek, ...Array(7 - currentWeek.length).fill(null)]);
+  // Only add the last week if it contains any days of the current month
+  if (currentWeek.length > 0) {
+    weeks.push([...currentWeek, ...Array(7 - currentWeek.length).fill(null)]);
+  }
 
   return weeks;
 };
