@@ -1,11 +1,21 @@
-import { getWeekNumber } from "@/utils/getWeekNumber.ts";
-import { WeekHeader } from "@/components/WeekHeader.tsx";
-import { WeekRow } from "@/components/weekRow.tsx";
 import { generateMonthWeeks } from "@/utils/generateMonthWeeks.ts";
-import { monthNames } from "@/utils/monthNames.ts";
 import useToggleSelection from "../../hooks/useToggleSelection.tsx";
+import { monthNames } from "@/utils/monthNames.ts";
+import { WeekHeader } from "@/components/WeekHeader.tsx";
+import { WeekRows } from "@/components/WeekRows.tsx";
+import React from "react";
 
-export const FormCalendar = (props: { year: number }) => {
+/**
+ * FormCalendar component.
+ *
+ * @component
+ *
+ * @param {Object} props - Component props.
+ * @param {number} props.year - The year for which the calendar is being displayed.
+ *
+ * @returns {React.ReactElement} A fragment containing a details element for each month of the year.
+ */
+export const FormCalendar = (props: { year: number }): React.ReactElement => {
   const { selectedItems: selectedWeeks, updateSelectionState } =
     useToggleSelection();
 
@@ -25,56 +35,13 @@ export const FormCalendar = (props: { year: number }) => {
               </summary>
               <div className="flex flex-col gap-2 overflow-auto p-4">
                 <WeekHeader />
-                {weeks.map((week, weekIndex) => {
-                  const weekStartDate = new Date(
-                    props.year,
-                    monthIndex,
-                    weekIndex * 7 + 1,
-                  );
-                  const weekNumber = getWeekNumber(weekStartDate);
-
-                  return (
-                    <WeekRow
-                      name={`${props.year}/${monthIndex + 1}-week#${weekNumber}`}
-                      key={weekIndex}
-                      status="Ledig"
-                      week={weekNumber}
-                      days={week}
-                      selected={selectedWeeks.some((selectedWeek) => {
-                        if (
-                          monthIndex === 0 &&
-                          (weekNumber === 52 || weekNumber === 53)
-                        ) {
-                          return (
-                            selectedWeek.id ===
-                            `${weekNumber}-${props.year - 1}`
-                          );
-                        } else {
-                          return (
-                            selectedWeek.id === `${weekNumber}-${props.year}`
-                          );
-                        }
-                      })}
-                      onWeekSelect={(isSelected) => {
-                        if (
-                          monthIndex === 0 &&
-                          (weekNumber === 52 || weekNumber === 53)
-                        ) {
-                          updateSelectionState(
-                            `${weekNumber}-${props.year - 1}`,
-                            isSelected,
-                          );
-                          return;
-                        } else {
-                          updateSelectionState(
-                            `${weekNumber}-${props.year}`,
-                            isSelected,
-                          );
-                        }
-                      }}
-                    />
-                  );
-                })}
+                <WeekRows
+                  year={props.year}
+                  monthIndex={monthIndex}
+                  selectedWeeks={selectedWeeks}
+                  updateSelectionState={updateSelectionState}
+                  weeks={weeks}
+                />
               </div>
             </details>
           );
