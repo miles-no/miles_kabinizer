@@ -8,10 +8,10 @@ import Gallery from "./pages/gallery";
 import { LoginPage } from "@/LoginPage.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "@/routes/root.tsx";
-import TorjePage, {
-  loader as torjeLoader,
-  action as torjeAction,
-} from "@/pages/torje.tsx";
+import CabinBookingPage, {
+  loader as cabinBookingLoader,
+  action as cabinBookingAction,
+} from "@/pages/CabinBookingPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -19,10 +19,10 @@ const router = createBrowserRouter([
     element: <Root />,
   },
   {
-    path: "/torje",
-    element: <TorjePage />,
-    loader: torjeLoader,
-    action: torjeAction,
+    path: "/cabin-booking",
+    element: <CabinBookingPage />,
+    loader: cabinBookingLoader,
+    action: cabinBookingAction,
   },
   {
     path: "/select-periods",
@@ -44,16 +44,11 @@ function App() {
       <AuthenticatedTemplate>
         <RouterProvider router={router} />
         {/*<div className="sticky top-0 flex flex-wrap justify-center gap-2 overflow-scroll bg-miles-red-900 p-10">*/}
-        {/*  {routes.map((route) => (*/}
-        {/*    <a*/}
-        {/*      className={*/}
-        {/*        "content-center rounded-full bg-miles-red-500 pb-2 pl-4 pr-4 pt-2 font-bold text-white"*/}
-        {/*      }*/}
-        {/*      href={route.path}*/}
-        {/*    >*/}
-        {/*      {route.name}*/}
-        {/*    </a>*/}
-        {/*  ))}*/}
+        {/*  <Link to="/">Home</Link>*/}
+        {/*  <Link to="/cabin-booking">Cabin Booking</Link>*/}
+        {/*  <Link to="/select-periods">Select Periods</Link>*/}
+        {/*  <Link to="/admin">Admin</Link>*/}
+        {/*  <Link to="/gallery">Gallery</Link>*/}
         {/*</div>*/}
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>

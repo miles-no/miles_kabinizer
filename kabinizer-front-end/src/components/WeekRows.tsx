@@ -1,6 +1,7 @@
 import { getWeekNumber } from "@/utils/getWeekNumber.ts";
 import { WeekRow } from "@/components/WeekRow.tsx";
 import React from "react";
+import { Weeks } from "@/utils/createWeeksForMonth.ts";
 
 /**
  * WeekRows component.
@@ -12,7 +13,7 @@ import React from "react";
  * @param {number} props.monthIndex - The index of the month for which the weeks are being displayed.
  * @param {Array} props.selectedWeeks - An array of objects, each containing an id of a selected week.
  * @param {Function} props.updateSelectionState - A function to update the selection state of a week.
- * @param {Array} props.weeks - A 2D array representing the weeks of a month and the days in each week.
+ * @param {Weeks} props.weeks - A 2D array representing the weeks of a month and the days in each week.
  *
  * @returns {React.ReactElement} A fragment containing a WeekRow component for each week in the weeks array.
  */
@@ -21,7 +22,7 @@ export const WeekRows = (props: {
   monthIndex: number;
   selectedWeeks: { id: string }[];
   updateSelectionState: (id: string, isSelected: boolean) => void;
-  weeks: (number | null)[][];
+  weeks: Weeks;
 }): React.ReactElement => {
   const { year, monthIndex, selectedWeeks, updateSelectionState, weeks } =
     props;

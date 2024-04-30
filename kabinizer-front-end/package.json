@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "test": "vitest",
+    "bench": "vitest bench",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "generate": "openapi -i https://app-kabinizer-dev.azurewebsites.net/swagger/v1/swagger.json -o ./api --useUnionTypes & prettier -w ./api",

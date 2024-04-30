@@ -1,4 +1,4 @@
-import { generateMonthWeeks } from "@/utils/generateMonthWeeks.ts";
+import { createWeeksForMonth } from "@/utils/createWeeksForMonth.ts";
 import useToggleSelection from "../../hooks/useToggleSelection.tsx";
 import { monthNames } from "@/utils/monthNames.ts";
 import { WeekHeader } from "@/components/WeekHeader.tsx";
@@ -23,7 +23,7 @@ export const FormCalendar = (props: { year: number }): React.ReactElement => {
     <>
       {Array.from({ length: 12 }, (_, monthIndex) => {
         {
-          const weeks = generateMonthWeeks(monthIndex, props.year);
+          const weeks = createWeeksForMonth(monthIndex, props.year);
 
           return (
             <details

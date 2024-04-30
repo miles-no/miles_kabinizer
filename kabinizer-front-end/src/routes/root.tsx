@@ -8,7 +8,7 @@ export default function Root() {
         <nav>
           <ul>
             <li>
-              <Link to="/torje">Torje</Link>
+              <Link to="/cabin-booking">Cabin booking</Link>
             </li>
           </ul>
           <ul>
