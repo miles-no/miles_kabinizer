@@ -51,7 +51,7 @@ const Admin = () => {
               </h2>
             </div>
             <Button size="large" onClick={mutate}>
-              DOWNLOAD
+              Download
             </Button>
           </div>
         </div>

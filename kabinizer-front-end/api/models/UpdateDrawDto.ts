@@ -7,7 +7,6 @@ import type { UpdatePeriod } from "./UpdatePeriod";
 
 export type UpdateDrawDto = {
   id?: string | null;
-  start?: string;
   end?: string;
   title?: string | null;
   isSpecial?: boolean;
