@@ -10,7 +10,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "@/routes/root.tsx";
 import CabinBookingPage, {
   loader as cabinBookingLoader,
-  action as cabinBookingAction,
 } from "@/pages/CabinBookingPage.tsx";
 
 const router = createBrowserRouter([
@@ -22,7 +21,7 @@ const router = createBrowserRouter([
     path: "/cabin-booking",
     element: <CabinBookingPage />,
     loader: cabinBookingLoader,
-    action: cabinBookingAction,
+    // action: cabinBookingAction,
   },
   {
     path: "/select-periods",
