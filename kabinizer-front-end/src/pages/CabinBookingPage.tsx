@@ -34,9 +34,9 @@ const CabinBookingPage = () => {
   const { year } = useLoaderData();
 
   return (
-    <div className="flex flex-wrap justify-center p-4">
-      <div className="flex-grow ">
-        <div className="sticky top-8 xl:pr-4">
+    <div className="flex flex-wrap justify-center p-4 xl:flex-nowrap">
+      <div className="max-w-xl flex-grow">
+        <div className="sticky top-8 xl:pr-8">
           <Logo />
           <h1 className="max-w-xl text-3xl font-extrabold text-red-900">
             Hei kollega! <br />
@@ -57,7 +57,7 @@ const CabinBookingPage = () => {
           }, 2000);
           e.preventDefault();
         }}
-        className="max-w-xl"
+        className="max-w-xl flex-grow"
       >
         <div className="pb-4 pt-4">
           <h2
@@ -72,7 +72,7 @@ const CabinBookingPage = () => {
             hensyn til ansatte med barn i skolealder når vi gjennomfører
             trekkingen for vinter- og høstferie.
           </p>
-          <div className={" flex flex-col gap-4 pt-6"}>
+          <div className={"flex flex-col gap-4 pt-6"}>
             <StyledCheckBoxWithLabel title="Vinterferien" name="vinterferie" />
             <StyledCheckBoxWithLabel
               title="Påskeferien - Første halvdel"
