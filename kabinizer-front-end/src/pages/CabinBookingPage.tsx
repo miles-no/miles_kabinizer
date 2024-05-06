@@ -1,7 +1,8 @@
-import { StyledCheckBoxWithLabel } from "@/pages/styledCheckBoxWithLabel.tsx";
+import { StyledCheckBoxWithLabel } from "@/components/StyledCheckBoxWithLabel.tsx";
 import { useState } from "react";
-import { FormCalendar } from "@/components/formCalendar.tsx";
+import { FormCalendar } from "@/components/FormCalendar.tsx";
 import { Form, useLoaderData } from "react-router-dom";
+import Logo from "@/components/Logo.tsx";
 
 // Note, this is all happening in the browser since we are using an SPA
 
@@ -29,28 +30,17 @@ const CabinBookingPage = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   // const [year, setYear] = useState(new Date().getFullYear());
 
+  // @ts-expect-error - we know this is in the loader data
   const { year } = useLoaderData();
 
   return (
     <div className="flex flex-wrap justify-center p-4">
-      <div className="xl:pr-4">
-        <div className="sticky top-8">
-          <div className=" pb-8 text-4xl font-extrabold text-miles-red-500">
-            Kabinizer
-          </div>
-          {/*<div className="p-4 pb-4 pt-4 text-2xl font-extrabold text-red-900">*/}
-          {/*  {greeting}*/}
-          {/*</div>*/}
+      <div className="flex-grow ">
+        <div className="sticky top-8 xl:pr-4">
+          <Logo />
           <h1 className="max-w-xl text-3xl font-extrabold text-red-900">
             Hei kollega! <br />
             Velg når du ønsker å bruke Miles-hytten
-            {/*i*/}
-            {/*<input*/}
-            {/*  className="input-number input input-md"*/}
-            {/*  type="number"*/}
-            {/*  value={year}*/}
-            {/*  onChange={(e) => setYear(parseInt(e.target.value))}*/}
-            {/*/>*/}
           </h1>
         </div>
       </div>
@@ -77,7 +67,7 @@ const CabinBookingPage = () => {
           >
             Velg ferier i {year}
           </h2>
-          <p className="  text-miles-red-900">
+          <p className="text-miles-red-900">
             Her kan du kan velge så mange ferier du vil. Vi ønsker å ta ekstra
             hensyn til ansatte med barn i skolealder når vi gjennomfører
             trekkingen for vinter- og høstferie.
