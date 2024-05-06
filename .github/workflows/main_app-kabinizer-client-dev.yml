@@ -15,20 +15,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: latest 
 
       - name: Set up Node.js version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
-          node-version: "18.x"
+          node-version: 'lts/*'
 
-      - name: bun install, build
+      - name: npm install, build
         run: |
           cd kabinizer-front-end
-          bun install
-          bun run build
+          npm install
+          npm run build
           rm -rf node_modules
 
       - name: Upload artifact for deployment job
