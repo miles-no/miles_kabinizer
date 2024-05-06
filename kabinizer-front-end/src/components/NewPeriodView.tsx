@@ -43,7 +43,7 @@ const NewPeriodView = () => {
         >
           <div className="flex flex-col justify-between gap-4">
             <label className=" rounded-xl bg-[#354A71] p-1 text-center">
-              Draw title
+              Trekning tittel
             </label>
             <form.Field
               name="title"
@@ -76,7 +76,7 @@ const NewPeriodView = () => {
 
           <div className="flex flex-col justify-between gap-4">
             <label className="whitespace-nowrap rounded-xl bg-[#354A71] p-1 text-center">
-              Deadline to
+              Frist
             </label>
             <form.Field
               name="deadlineEnd"
@@ -109,7 +109,7 @@ const NewPeriodView = () => {
           </div>
           <div className="flex flex-col justify-between gap-4">
             <label className="whitespace-nowrap rounded-xl bg-[#354A71] p-1 text-center">
-              Is special draw?
+              Er det en spesiell trekning?
             </label>
             <form.Field
               name="isSpecial"
@@ -162,7 +162,7 @@ const NewPeriodView = () => {
                             return (
                               <div className="flex flex-col justify-between gap-4">
                                 <label className="whitespace-nowrap rounded-xl bg-[#354A71] p-1 text-center">
-                                  Period from?
+                                  Periode fra?
                                 </label>
                                 <input
                                   className="w-56 rounded bg-white p-1 text-justify text-black"
@@ -200,7 +200,7 @@ const NewPeriodView = () => {
                             return (
                               <div className="flex flex-col justify-between gap-4">
                                 <label className="whitespace-nowrap rounded-xl bg-[#354A71] p-1 text-center">
-                                  Period to?
+                                  Periode til?
                                 </label>
                                 <input
                                   className="w-56 rounded bg-white p-1 text-justify text-black"
@@ -222,7 +222,7 @@ const NewPeriodView = () => {
                             return (
                               <div className="flex flex-col justify-between gap-4">
                                 <label className="whitespace-nowrap rounded-xl bg-[#354A71] p-1 text-center">
-                                  Period title?
+                                  Periode tittel?
                                 </label>
                                 <input
                                   className="w-56 rounded bg-white p-1 text-justify text-black"
@@ -251,7 +251,7 @@ const NewPeriodView = () => {
                       }
                       type="button"
                     >
-                      Add period
+                      Legg til periode
                     </button>
                   </div>
                 </div>
@@ -265,12 +265,12 @@ const NewPeriodView = () => {
               <div className="mt-8 flex gap-8">
                 <div className="w-20 rounded bg-[#354A71] p-1 text-center hover:bg-blue-700">
                   <button type="submit" disabled={!canSubmit}>
-                    {isSubmitting ? "..." : "Submit"}
+                    {isSubmitting ? "..." : "Send inn"}
                   </button>
                 </div>
                 <div className="w-20 rounded bg-[#354A71] p-1 text-center hover:bg-blue-700">
                   <button type="reset" onClick={() => form.reset()}>
-                    Reset
+                    Slett
                   </button>
                 </div>
               </div>

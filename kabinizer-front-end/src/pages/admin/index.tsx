@@ -47,17 +47,17 @@ const Admin = () => {
           <div className="w-22 flex w-full flex-col items-center gap-4">
             <div className="rounded bg-[#354A71] p-1 ">
               <h2 className="font-poppins text-lg">
-                Download selected periods
+                Last ned perioder
               </h2>
             </div>
             <Button size="large" onClick={mutate}>
-              Download
+              Last ned
             </Button>
           </div>
         </div>
         <div className="rounded flex w-full flex-col justify-center gap-10 bg-gray-300 p-4">
           <Button size="large" onClick={generateNewPeriod}>
-            Generate new period
+            Legg til nye perioder
           </Button>
         </div>
         {showNewPeriodView && <NewPeriodView />}
