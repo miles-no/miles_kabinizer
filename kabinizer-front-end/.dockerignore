@@ -1,0 +1,13 @@
+### react template
+.DS_*
+*.log
+logs
+**/*.backup.*
+**/*.back.*
+
+node_modules
+
+psd
+thumb
+sketch
+
