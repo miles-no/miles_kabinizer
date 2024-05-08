@@ -12,7 +12,12 @@
       "src": "/maskable_icon.png",
       "sizes": "1024x1024",
       "type": "image/png",
-      "purpose": "any maskable"
+    },
+    {
+      "src": "/maskable_icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "/android-chrome-192x192.png",
@@ -23,6 +28,22 @@
       "src": "/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "richer-install-assets/richer-install-screenshot-wide.png",
+      "sizes": "2048x1024",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Kabinizer - Splash Screen"
+    },
+    {
+      "src": "richer-install-assets/richer-install-screenshot-narrow.png",
+      "sizes": "1024x2048",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Kabinizer - Splash Screen"
     }
   ]
 }
