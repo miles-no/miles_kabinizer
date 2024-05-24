@@ -1,16 +1,29 @@
-# Kabinizer: Your Cabin Booking Solution
+# Hytte.ro: Your Cabin Booking Solution
 
-Welcome to Kabinizer, a comprehensive solution for cabin booking based in Stavanger. This project is designed to
-streamline the process of booking and managing cabin reservations, making it easier for both administrators and users.
+Welcome to Hytte.ro, a comprehensive solution for cabin booking based in Stavanger. This project is designed to streamline the process of booking and managing cabin reservations, making it easier for both administrators and users. 
+
+You can view the design and user interface prototype for Hytte.ro on Figma [here](https://www.figma.com/design/uq5qeXZh25cjfIaOtZmtXy/Kabinizer-%E2%9C%A8-Enhanced-%F0%9F%A7%9A?node-id=0%3A1&t=aQ2dogROHVA1RqDf-1).
 
 Before you get started, please review the overview and architecture of the system. 
 
 If you have any questions or need assistance, please don't hesitate to reach out to the project team on slack or
 email [kabinizer-support-aaaamw5kclgfndz6ufcdnfxbfq@miles-no.slack.com](mailto:kabinizer-support-aaaamw5kclgfndz6ufcdnfxbfq@miles-no.slack.com).
 
+## Why Hytte.ro?
+
+The previous name, "Kabinizer," used "kabin," which typically refers to an airplane cabin or a ship's cabin. That didn’t quite hit the mark. 
+
+Sure, "Kabinizer" sounded good when spoken out loud, but it didn't quite capture the cozy cabin vibes we were aiming for. So, we decided to switch things up and find a name that truly resonates with our vision. That's when "Hytte.ro" came into play! 
+
+After a few caffeine-fueled searches, we stumbled upon the TLD “.ro,” and it just clicked.
+
+In Norwegian, "hytte" means "cabin," perfectly capturing the essence of what we're all about. Plus, the ".ro" ending? It exudes calm and peace (literally, "ro" means "peace" in Norwegian). 
+
+So, here we are, all set to offer you the slickest, friendliest cabin booking solution out there.
+
 ## System Overview and Architecture
 
-Kabinizer's main aim is to organize cabin raffles in the Stavanger area. Users can request a specific period, and once
+Hytte.ro's main aim is to organize cabin raffles in the Stavanger area. Users can request a specific period, and once
 the deadline is reached, the system randomly picks a user to be awarded that period.
 
 The system is designed with administrators in mind, making it easy for them to keep track of requests and allocations.
@@ -22,7 +35,7 @@ Here's a simple "ER"-ish diagram of the system to help you get a grip on the sys
 
 ```mermaid
 ---
-title: ER-ish diagram of Kabinizer (In theory how the system should work)
+title: ER-ish diagram of Hytte.ro (In theory how the system should work)
 ---
 erDiagram
     Draw {
@@ -62,7 +75,7 @@ For more details, please refer to the [kabinizer-front-end](kabinizer-front-end/
 
 [![Build and deploy ASP.Net Core app to Azure Web App - app-kabinizer-dev](https://github.com/miles-no/miles_kabinizer/actions/workflows/main_app-kabinizer-dev.yml/badge.svg)](https://github.com/miles-no/miles_kabinizer/actions/workflows/main_app-kabinizer-dev.yml)
 
-The backend of Kabinizer is a controller-based .NET 8 web API, utilizing Entity Framework as an object-relational
+The backend of Hytte.ro is a controller-based .NET 8 web API, utilizing Entity Framework as an object-relational
 mapper (ORM). It includes a Docker Compose file for setting up a SQL Server database, making it easy to manage and
 access data.
 

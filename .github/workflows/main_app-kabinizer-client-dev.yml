@@ -14,25 +14,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: latest 
+      - uses: actions/checkout@v4
 
       - name: Set up Node.js version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: "18.x"
+          node-version: 'lts/*'
 
-      - name: bun install, build
+      - name: npm install, build
         run: |
           cd kabinizer-front-end
-          bun install
-          bun run build
+          npm install
+          npm run build
           rm -rf node_modules
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: node-app
           path: ./kabinizer-front-end/dist
@@ -46,7 +43,7 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: node-app
 
