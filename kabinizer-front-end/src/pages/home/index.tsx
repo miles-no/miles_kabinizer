@@ -19,7 +19,7 @@ const Welcome = () => {
           <h1 className="text-3xl font-bold tracking-tighter md:text-5xl">
             Velkommen til Tjørhomfjellet
           </h1>
-          <p className="max-w-[600px] text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+          <p className="max-w-[600px] text-gray-100 dark:text-gray-100 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
             I Miles Stavanger/Haugesund har vi tilgang til en flott firmahytte
             på Tjørhomfjellet i Sirdal, kun 1,5 time fra Stavanger. Her kan du
             ta med familie og venner og nyte alle årstider 😀
@@ -54,10 +54,10 @@ const Location = () => {
         </h2>
         <div className="flex flex-col gap-4">
           <div className="flex flex-col justify-center space-y-4">
-            <p className="text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            <p className="text-gray-100 dark:text-gray-100 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Odden 7D, 4443 Tjørhom
             </p>
-            <p className="text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            <p className="text-gray-100 dark:text-gray-100 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Kjør inn til Tjørhom fjellet og ta første vei til høyre. Følg
               veien helt til endes. (du passerer stolheisen på venstre side)
               Hytten ligger på nederste rad, merket med Miles skilt utenfor
@@ -95,7 +95,7 @@ const Activeties = () => {
             <h3 className="text-2xl font-bold tracking-tighter sm:text-3xl">
               Vinter aktiviteter
             </h3>
-            <ul className="list-inside list-disc text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            <ul className="list-inside list-disc text-gray-100 dark:text-gray-100 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               <li>Alpinanlegg med stolheis, tallerkenheis og tautrekk</li>
               <li>Langrennsløyper</li>
               <li>Opplyst akebakke</li>
@@ -106,7 +106,7 @@ const Activeties = () => {
             <h3 className="text-2xl font-bold tracking-tighter sm:text-3xl">
               Sommer, vår, høst
             </h3>
-            <ul className="list-inside list-disc text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            <ul className="list-inside list-disc text-gray-100 dark:text-gray-100 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               <li>Vannpark</li>
               <li>Klatrepark</li>
               <li>Sommerheis</li>
@@ -142,7 +142,7 @@ const ImportantInformation = () => {
             <h3 className="text-2xl font-bold tracking-tighter sm:text-3xl">
               Hva du må ta med
             </h3>
-            <ul className="list-inside list-disc text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            <ul className="list-inside list-disc text-gray-100 dark:text-gray-100 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               <li>Sengetøy</li>
               <li>Håndklær</li>
               <li>Kjøkkenhåndklær</li>
@@ -152,7 +152,7 @@ const ImportantInformation = () => {
             <h3 className="text-2xl font-bold tracking-tighter sm:text-3xl">
               Regler
             </h3>
-            <ul className="list-inside list-disc text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            <ul className="list-inside list-disc text-gray-100 dark:text-gray-100 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               <li>
                 Firbente venner får lov til å bli med på hytta, men de får ikke
                 være i sofa/senger!

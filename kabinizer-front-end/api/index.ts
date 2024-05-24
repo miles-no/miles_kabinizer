@@ -7,16 +7,15 @@ export { CancelablePromise, CancelError } from "./core/CancelablePromise";
 export { OpenAPI } from "./core/OpenAPI";
 export type { OpenAPIConfig } from "./core/OpenAPI";
 
-export type { BookingRequestDto } from "./models/BookingRequestDto";
+export type { BookingRequest } from "./models/BookingRequest";
 export type { CreateBookingRequestDto } from "./models/CreateBookingRequestDto";
 export type { CreateDrawDto } from "./models/CreateDrawDto";
 export type { Draw } from "./models/Draw";
-export type { DrawEntity } from "./models/DrawEntity";
 export type { DrawPeriod } from "./models/DrawPeriod";
 export type { Period } from "./models/Period";
-export type { PeriodEntity } from "./models/PeriodEntity";
-export type { ProblemDetails } from "./models/ProblemDetails";
-export type { ReadPeriodDto } from "./models/ReadPeriodDto";
+export type { UpdateDrawDto } from "./models/UpdateDrawDto";
+export type { UpdatePeriod } from "./models/UpdatePeriod";
+export type { User } from "./models/User";
 
 export { BookingRequestService } from "./services/BookingRequestService";
 export { DrawService } from "./services/DrawService";

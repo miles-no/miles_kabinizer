@@ -4,7 +4,7 @@
 /* eslint-disable */
 import type { CreateDrawDto } from "../models/CreateDrawDto";
 import type { Draw } from "../models/Draw";
-import type { DrawEntity } from "../models/DrawEntity";
+import type { UpdateDrawDto } from "../models/UpdateDrawDto";
 
 import type { CancelablePromise } from "../core/CancelablePromise";
 import { OpenAPI } from "../core/OpenAPI";
@@ -24,12 +24,12 @@ export class DrawService {
 
   /**
    * @param requestBody
-   * @returns DrawEntity Success
+   * @returns any Success
    * @throws ApiError
    */
   public static postApiDraw(
     requestBody: CreateDrawDto,
-  ): CancelablePromise<DrawEntity> {
+  ): CancelablePromise<any> {
     return __request(OpenAPI, {
       method: "POST",
       url: "/api/Draw",
@@ -39,65 +39,31 @@ export class DrawService {
   }
 
   /**
-   * @returns Draw Success
-   * @throws ApiError
-   */
-  public static getApiDrawCurrent(): CancelablePromise<Array<Draw>> {
-    return __request(OpenAPI, {
-      method: "GET",
-      url: "/api/Draw/current",
-    });
-  }
-
-  /**
-   * @returns Draw Success
-   * @throws ApiError
-   */
-  public static getApiDrawUpcoming(): CancelablePromise<Array<Draw>> {
-    return __request(OpenAPI, {
-      method: "GET",
-      url: "/api/Draw/upcoming",
-    });
-  }
-
-  /**
-   * @returns Draw Success
-   * @throws ApiError
-   */
-  public static getApiDrawPast(): CancelablePromise<Array<Draw>> {
-    return __request(OpenAPI, {
-      method: "GET",
-      url: "/api/Draw/past",
-    });
-  }
-
-  /**
-   * @param drawId
-   * @returns DrawEntity Success
-   * @throws ApiError
-   */
-  public static getApiDraw1(drawId: string): CancelablePromise<DrawEntity> {
-    return __request(OpenAPI, {
-      method: "GET",
-      url: "/api/Draw/{drawId}",
-      path: {
-        drawId: drawId,
-      },
-    });
-  }
-
-  /**
-   * @param drawId
+   * @param id
    * @returns any Success
    * @throws ApiError
    */
-  public static deleteApiDraw(drawId: string): CancelablePromise<any> {
+  public static deleteApiDraw(id: string): CancelablePromise<any> {
     return __request(OpenAPI, {
       method: "DELETE",
-      url: "/api/Draw/{drawId}",
-      path: {
-        drawId: drawId,
+      url: "/api/Draw",
+      query: {
+        drawId: id,
       },
+    });
+  }
+
+  /**
+   * @param requestBody
+   * @returns any Success
+   * @throws ApiError
+   */
+  public static putApiDraw(requestBody: UpdateDrawDto): CancelablePromise<any> {
+    return __request(OpenAPI, {
+      method: "PUT",
+      url: "/api/Draw",
+      body: requestBody,
+      mediaType: "application/json",
     });
   }
 }

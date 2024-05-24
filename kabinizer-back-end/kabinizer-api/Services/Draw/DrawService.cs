@@ -40,9 +40,17 @@ public class DrawService(EntityContext entityContext, PeriodService periodServic
     /**
      * Update a draw
      */
-    public Task UpdateDraw(Guid drawId)
+      public void UpdateDraw(UpdateDrawDto draw)
     {
-        throw new NotImplementedException();
+        var drawToUpdate = entityContext.Draws.Include(d => d.Periods).FirstOrDefault(d => d.Id == Guid.Parse(draw.Id)) 
+            ?? throw new Exception("Draw not found");
+
+        drawToUpdate.DeadlineStart = draw.Start;
+        drawToUpdate.DeadlineEnd = draw.End;
+        drawToUpdate.Title = draw.Title;
+        drawToUpdate.IsSpecial = draw.IsSpecial;
+        drawToUpdate.Periods = periodService.UpdatePeriods(drawToUpdate.Id, draw.Periods);
+        entityContext.SaveChanges();
     }
 
     /**

@@ -24,6 +24,25 @@ public class PeriodService(EntityContext entityContext)
         return periodEntities;
     }
 
+    internal List<PeriodEntity>? UpdatePeriods(Guid id, List<UpdatePeriod>? periods)
+    {
+     ArgumentNullException.ThrowIfNull(periods);
+
+        List<PeriodEntity> periodEntities = new();
+        foreach (UpdatePeriod updatePeriod in periods) {
+            PeriodEntity periodEntity = new()
+            {
+                PeriodStart = updatePeriod.PeriodStart,
+                PeriodEnd = updatePeriod.PeriodEnd,
+                Title = updatePeriod.Title,
+                DrawId = Guid.Parse(updatePeriod.DrawId)
+            };
+            periodEntities.Add(periodEntity);
+        }
+        return periodEntities;
+    }
+
+
     private PeriodEntity CreateSinglePeriod(DrawPeriod drawPeriod, Guid drawId)
     {
         if (drawPeriod.Title?.Trim().Length == 0)

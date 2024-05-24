@@ -1,8 +1,11 @@
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import Button from "../../components/Button";
 import { BookingRequestService } from "../../../api";
 import useUser from "../../hooks/useUser";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import NewPeriodView from "../../components/NewPeriodView";
+import { DrawService } from "../../../api/services/DrawService";
+import DeleteDraw from "../../components/DeleteDraw";
 
 const Admin = () => {
   const { isAdmin } = useUser();
@@ -21,6 +24,11 @@ const Admin = () => {
       },
     },
   );
+  const [showNewPeriodView, setShowNewPeriodView] = useState(false);
+
+  const generateNewPeriod = () => {
+    setShowNewPeriodView(!showNewPeriodView);
+  };
 
   useEffect(() => {
     if (!isAdmin) {
@@ -28,17 +36,32 @@ const Admin = () => {
     }
   }, [isAdmin]);
 
+  const { data: draws = [], isLoading } = useQuery(["getApiDraw"], () =>
+    DrawService.getApiDraw(),
+  );
+
   return (
     <div className="flex h-full w-full justify-center py-6 lg:py-16">
-      <div className="flex h-full w-96 flex-col items-center gap-8">
-        <div className="flex w-full rounded-xl bg-gray-300 p-4">
+      <div className="flex h-full w-2/4 flex-col items-center gap-8">
+        <div className="flex w-full rounded bg-gray-300 p-4">
           <div className="w-22 flex w-full flex-col items-center gap-4">
-            <h2 className="font-poppins text-lg">Download selected periods</h2>
+            <div className="rounded bg-[#354A71] p-1 ">
+              <h2 className="font-poppins text-lg">
+                Last ned perioder
+              </h2>
+            </div>
             <Button size="large" onClick={mutate}>
-              DOWNLOAD
+              Last ned
             </Button>
           </div>
         </div>
+        <div className="rounded flex w-full flex-col justify-center gap-10 bg-gray-300 p-4">
+          <Button size="large" onClick={generateNewPeriod}>
+            Legg til nye perioder
+          </Button>
+        </div>
+        {showNewPeriodView && <NewPeriodView />}
+        {!isLoading && <DeleteDraw draws={draws} />}
       </div>
     </div>
   );

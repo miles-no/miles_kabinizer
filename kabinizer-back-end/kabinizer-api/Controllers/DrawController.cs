@@ -43,16 +43,35 @@ public class DrawController(DrawService drawService) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<DrawEntity>> CreateDraw([Required] CreateDrawDto draw)
+    public async Task<ActionResult<ReadDrawDto>>  CreateDraw([Required] CreateDrawDto draw)
     {
         var createdDraw = await drawService.CreateDraw(draw);
-        return CreatedAtAction(nameof(GetDraws), new { drawId = createdDraw.Id }, createdDraw);
+        return Ok(ReadDrawDto.FromEntity(createdDraw));
     }
 
-    [HttpDelete("{drawId:guid}")]
+
+
+  
+    [HttpPut]
+
+    public IActionResult UpdateDraw([Required] UpdateDrawDto draw)
+    {
+        try
+        {
+            drawService.UpdateDraw(draw);
+            return new NoContentResult();
+        }
+        catch (Exception)
+        {
+            return new NotFoundResult();
+        }
+    }
+
+    [HttpDelete]
     public async Task<IActionResult> DeleteDraw([Required] Guid drawId)
     {
         await drawService.DeleteDraw(drawId);
         return NoContent();
     }
+
 }

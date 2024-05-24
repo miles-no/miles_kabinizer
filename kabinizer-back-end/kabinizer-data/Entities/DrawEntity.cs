@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace kabinizer_data.Entities;
 
 [Table("Draw")]
 public class DrawEntity
 {
+    [Key]
     public Guid Id { get; set; }
     public DateTime DeadlineStart { get; set; }
     public DateTime DeadlineEnd { get; set; }

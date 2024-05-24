@@ -121,7 +121,6 @@ export const getMonthsMap = (data: Option[]): MonthMapType => {
       monthsMap[month][Number(week)] = weeksMap[week];
     }
   }
-
   return monthsMap;
 };
 
