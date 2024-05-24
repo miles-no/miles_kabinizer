@@ -15,7 +15,7 @@ The previous name, "Kabinizer," used "kabin," which typically refers to an airpl
 
 Sure, "Kabinizer" sounded good when spoken out loud, but it didn't quite capture the cozy cabin vibes we were aiming for. So, we decided to switch things up and find a name that truly resonates with our vision. That's when "Hytte.ro" came into play! 
 
-After a few lively brainstorming sessions and maybe a bit too much caffeine, we stumbled upon the TLD “.ro,” and it just clicked. 
+After a few caffeine-fueled searches, we stumbled upon the TLD “.ro,” and it just clicked.
 
 In Norwegian, "hytte" means "cabin," perfectly capturing the essence of what we're all about. Plus, the ".ro" ending? It exudes calm and peace (literally, "ro" means "peace" in Norwegian). 
 
