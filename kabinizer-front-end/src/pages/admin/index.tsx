@@ -36,7 +36,7 @@ const Admin = () => {
     }
   }, [isAdmin]);
 
-  const { data: draws, isLoading } = useQuery(["getApiDraw"], () =>
+  const { data: draws = [], isLoading } = useQuery(["getApiDraw"], () =>
     DrawService.getApiDraw(),
   );
 
@@ -61,7 +61,7 @@ const Admin = () => {
           </Button>
         </div>
         {showNewPeriodView && <NewPeriodView />}
-        {!isLoading && <DeleteDraw draw={draws} />}
+        {!isLoading && <DeleteDraw draws={draws} />}
       </div>
     </div>
   );

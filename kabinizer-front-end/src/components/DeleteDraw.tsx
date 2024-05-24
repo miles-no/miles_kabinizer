@@ -6,7 +6,7 @@ import EditPeriodView from "../components/EditPeriodView";
 import { useState } from "react";
 import Editicon from "../components/EditIcon";
 
-const DeleteDraw = ({ draw }: { draw: Array<Draw> }) => {
+const DeleteDraw = ({ draws }: { draws: Array<Draw> }) => {
   const deleteDrawPeriods = (id: string | undefined) => {
     if (!id) return;
     DrawService.deleteApiDraw(id);
@@ -28,19 +28,19 @@ const DeleteDraw = ({ draw }: { draw: Array<Draw> }) => {
       <div className="rounded gap-10 bg-[#354A71]  text-center">
         <h2 className="text-lg h-10 flex w-full items-center justify-center rounded bg-[#354A71] px-4 font-poppins text-white">Slett eller endre trekning</h2>
       </div>
-      {draw?.map((draws) => (
-        <div key={draws.id} className="flex flex-col items-center gap-4">
+      {draws?.map((draw) => (
+        <div key={draw.id} className="flex flex-col items-center gap-4">
           <div className="flex flex-row items-center gap-3">
             <button
-              key={draws.id}
+              key={draw.id}
               onClick={() => wantToEdit()}
               className="rounded hover:bg-green-700"
             >
               <Editicon />
             </button>
             <div className="font-poppins flex w-full flex-col items-start gap-2 rounded bg-[#354A71] p-4 text-white">
-              <p>{draws?.title}</p>
-              {draws?.periods?.map((period) => (
+              <p>{draw?.title}</p>
+              {draw?.periods?.map((period) => (
                 <div key={period.id}>
                   {`Periode  ${formatDate(period?.periodStart)} -
                   ${formatDate(period?.periodEnd)}`}
@@ -50,12 +50,12 @@ const DeleteDraw = ({ draw }: { draw: Array<Draw> }) => {
 
             <button
               className="rounded hover:bg-pink-700"
-              onClick={() => deleteDrawPeriods(draws?.id)}
+              onClick={() => deleteDrawPeriods(draw?.id)}
             >
               <DeleteButtonIcon />
             </button>
           </div>
-          {youWantToDoSomeEditing && <EditPeriodView draw={draws} />}
+          {youWantToDoSomeEditing && <EditPeriodView draw={draw} />}
         </div>
       ))}
     </div>
