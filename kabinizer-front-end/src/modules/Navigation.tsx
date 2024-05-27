@@ -13,7 +13,7 @@ function Navigation() {
     <div className="fixed inset-x-0 top-0 z-20 h-16 w-full">
       <div className="relavive flex h-full w-full items-end justify-between bg-[#EBEBEB] px-4 py-1 shadow-md">
         <a href="/">
-          <h1 className="">Kabinizer</h1>
+          <h1 className="">Hytte.ro</h1>
         </a>
         <Navbar />
       </div>

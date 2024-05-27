@@ -37,14 +37,14 @@
       "sizes": "2048x1024",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Kabinizer - Splash Screen"
+      "label": "Hytte.ro - Splash Screen"
     },
     {
       "src": "richer-install-assets/richer-install-screenshot-narrow.png",
       "sizes": "1024x2048",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Kabinizer - Splash Screen"
+      "label": "Hytte.ro - Splash Screen"
     }
   ]
 }
