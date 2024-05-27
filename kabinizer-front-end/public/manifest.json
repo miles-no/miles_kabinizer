@@ -5,8 +5,8 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "name": "Kabinizer - Miles Stavanger",
-  "short_name": "Kabinizer",
+  "name": "Hytte.ro - Miles Stavanger",
+  "short_name": "Hytte.ro",
   "description": "Hyttebooking for Miles Stavanger",
   "icons": [
     {

@@ -6,60 +6,83 @@ export default function Root() {
       <div className="flex justify-center bg-gray-100">
         {/*Todo: implement a outlet here*/}
         {/*<Outlet />*/}
-        <nav className="btm-nav">
+        <nav className="btm-nav mb-2 mt-2">
           <Link
             to="/cabin-booking"
-            className="active border-miles-red-500 bg-gray-50 text-miles-red-500"
+            className="ite m-2 flex flex-col items-center rounded border-2"
           >
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              width="27"
+              height="26"
+              viewBox="0 0 27 26"
               fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                d="M26.1039 10.8V5.6C26.1039 4.157 24.9339 3 23.5039 3H2.70388C1.27388 3 0.116882 4.157 0.116882 5.6V10.8C1.54688 10.8 2.70388 11.97 2.70388 13.4C2.70388 14.83 1.54688 16 0.103882 16V21.2C0.103882 22.63 1.27388 23.8 2.70388 23.8H23.5039C24.9339 23.8 26.1039 22.63 26.1039 21.2V16C24.6739 16 23.5039 14.83 23.5039 13.4C23.5039 11.97 24.6739 10.8 26.1039 10.8ZM14.4039 20.55H11.8039V17.95H14.4039V20.55ZM14.4039 14.7H11.8039V12.1H14.4039V14.7ZM14.4039 8.85H11.8039V6.25H14.4039V8.85Z"
+                fill="#450D21"
               />
             </svg>
-            <span className="btm-nav-label">Ønsker</span>
+            <p className="btm-nav-label">Ønsker</p>
           </Link>
-          <Link to="/at-the-cabin" className="bg-gray-50 text-miles-red-900">
+          <Link
+            to="/check-in-and-out"
+            className="ite m-2 flex flex-col items-center rounded border-2"
+          >
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              width="27"
+              height="26"
+              viewBox="0 0 27 26"
               fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                d="M7.33447 16.8459C8.33872 16.8459 9.19233 16.4944 9.89531 15.7914C10.5983 15.0885 10.9498 14.2348 10.9498 13.2306C10.9498 12.2263 10.5983 11.3727 9.89531 10.6698C9.19233 9.96678 8.33872 9.6153 7.33447 9.6153C6.33022 9.6153 5.47661 9.96678 4.77364 10.6698C4.07066 11.3727 3.71918 12.2263 3.71918 13.2306C3.71918 14.2348 4.07066 15.0885 4.77364 15.7914C5.47661 16.4944 6.33022 16.8459 7.33447 16.8459ZM7.33447 20.4612C5.32597 20.4612 3.61875 19.7582 2.2128 18.3523C0.806856 16.9463 0.103882 15.2391 0.103882 13.2306C0.103882 11.2221 0.806856 9.51487 2.2128 8.10892C3.61875 6.70297 5.32597 6 7.33447 6C8.96136 6 10.3826 6.46195 11.5981 7.38586C12.8128 8.30977 13.6612 9.45462 14.1433 10.8204H23.7238C23.8845 10.8204 24.0404 10.8505 24.1914 10.9108C24.3416 10.971 24.467 11.0514 24.5674 11.1518L25.7424 12.3268C25.8629 12.4473 25.9532 12.5826 26.0135 12.7329C26.0738 12.8839 26.1039 13.0398 26.1039 13.2005C26.1039 13.3611 26.079 13.5118 26.0292 13.6524C25.9786 13.793 25.893 13.9235 25.7725 14.044L22.6392 17.1773C22.5187 17.2978 22.3882 17.3882 22.2476 17.4484C22.107 17.5087 21.9563 17.5388 21.7957 17.5388C21.635 17.5388 21.4843 17.5135 21.3437 17.4629C21.2031 17.4131 21.0726 17.3279 20.9521 17.2074L19.3855 15.6408L17.8188 17.2074C17.6983 17.3279 17.5678 17.4131 17.4272 17.4629C17.2866 17.5135 17.1359 17.5388 16.9753 17.5388C16.8146 17.5388 16.6639 17.5135 16.5233 17.4629C16.3828 17.4131 16.2522 17.3279 16.1317 17.2074L14.5651 15.6408H14.1433C13.6412 17.0869 12.7675 18.2518 11.5222 19.1356C10.2769 20.0193 8.88101 20.4612 7.33447 20.4612Z"
+                fill="#450D21"
               />
             </svg>
-            <span className="btm-nav-label">På hytta</span>
+
+            <p className="btm-nav-label">Inn-/utsjekk</p>
           </Link>
-          <Link to="/info" className="bg-gray-50 text-miles-red-900">
+          <Link
+            to="/at-the-cabin"
+            className="ite m-2 flex flex-col items-center rounded border-2"
+          >
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              width="27"
+              height="26"
+              viewBox="0 0 27 26"
               fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                d="M10.5039 24.1V16.3H15.7039V24.1H22.2039V13.7H26.1039L13.1039 2L0.103882 13.7H4.00388V24.1H10.5039Z"
+                fill="#450D21"
               />
             </svg>
-            <span className="btm-nav-label">Info</span>
+            <p className="btm-nav-label">På hytta</p>
+          </Link>
+          <Link
+            to="/info"
+            className="ite m-2 flex flex-col items-center rounded border-2"
+          >
+            <svg
+              width="27"
+              height="26"
+              viewBox="0 0 27 26"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M13.7272 13C16.7647 13 19.2272 10.5376 19.2272 7.5C19.2272 4.46243 16.7647 2 13.7272 2C10.6896 2 8.22717 4.46243 8.22717 7.5C8.22717 10.5376 10.6896 13 13.7272 13Z"
+                fill="#450D21"
+              />
+              <path
+                d="M22.5137 16.5201C20.2037 15.3376 17.2062 14.3751 13.7274 14.3751C10.2487 14.3751 7.25117 15.3376 4.94117 16.5201C3.56617 17.2213 2.72742 18.6376 2.72742 20.1776V24.0001H24.7274V20.1776C24.7274 18.6376 23.8887 17.2213 22.5137 16.5201Z"
+                fill="#450D21"
+              />
+            </svg>
+            <p className="btm-nav-label">Min hytteID</p>
           </Link>
         </nav>
       </div>
