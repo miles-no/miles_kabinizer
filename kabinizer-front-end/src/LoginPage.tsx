@@ -16,13 +16,13 @@ export const LoginPage = () => {
 
   return (
     <div className="bg-calm-yellow flex h-screen w-screen flex-col items-center justify-center">
-      <img src={house} alt="house" className="fadeFromTop pb-2" />
-      <h1 className="fadeFromBottom pb-2 text-3xl font-extrabold text-miles-red-500">
+      <img src={house} alt="" className="fadeFromTop pb-4" />
+      <h1 className="fadeFromBottom pb-4 text-3xl font-extrabold text-miles-red-500">
         Hytte.ro
       </h1>
       <button
         onClick={handleLogin}
-        className="fadeFromBottom btn btn-primary btn-wide mt-4 rounded-full text-white"
+        className="btn btn-primary btn-wide mt-4 rounded-full text-white"
         type="submit"
       >
         Logg inn
