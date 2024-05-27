@@ -6,16 +6,14 @@ import {
 import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { NameInitials } from "@/utils";
-import { useTheme } from "@/hooks/useTheme";
+import { Link } from "react-router-dom";
 
 function Navigation() {
   return (
     <div className="fixed inset-x-0 top-0 z-20 h-16 w-full">
       <div className="relavive flex h-full w-full items-end justify-between bg-[#EBEBEB] px-4 py-1 shadow-md">
         <a href="/">
-          <h1 className="font-poppins text-xl font-bold text-[#B72318]">
-            Kabinizer
-          </h1>
+          <h1 className="">Hytte.ro</h1>
         </a>
         <Navbar />
       </div>
@@ -33,7 +31,7 @@ const Navbar = () => {
           <DropdownMenuTrigger
             data-collapse-toggle="navbar-default"
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 md:hidden dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
             aria-controls="navbar-default"
             aria-expanded="false"
           >
@@ -59,7 +57,6 @@ const Navbar = () => {
             id="user-dropdown"
           >
             <div className="block w-full md:w-auto" id="navbar-default">
-              <ThemeToggle />
               <a
                 href="/"
                 className="block rounded-t-lg px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-700 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -79,6 +76,12 @@ const Navbar = () => {
               >
                 Select periods
               </a>
+              <Link
+                to="/CabinBookingPage"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-700 dark:hover:bg-gray-600 dark:hover:text-white"
+              >
+                Torje
+              </Link>
               {isAdmin && (
                 <a
                   href="/admin"
@@ -101,7 +104,7 @@ const Navbar = () => {
             <li>
               <a
                 href="/"
-                className="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
+                className="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
                 aria-current="page"
               >
                 Home
@@ -110,7 +113,7 @@ const Navbar = () => {
             <li>
               <a
                 href="/gallery"
-                className="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
+                className="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
               >
                 Gallery
               </a>
@@ -118,7 +121,7 @@ const Navbar = () => {
             <li>
               <a
                 href="/select-periods"
-                className="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
+                className="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
               >
                 Select periods
               </a>
@@ -141,7 +144,7 @@ const UserMenu = () => {
       <DropdownMenu>
         <DropdownMenuTrigger
           type="button"
-          className="flex rounded-full bg-gray-800 text-sm focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 md:me-0"
+          className="flex rounded-full bg-gray-800 text-sm focus:ring-4 focus:ring-gray-300 md:me-0 dark:focus:ring-gray-600"
           id="user-menu-button"
           aria-expanded="false"
           data-dropdown-toggle="user-dropdown"
@@ -164,9 +167,6 @@ const UserMenu = () => {
             </span>
           </div>
           <ul className="py-2" aria-labelledby="user-menu-button">
-            <li>
-              <ThemeToggle />
-            </li>
             {isAdmin && (
               <li>
                 <a
@@ -188,27 +188,6 @@ const UserMenu = () => {
           </ul>
         </DropdownMenuContent>
       </DropdownMenu>
-    </div>
-  );
-};
-
-const ThemeToggle = () => {
-  const { theme, setTheme } = useTheme();
-
-  return (
-    <div className="flex">
-      <button
-        className="flex-1 text-nowrap px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-        onClick={() => setTheme("light")}
-      >
-        {theme === "light" && <span className="text-green-500">✓</span>} Light
-      </button>
-      <button
-        className="flex-1 text-nowrap px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-        onClick={() => setTheme("dark")}
-      >
-        {theme === "dark" && <span className="text-green-500">✓</span>} Dark
-      </button>
     </div>
   );
 };
