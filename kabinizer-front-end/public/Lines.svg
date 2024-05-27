@@ -1,0 +1,16 @@
+<svg width="393" height="859" viewBox="0 0 393 859" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g style="mix-blend-mode:overlay">
+        <path d="M303 1203.5C330.667 1086.17 333.801 897.572 790 857C1273.5 814 1420 626.5 1378 479" stroke="black"
+              stroke-opacity="0.3" stroke-width="6"/>
+        <g style="mix-blend-mode:color-burn">
+            <path d="M-23 1117C9.01612 980.637 165.625 712.212 535.932 729.413C906.239 746.613 1146.94 433.638 1221 275"
+                  stroke="black" stroke-opacity="0.3" stroke-width="6"/>
+        </g>
+        <path d="M-434 429.5C-406.333 312.167 -271 81.2 49 96C369 110.8 577 -158.5 641 -295" stroke="black"
+              stroke-opacity="0.3" stroke-width="6"/>
+        <path d="M0 819C29.6998 693.002 174.979 444.98 518.495 460.873C862.011 476.766 1085.3 187.58 1154 41"
+              stroke="black" stroke-opacity="0.3" stroke-width="6"/>
+        <path d="M-43 549C-13.3002 423.002 131.979 174.98 475.495 190.873C819.011 206.766 1042.3 -82.4203 1111 -229"
+              stroke="black" stroke-opacity="0.3" stroke-width="6"/>
+    </g>
+</svg>

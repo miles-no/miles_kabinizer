@@ -18,6 +18,10 @@ const router = createBrowserRouter([
     element: <Root />,
   },
   {
+    path: "/login",
+    element: <LoginPage />,
+  },
+  {
     path: "/cabin-booking",
     element: <CabinBookingPage />,
     loader: cabinBookingLoader,

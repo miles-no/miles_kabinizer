@@ -18,14 +18,14 @@ p {
 
 label:has(input[type="checkbox"]:checked) {
     @apply border-miles-red-500;
-    transition: border-color 0.2s ease;
+    transition: border-color 1.8s ease;
 }
 
 label:has(input[type="checkbox"]:disabled) {
     @apply border-gray-300 text-gray-400;
     cursor: not-allowed;
     text-decoration: line-through;
-    transition: text-decoration 0.2s ease;
+    transition: text-decoration 1.8s ease;
 }
 
 /*Let's animate in all elements in a staggered manner*/
@@ -43,3 +43,65 @@ label:has(input[type="checkbox"]:disabled) {
 .fade-in {
     animation: fadeIn 0.5s ease-in-out;
 }
+
+
+.fadeFromTop {
+    animation: fadeFromTop 1.8s ease-out;
+}
+
+@keyframes fadeFromTop {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fadeFromRight {
+    animation: fadeFromRight 1.8s ease-out;
+}
+
+@keyframes fadeFromRight {
+    0% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.fadeFromBottom {
+    animation: fadeFromBottom 1.8s ease-out;
+}
+
+@keyframes fadeFromBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fadeFromLeft {
+    animation: fadeFromLeft 1.8s ease-out;
+}
+
+@keyframes fadeFromLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+

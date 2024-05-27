@@ -1,7 +1,8 @@
 {
   "theme_color": "#6A1426",
   "background_color": "#6A1426",
-  "display": "fullscreen",
+  "display_override": ["fullscreen", "minimal-ui"],
+  "display": "standalone",
   "scope": "/",
   "start_url": "/",
   "name": "Kabinizer - Miles Stavanger",

@@ -7,6 +7,7 @@ module.exports = {
         "miles-red-500": "#FF303B",
         "miles-red-900": "#6A1426",
         "miles-green": "#2ABF12",
+        "calm-yellow": "#FBF0E5",
       },
     },
   },
