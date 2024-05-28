@@ -5,7 +5,7 @@ This is a [Remix](https://remix.run) app with PWA support.
 ## Features
 
 | Library     | Link                                                                                       | Description                             |
-| ----------- | ------------------------------------------------------------------------------------------ | --------------------------------------- |
+|-------------|--------------------------------------------------------------------------------------------|-----------------------------------------|
 | Remix       | [https://remix.run](https://remix.run)                                                     | Framework                               |
 | Remix PWA   | [https://remix-pwa.run/docs/main/quick-start](https://remix-pwa.run/docs/main/quick-start) | Remix PWA plugin                        |
 | TailwindCSS | [https://tailwindcss.com](https://tailwindcss.com)                                         | Utility-first CSS framework             |
@@ -22,7 +22,9 @@ Run the Vite dev server:
 npm run dev
 ```
 
-## Deployment
+## Running in Production
+
+### Local Deployment
 
 First, build your app for production:
 
@@ -36,18 +38,19 @@ Then run the app in production mode:
 npm start
 ```
 
-Now you'll need to pick a host to deploy it to.
+### Docker Deployment
 
-### DIY
+The Dockerfile is configured to execute the application in a production environment.
+Follow the steps below to build and run the application using Docker.
 
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
+First, construct the Docker image:
 
-Make sure to deploy the output of `npm run build`
+```sh
+docker build -t hytte-ro .
+```
 
-- `build/server`
-- `build/client`
+Next, initiate the Docker container:
 
-
-## Todo
-
-Dockerize the app and deploy it to Google Cloud Run.
+```sh
+docker run -p 3000:3000 hytte-ro
+```
