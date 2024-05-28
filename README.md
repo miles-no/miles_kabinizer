@@ -11,7 +11,11 @@ email [kabinizer-support-aaaamw5kclgfndz6ufcdnfxbfq@miles-no.slack.com](mailto:k
 
 ## Why Hytte.ro?
 
-The previous name, "Kabinizer," used "kabin," which typically refers to an airplane cabin or a ship's cabin. That didn’t quite hit the mark. 
+The previous name, "Kabinizer 3000" was from a time when we were still figuring out what we wanted to be.
+We've since evolved and found our true calling: to be the go-to cabin booking solution for Miles employees in Stavanger.
+
+The previous name, "Kabinizer," used "kabin," which typically refers to an airplane cabin or a ship's cabin.
+That didn't quite hit the mark. 
 
 Sure, "Kabinizer" sounded good when spoken out loud, but it didn't quite capture the cozy cabin vibes we were aiming for. So, we decided to switch things up and find a name that truly resonates with our vision. That's when "Hytte.ro" came into play! 
 
