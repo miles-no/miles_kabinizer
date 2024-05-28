@@ -1,0 +1,18 @@
+html * {
+    font-family: Manrope, sans-serif;
+}
+
+/* Checkboxes */
+label {
+    transition: border-color 0.2s ease-out, text-decoration 0.2s ease-out;
+}
+
+label:has(input[type="checkbox"]:checked) {
+    @apply border-primary;
+}
+
+label:has(input[type="checkbox"]:disabled) {
+    @apply border-gray-300 text-gray-400;
+    cursor: not-allowed;
+    text-decoration: line-through;
+}

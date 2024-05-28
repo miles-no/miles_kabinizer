@@ -1,0 +1,50 @@
+{
+  "theme_color": "#6A1426",
+  "background_color": "#6A1426",
+  "display_override": ["fullscreen", "minimal-ui"],
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "name": "Henry's PWA template",
+  "short_name": "Henry's PWA",
+  "description": "This is an opinionated PWA template composed by Henry",
+  "icons": [
+    {
+      "src": "/maskable_icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    },
+    {
+      "src": "/maskable_icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "richer-install-assets/richer-install-screenshot-wide.png",
+      "sizes": "2048x1024",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Screenshot of the app on a wide screen"
+    },
+    {
+      "src": "richer-install-assets/richer-install-screenshot-narrow.png",
+      "sizes": "1024x2048",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Screenshot of the app on a narrow screen"
+    }
+  ]
+}
