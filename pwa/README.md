@@ -46,3 +46,8 @@ Make sure to deploy the output of `npm run build`
 
 - `build/server`
 - `build/client`
+
+
+## Todo
+
+Dockerize the app and deploy it to Google Cloud Run.
