@@ -5,9 +5,9 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "name": "Henry's PWA template",
-  "short_name": "Henry's PWA",
-  "description": "This is an opinionated PWA template composed by Henry",
+  "name": "Hytte.ro",
+  "short_name": "Hytte.ro",
+  "description": "Hytte.ro - Hyttebooking for Miles Stavanger",
   "icons": [
     {
       "src": "/maskable_icon.png",
