@@ -87,6 +87,7 @@ const route3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
 const assets = [
   "/android-chrome-192x192.png",
   "/android-chrome-512x512.png",
+  "/entry.worker.js",
   "/favicon.ico",
   "/manifest.json",
   "/maskable_icon.png",
@@ -106,6 +107,18 @@ const routes = {
     hasWorkerAction: false,
     module: route0
   },
+  "routes/components": {
+    id: "routes/components",
+    parentId: "root",
+    path: "components",
+    index: void 0,
+    caseSensitive: void 0,
+    hasLoader: false,
+    hasAction: false,
+    hasWorkerLoader: false,
+    hasWorkerAction: false,
+    module: route1
+  },
   "routes/booking": {
     id: "routes/booking",
     parentId: "root",
@@ -116,25 +129,13 @@ const routes = {
     hasAction: true,
     hasWorkerLoader: false,
     hasWorkerAction: false,
-    module: route1
+    module: route2
   },
   "routes/_index": {
     id: "routes/_index",
     parentId: "root",
     path: void 0,
     index: true,
-    caseSensitive: void 0,
-    hasLoader: false,
-    hasAction: false,
-    hasWorkerLoader: false,
-    hasWorkerAction: false,
-    module: route2
-  },
-  "routes/henry": {
-    id: "routes/henry",
-    parentId: "root",
-    path: "henry",
-    index: void 0,
     caseSensitive: void 0,
     hasLoader: false,
     hasAction: false,
