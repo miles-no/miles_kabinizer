@@ -51,8 +51,8 @@ export default {
           "info-content": "#FFFFFF", // Light content color for info
           success: "#006644", // Darker success color
           "success-content": "#FFFFFF", // Light content color for success
-          warning: "#FFBF00", // Darker warning color
-          "warning-content": "#000000", // Foreground content color to use on warning color
+          warning: "#FFBF00", // Warning color
+          "warning-content": "#FFFFFF", // Foreground content color to use on warning color
           error: "#FF1A1A", // Light error color
           "error-content": "#FFFFFF", // Dark content color for error
         },
