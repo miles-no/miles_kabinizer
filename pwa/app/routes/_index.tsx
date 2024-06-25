@@ -21,8 +21,25 @@ export default function Index() {
           <Link className="link" to="/components">
             Components
           </Link>
+        </li>
+        <li>
+          <Link className="link" to="booking">
+            Booking (POC)
+          </Link>
+        </li>
+        <li>
+          <Link className="link" to="draws">
+            Draws
+          </Link>
+        </li>
+        <li>
           <Link className="link" to="draws/new">
             Add a New Draw
+          </Link>
+        </li>
+        <li>
+          <Link className="link" to="draws/1234567890">
+            Edit Draw 1234567890
           </Link>
         </li>
       </ul>

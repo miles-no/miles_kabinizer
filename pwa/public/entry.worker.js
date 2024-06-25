@@ -28,6 +28,76 @@ self.addEventListener("activate", (event) => {
 const entryWorker = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null
 }, Symbol.toStringTag, { value: "Module" }));
+var __getOwnPropNames$8 = Object.getOwnPropertyNames;
+var __commonJS$8 = (cb, mod) => function __require() {
+  return mod || (0, cb[__getOwnPropNames$8(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+};
+var require_worker_runtime$8 = __commonJS$8({
+  "@remix-pwa/worker-runtime"(exports, module) {
+    module.exports = {};
+  }
+});
+var worker_runtime_default$8 = require_worker_runtime$8();
+const route0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: worker_runtime_default$8
+}, Symbol.toStringTag, { value: "Module" }));
+var __getOwnPropNames$7 = Object.getOwnPropertyNames;
+var __commonJS$7 = (cb, mod) => function __require() {
+  return mod || (0, cb[__getOwnPropNames$7(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+};
+var require_worker_runtime$7 = __commonJS$7({
+  "@remix-pwa/worker-runtime"(exports, module) {
+    module.exports = {};
+  }
+});
+var worker_runtime_default$7 = require_worker_runtime$7();
+const route1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: worker_runtime_default$7
+}, Symbol.toStringTag, { value: "Module" }));
+var __getOwnPropNames$6 = Object.getOwnPropertyNames;
+var __commonJS$6 = (cb, mod) => function __require() {
+  return mod || (0, cb[__getOwnPropNames$6(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+};
+var require_worker_runtime$6 = __commonJS$6({
+  "@remix-pwa/worker-runtime"(exports, module) {
+    module.exports = {};
+  }
+});
+var worker_runtime_default$6 = require_worker_runtime$6();
+const route2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: worker_runtime_default$6
+}, Symbol.toStringTag, { value: "Module" }));
+var __getOwnPropNames$5 = Object.getOwnPropertyNames;
+var __commonJS$5 = (cb, mod) => function __require() {
+  return mod || (0, cb[__getOwnPropNames$5(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+};
+var require_worker_runtime$5 = __commonJS$5({
+  "@remix-pwa/worker-runtime"(exports, module) {
+    module.exports = {};
+  }
+});
+var worker_runtime_default$5 = require_worker_runtime$5();
+const route3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: worker_runtime_default$5
+}, Symbol.toStringTag, { value: "Module" }));
+var __getOwnPropNames$4 = Object.getOwnPropertyNames;
+var __commonJS$4 = (cb, mod) => function __require() {
+  return mod || (0, cb[__getOwnPropNames$4(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+};
+var require_worker_runtime$4 = __commonJS$4({
+  "@remix-pwa/worker-runtime"(exports, module) {
+    module.exports = {};
+  }
+});
+var worker_runtime_default$4 = require_worker_runtime$4();
+const route4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: worker_runtime_default$4
+}, Symbol.toStringTag, { value: "Module" }));
 var __getOwnPropNames$3 = Object.getOwnPropertyNames;
 var __commonJS$3 = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames$3(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
@@ -38,7 +108,7 @@ var require_worker_runtime$3 = __commonJS$3({
   }
 });
 var worker_runtime_default$3 = require_worker_runtime$3();
-const route0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const route5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: worker_runtime_default$3
 }, Symbol.toStringTag, { value: "Module" }));
@@ -52,7 +122,7 @@ var require_worker_runtime$2 = __commonJS$2({
   }
 });
 var worker_runtime_default$2 = require_worker_runtime$2();
-const route1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const route6 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: worker_runtime_default$2
 }, Symbol.toStringTag, { value: "Module" }));
@@ -66,7 +136,7 @@ var require_worker_runtime$1 = __commonJS$1({
   }
 });
 var worker_runtime_default$1 = require_worker_runtime$1();
-const route2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const route7 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: worker_runtime_default$1
 }, Symbol.toStringTag, { value: "Module" }));
@@ -80,7 +150,7 @@ var require_worker_runtime = __commonJS({
   }
 });
 var worker_runtime_default = require_worker_runtime();
-const route3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const route8 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: worker_runtime_default
 }, Symbol.toStringTag, { value: "Module" }));
@@ -150,6 +220,42 @@ const routes = {
     hasWorkerAction: false,
     module: route0
   },
+  "routes/draws.$draw.status": {
+    id: "routes/draws.$draw.status",
+    parentId: "root",
+    path: "draws/:draw/status",
+    index: void 0,
+    caseSensitive: void 0,
+    hasLoader: false,
+    hasAction: false,
+    hasWorkerLoader: false,
+    hasWorkerAction: false,
+    module: route1
+  },
+  "routes/draws.$id.edit": {
+    id: "routes/draws.$id.edit",
+    parentId: "routes/draws.$id",
+    path: "edit",
+    index: void 0,
+    caseSensitive: void 0,
+    hasLoader: true,
+    hasAction: false,
+    hasWorkerLoader: false,
+    hasWorkerAction: false,
+    module: route2
+  },
+  "routes/draws._index": {
+    id: "routes/draws._index",
+    parentId: "root",
+    path: "draws",
+    index: true,
+    caseSensitive: void 0,
+    hasLoader: true,
+    hasAction: false,
+    hasWorkerLoader: false,
+    hasWorkerAction: false,
+    module: route3
+  },
   "routes/components": {
     id: "routes/components",
     parentId: "root",
@@ -160,7 +266,31 @@ const routes = {
     hasAction: false,
     hasWorkerLoader: false,
     hasWorkerAction: false,
-    module: route1
+    module: route4
+  },
+  "routes/draws.$id": {
+    id: "routes/draws.$id",
+    parentId: "root",
+    path: "draws/:id",
+    index: void 0,
+    caseSensitive: void 0,
+    hasLoader: true,
+    hasAction: false,
+    hasWorkerLoader: false,
+    hasWorkerAction: false,
+    module: route5
+  },
+  "routes/draws.new": {
+    id: "routes/draws.new",
+    parentId: "root",
+    path: "draws/new",
+    index: void 0,
+    caseSensitive: void 0,
+    hasLoader: false,
+    hasAction: false,
+    hasWorkerLoader: false,
+    hasWorkerAction: false,
+    module: route6
   },
   "routes/booking": {
     id: "routes/booking",
@@ -172,7 +302,7 @@ const routes = {
     hasAction: true,
     hasWorkerLoader: false,
     hasWorkerAction: false,
-    module: route2
+    module: route7
   },
   "routes/_index": {
     id: "routes/_index",
@@ -184,7 +314,7 @@ const routes = {
     hasAction: false,
     hasWorkerLoader: false,
     hasWorkerAction: false,
-    module: route3
+    module: route8
   }
 };
 const entry = { module: entryWorker };

@@ -1,83 +1,97 @@
+# Hytte.ro overview
+
 ```mermaid
 ---
-title: ER-diagram of Hytte.ro
+title:  ER-diagram of Hytte.ro
 ---
 erDiagram
     Draw {
-        string Title "Title of the draw. E.g. 'Summer 2025'"
-        string Description "Optional description of the draw"
-        boolean special_draw_exclude_last_year_winners "Exclude last year's winners from this draw"
-        boolean reserved_for_families_with_schoolchildren "Reserved for families with schoolchildren"
-    }
-    DrawPeriod {
-        date From "Date From"
-        date To "Date To"
-    }
-    BookingRequest {
+        int id
+        string title
+        string description
+        boolean specialDrawExcludeLastYearWinners
+        boolean reservedForFamiliesWithSchoolchildren
     }
     User {
-        string Name "User's name"
-        string Email "User's email"
-        string Roles "User's roles. Eg. 'admin', 'user'"
+        int id
+        string name
+        string email
+        string phone
     }
-    Draw ||--|{ DrawPeriod: "Contains"
-    DrawPeriod }o--o| User: "Winner"
-    User ||--o{ BookingRequest: "Makes"
-    BookingRequest }o--|{ DrawPeriod: "Requests"
-    CabinLogEntry {
-        date Date "Date of the log entry"
-        string Message "Log message"
-        int Likes "Number of likes"
+    Day {
+        int id
+        date date
+        int drawId
+        int userId
     }
-    User ||--o{ CabinLogEntry: "Writes"
+    Interest {
+        int id
+        int userId
+        int dayId
+    }
+
+    Draw ||--o{ Day : "Has"
+    User ||--o{ Day : "Awarded"
+    User ||--o{ Interest : "Has"
+    Day ||--o{ Interest : "Has"
+
 ```
+
+## Flowchart
+
+```mermaid
+---
+title: Flowchart of Hytte.ro's page flow
+---
+flowchart TD
+    Login --> CabinLottery
+    Login --> AboutCabin[About the Cabin]
+    Login --> CheckInOut[Check-in/Check-out]
+    Login --> MyCabinTime[My Cabin Time]
+
+    CabinLottery --> DrawParticipation[Participate in Draw]
+
+    AboutCabin --> CabinInfo[Cabin Information]
+    AboutCabin --> Location[Location Details]
+    AboutCabin --> Amenities[Amenities]
+
+    CheckInOut --> CheckIn[Check In]
+    CheckInOut --> CheckOut[Check Out]
+
+    MyCabinTime --> UserProfile[User Profile]
+    MyCabinTime --> Bookings[My Bookings]
+    MyCabinTime --> Interests[My Interests]
+    MyCabinTime --> EditProfile[Edit Profile]
+    Bookings --> ViewBookings[View Bookings]
+    Bookings --> CancelBooking[Cancel Booking]
+    Bookings --> EditBooking[Notify other users about days you don't want to use so that they can book them]
+    Interests --> CabinLottery[Add Interest]
+    Interests --> CabinLottery[Remove Interest]
+```
+
+## Interest vs Booking
+
+Interests are a way to show that you want to use a certain day.
+Booking is a day that is awarded to you if you win the draw.
+
+
+
+## Relation 
+- a draw can contain many days.
+- a day can belong to one draw.
+
+- interest can contain one day
+- day can belong to one interest
 
 # Tables
 
-## Draws
-
-| Column Name                               | Data Type    | Description                                |
-|-------------------------------------------|--------------|--------------------------------------------|
-| ID                                        | INT          | Primary Key                                |
-| Title                                     | VARCHAR(255) | Title of the draw. E.g. 'Summer 2025'      |
-| Description                               | VARCHAR(255) | Optional description of the draw           |
-| special_draw_exclude_last_year_winners    | BOOLEAN      | Exclude last year's winners from this draw |
-| reserved_for_families_with_schoolchildren | BOOLEAN      | Reserved for families with schoolchildren  |
-
-## DrawPeriods
-
-| Column Name | Data Type | Description                      |
-|-------------|-----------|----------------------------------|
-| ID          | INT       | Primary Key                      |
-| From        | DATE      | Date From                        |
-| To          | DATE      | Date To                          |
-| DrawID      | INT       | Foreign Key referencing Draw(ID) |
-
-## Users
-
-| Column Name | Data Type    | Description                       |
-|-------------|--------------|-----------------------------------|
-| ID          | INT          | Primary Key                       |
-| Name        | VARCHAR(255) | User's name                       |
-| Email       | VARCHAR(255) | User's email                      |
-| Phone       | VARCHAR(255) | User's phone number               |
-| Roles       | VARCHAR(255) | User's roles. Eg. 'admin', 'user' |
-
-## BookingRequests
-
-| Column Name  | Data Type | Description                            |
-|--------------|-----------|----------------------------------------|
-| ID           | INT       | Primary Key                            |
-| who          | INT       | Foreign Key referencing User(ID)       |
-| DrawPeriodID | INT       | Foreign Key referencing DrawPeriod(ID) |
-
-## CabinLogEntries
-
-| Column Name | Data Type | Description                      |
-|-------------|-----------|----------------------------------|
-| ID          | INT       | Primary Key                      |
-| Date        | DATE      | Date of the log entry            |
-| Message     | TEXT      | Log message                      |
-| Likes       | INT       | Number of likes                  |
-| written_by  | INT       | Foreign Key referencing User(ID) |
-
+- Draw
+- DrawDays
+- Day
+- DayInterests
+- Interest
+- UserInterests
+- User
+- UserBookings
+- Booking
+- BookingDays

@@ -1,5 +1,5 @@
 /**
- * ISO 8601 week number of the year
+ * ISO 8601-week number of the year
  * @param date
  */
 export const getWeekNumber = (date: Date): number => {

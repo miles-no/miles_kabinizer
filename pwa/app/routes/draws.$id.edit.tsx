@@ -1,6 +1,20 @@
 import { Form } from "@remix-run/react";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { ChangeEventHandler, useState } from "react";
+import { useLoaderData } from "@remix-run/react";
+
+export const loader = async () => {
+  const data = {
+    title: "Draw 1",
+    description: "Description of draw 1",
+    special_draw_exclude_last_year_winners: true,
+    reserved_for_families_with_schoolchildren: false,
+    periods: [
+      { from: "2022-01-01", to: "2022-01-31" },
+      { from: "2022-02-01", to: "2022-02-28" },
+    ],
+  };
+  return data;
+};
 
 function Period({
   period,
@@ -8,7 +22,7 @@ function Period({
   onRemove,
 }: {
   period: { from: string; to: string };
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onChange: ChangeEventHandler<HTMLInputElement>;
   onRemove: () => void;
 }) {
   return (
@@ -41,8 +55,8 @@ function Period({
 }
 
 export default function AddDraw() {
-  const navigate = useNavigate();
-  const [periods, setPeriods] = useState([{ from: "", to: "" }]);
+  const data = useLoaderData<typeof loader>();
+  const [periods, setPeriods] = useState(data.periods);
 
   function handlePeriodChange(
     event: React.ChangeEvent<HTMLInputElement>,
@@ -64,27 +78,11 @@ export default function AddDraw() {
     setPeriods(updatedPeriods);
   }
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-
-    const response = await fetch("/api/draws", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (response.ok) {
-      navigate("/draws");
-    } else {
-      // Handle error
-    }
-  }
-
   return (
     <div className="container mx-auto p-4 max-w-2xl">
-      <Form method="post" onSubmit={handleSubmit} className="space-y-8">
+      <h1 className="text-2xl">Edit draw</h1>
+      <Form method="post" className="space-y-8">
         <div className="space-y-4">
-          <h1 className="text-2xl">Add a New Draw</h1>
           <label className="form-control">
             Title:
             <input
@@ -93,6 +91,7 @@ export default function AddDraw() {
               name="title"
               required
               className="input input-bordered"
+              defaultValue={data.title}
             />
           </label>
           <label className="form-control">
@@ -101,6 +100,7 @@ export default function AddDraw() {
               id="description"
               className="textarea textarea-bordered"
               name="description"
+              defaultValue={data.description}
             />
           </label>
         </div>
@@ -111,6 +111,7 @@ export default function AddDraw() {
               type="checkbox"
               name="special_draw_exclude_last_year_winners"
               className="checkbox checkbox-primary"
+              defaultChecked={data.special_draw_exclude_last_year_winners}
             />
             <span>{`Exclude last year's winners`}</span>
           </label>
@@ -119,6 +120,7 @@ export default function AddDraw() {
               type="checkbox"
               name="reserved_for_families_with_schoolchildren"
               className="checkbox checkbox-primary"
+              defaultChecked={data.reserved_for_families_with_schoolchildren}
             />
             <span>Reserved for families with schoolchildren</span>
           </label>

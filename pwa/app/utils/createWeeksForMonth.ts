@@ -1,5 +1,5 @@
 import { getFirstDayOfWeek } from "~/utils/getFirstDayOfWeek";
-import { getDaysInMonth } from "~/utils/getDaysInMonth";
+import { getNumberOfDaysInMonth } from "~/utils/getNumberOfDaysInMonth";
 
 /**
  * Type representing a day of a week.
@@ -32,7 +32,7 @@ export const createWeeksForMonth = (
   ).fill(null);
 
   // Iterate over each day of the month
-  for (let day = 1; day <= getDaysInMonth(monthIndex, year); day++) {
+  for (let day = 1; day <= getNumberOfDaysInMonth(monthIndex, year); day++) {
     currentWeek.push(day);
     // If the current week has 7 days, push it and start a new week
     if (currentWeek.length === 7) {
