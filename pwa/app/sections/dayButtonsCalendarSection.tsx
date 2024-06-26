@@ -12,6 +12,18 @@ const dayStatusColorMap: Record<Status, string> = {
   Fill: "border-2 border-transparent bg-base-100 text-xl opacity-50",
 };
 
+// To get around the issue of not being able to use col-span-x on a div using tailwind
+// ref https://www.codeconcisely.com/posts/tailwind-css-dynamic-class/
+const colSpanMap: Record<number, string> = {
+  1: "col-span-1",
+  2: "col-span-2",
+  3: "col-span-3",
+  4: "col-span-4",
+  5: "col-span-5",
+  6: "col-span-6",
+  7: "col-span-7",
+};
+
 export const DayButtonsCalendarSection = () => {
   const days: OutputDate[] = [
     // Jan
@@ -72,7 +84,7 @@ export const DayButtonsCalendarSection = () => {
             </h3>
             {week.groupedDays.map((dayGroup) => (
               <div
-                className={`rounded-full col-span-${dayGroup.days.length} ${dayStatusColorMap[dayGroup.status]} flex justify-around min-w-8`}
+                className={`rounded-full ${colSpanMap[dayGroup.days.length]} ${dayStatusColorMap[dayGroup.status]} flex justify-around min-w-8`}
                 key={dayGroup.sortIndex}
               >
                 {dayGroup.days.map((day) => (
